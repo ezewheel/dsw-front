@@ -1,6 +1,11 @@
 import { useState } from "react";
-import { Container, Col, Row } from "react-bootstrap";
-import BookItem from "./components/bookItem/BookItem";
+import { Container } from "react-bootstrap";
+import { Route, Routes } from "react-router-dom";
+import BookCarousel from "./components/carousel/BookCarousel";
+import FeaturedBook from "./components/featuredBook/FeaturedBook";
+import NavBar from "./components/navbar/NavBar";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import "./App.css";
 
 type Book = {
@@ -41,6 +46,33 @@ const initialBooks: Book[] = [
     imageUrl: "/images/rayuela.svg",
     available: true,
   },
+  {
+    id: 4,
+    title: "Locura Mix",
+    author: "Bruno Peirone",
+    rating: 4,
+    pageCount: 200,
+    imageUrl: "/images/locura-mix.svg",
+    available: true,
+  },
+  {
+    id: 5,
+    title: "Culo Sas",
+    author: "El GG Naco",
+    rating: 5,
+    pageCount: 1000,
+    imageUrl: "/images/culo-sas.svg",
+    available: false,
+  },
+  {
+    id: 6,
+    title: "Mi Casa Tio",
+    author: "Eze Rueda",
+    rating: 2,
+    pageCount: 1,
+    imageUrl: "/images/mi-casa-tio.svg",
+    available: true,
+  },
 ];
 
 function App() {
@@ -48,32 +80,44 @@ function App() {
 
   const updateTitle = (id: number, newTitle: string) => {
     setBooks((prev) =>
-      prev.map((book) => (book.id === id ? { ...book, title: newTitle } : book)),
+      prev.map((book) =>
+        book.id === id ? { ...book, title: newTitle } : book,
+      ),
     );
   };
 
   return (
-    <Container className="catalog">
-      <header className="catalog-header">
-        <h2>Book Champions app</h2>
-        <p>Quiero leer libros</p>
-      </header>
-      <Row>
-        {books.map((book) => (
-          <Col key={book.id} xs={12} sm={6} lg={4}>
-            <BookItem
-              title={book.title}
-              author={book.author}
-              rating={book.rating}
-              pageCount={book.pageCount}
-              imageUrl={book.imageUrl}
-              available={book.available}
-              onUpdateTitle={(newTitle) => updateTitle(book.id, newTitle)}
-            />
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <>
+      <NavBar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Container className="catalog">
+              <header className="catalog-header">
+                <h2>Book Champions app</h2>
+                <p>Quiero leer libros</p>
+              </header>
+              <FeaturedBook
+                title={books[0].title}
+                author={books[0].author}
+                rating={books[0].rating}
+                pageCount={books[0].pageCount}
+                imageUrl={books[0].imageUrl}
+                available={books[0].available}
+                onUpdateTitle={(newTitle) => updateTitle(books[0].id, newTitle)}
+              />
+              <section className="mt-5">
+                <h3 className="text-center mb-4">Recomendados</h3>
+                <BookCarousel books={books} onUpdateTitle={updateTitle} />
+              </section>
+            </Container>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </>
   );
 }
 
