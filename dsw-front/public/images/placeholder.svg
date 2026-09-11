@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+  <rect width="400" height="600" fill="#e8e4de"/>
+  <rect x="20" y="20" width="360" height="560" fill="none" stroke="#b5ada3" stroke-width="2"/>
+  <text x="200" y="290" text-anchor="middle" fill="#9c948a" font-family="Georgia, serif" font-size="28">
+    <tspan x="200" dy="0">Portada no</tspan>
+    <tspan x="200" dy="34">disponible</tspan>
+  </text>
+</svg>

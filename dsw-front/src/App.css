@@ -1,0 +1,34 @@
+.catalog {
+  padding: 2rem 1rem 3rem;
+}
+
+.catalog-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.catalog-header h2 {
+  font-weight: 700;
+}
+
+.catalog-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.book-card {
+  height: 100%;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.14);
+}
+
+.book-card .card-img-top {
+  height: 320px;
+  object-fit: cover;
+}
