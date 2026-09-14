@@ -11,5 +11,10 @@
 body {
   margin: 0;
   background-color: var(--bg);
+  background-image: linear-gradient(rgb(22 26 30 / 0.85), rgb(22 26 30 / 0.85)),
+    url("/images/fondo-local.jpg");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
   color: var(--text);
 }

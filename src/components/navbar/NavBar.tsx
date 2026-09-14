@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, Navbar, Offcanvas } from "react-bootstrap";
+import { Button, Form, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
@@ -9,10 +9,10 @@ const NavBar = () => {
 
   return (
     <>
-      <Navbar className="navbar-custom" expand={false}>
+      <Navbar sticky="top" className="navbar-custom" expand={false}>
         <Button
           variant="outline-light"
-          className="navbar-toggle"
+          className="navbar-toggle d-lg-none"
           onClick={() => setShowOffcanvas(true)}
           aria-label="Abrir menú"
         >
@@ -20,9 +20,20 @@ const NavBar = () => {
           <span className="navbar-toggle-line" />
           <span className="navbar-toggle-line" />
         </Button>
-        <Navbar.Brand className="navbar-brand-custom" as={Link} to="/">
-          Book Champions
-        </Navbar.Brand>
+        <Nav className="desktop-nav d-none d-lg-flex">
+          <Nav.Link as={Link} to="/login">
+            Iniciar sesión
+          </Nav.Link>
+          <Nav.Link as={Link} to="/register">
+            Registrarse
+          </Nav.Link>
+          <Nav.Link as={Link} to="/profile">
+            Mi perfil
+          </Nav.Link>
+          <Nav.Link as={Link} to="/">
+            Menú
+          </Nav.Link>
+        </Nav>
         <Form className="d-flex ms-auto" onSubmit={(e) => e.preventDefault()}>
           <div className="search-wrap">
             <svg
@@ -40,7 +51,7 @@ const NavBar = () => {
             </svg>
             <Form.Control
               type="search"
-              placeholder="Buscar libros..."
+              placeholder="Buscar canciones..."
               aria-label="Buscar"
               className="search-input"
             />
@@ -66,6 +77,11 @@ const NavBar = () => {
             <li>
               <Link to="/register" onClick={closeMenu}>
                 Registrarse
+              </Link>
+            </li>
+            <li>
+              <Link to="/profile" onClick={closeMenu}>
+                Mi perfil
               </Link>
             </li>
             <li>
