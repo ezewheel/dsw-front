@@ -340,7 +340,7 @@ function App() {
 
   return (
     <>
-      <NavBar />
+      <NavBar songs={songs} />
       <Routes>
         <Route
           path="/"
