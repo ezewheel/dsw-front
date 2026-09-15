@@ -30,6 +30,7 @@ const SongCarousel = ({ songs, scores, onPlay }: SongCarouselProps) => {
       perPage: 3,
       autoplay: true,
       gap: "1rem",
+      arrows: false,
       breakpoints: {
         992: { perPage: 2 },
         576: { perPage: 1 },

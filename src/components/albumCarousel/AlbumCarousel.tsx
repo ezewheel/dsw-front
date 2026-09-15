@@ -27,6 +27,7 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
       perPage: 1,
       autoplay: true,
       gap: "1rem",
+      arrows: false,
       pagination: false,
     });
 

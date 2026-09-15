@@ -1,3 +1,27 @@
+@font-face {
+  font-family: "Vegur";
+  src: url("/fonts/Vegur-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vegur";
+  src: url("/fonts/Vegur-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vegur";
+  src: url("/fonts/Vegur-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg: #535353;
   --text: #f5f0ea;
@@ -10,11 +34,7 @@
 
 body {
   margin: 0;
-  background-color: var(--bg);
-  background-image: linear-gradient(rgb(22 26 30 / 0.85), rgb(22 26 30 / 0.85)),
-    url("/images/fondo-local.jpg");
-  background-position: center;
-  background-size: cover;
-  background-attachment: fixed;
+  background-color: #1c1c1c;
   color: var(--text);
+  font-family: "Vegur", system-ui, sans-serif;
 }

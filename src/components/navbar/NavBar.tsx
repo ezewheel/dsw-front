@@ -34,7 +34,7 @@ const NavBar = () => {
             Menú
           </Nav.Link>
         </Nav>
-        <Form className="d-flex ms-auto" onSubmit={(e) => e.preventDefault()}>
+        <Form className="d-flex" onSubmit={(e) => e.preventDefault()}>
           <div className="search-wrap">
             <svg
               className="search-icon"
