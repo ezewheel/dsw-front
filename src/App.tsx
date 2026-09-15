@@ -4,6 +4,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import SongCarousel from "./components/songCarousel/SongCarousel";
 import AlbumCarousel from "./components/albumCarousel/AlbumCarousel";
 import TopLists from "./components/topLists/TopLists";
+import ReviewsSection from "./components/reviews/ReviewsSection";
 import Reveal from "./components/reveal/Reveal";
 import FeaturedSong from "./components/featuredSong/FeaturedSong";
 import FeaturesSection from "./components/features/FeaturesSection";
@@ -378,6 +379,9 @@ function App() {
               </Reveal>
               <Reveal>
                 <TopLists songs={songs} scores={scores} />
+              </Reveal>
+              <Reveal>
+                <ReviewsSection />
               </Reveal>
             </Container>
           }
