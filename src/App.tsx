@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Container } from "react-bootstrap";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import SongCarousel from "./components/songCarousel/SongCarousel";
 import AlbumCarousel from "./components/albumCarousel/AlbumCarousel";
 import TopLists from "./components/topLists/TopLists";
+import Reveal from "./components/reveal/Reveal";
 import FeaturedSong from "./components/featuredSong/FeaturedSong";
+import FeaturesSection from "./components/features/FeaturesSection";
 import NavBar from "./components/navbar/NavBar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -266,12 +268,11 @@ const averageScore = (list: Comment[] | undefined): number | null => {
 
 function App() {
   const [songs, setSongs] = useState(initialSongs);
-  const [comments, setComments] = useState<Record<number, Comment[]>>(
-    initialComments,
+  const [comments, setComments] =
+    useState<Record<number, Comment[]>>(initialComments);
+  const [albumComments, setAlbumComments] = useState<Record<string, Comment[]>>(
+    {},
   );
-  const [albumComments, setAlbumComments] = useState<
-    Record<string, Comment[]>
-  >({});
 
   const addPlay = (id: number) => {
     setSongs((prev) =>
@@ -344,30 +345,40 @@ function App() {
           path="/"
           element={
             <Container className="catalog">
-              <FeaturedSong
-                id={songs[0].id}
-                title={songs[0].title}
-                artist={songs[0].artist}
-                album={songs[0].album}
-                score={scores[songs[0].id]}
-                duration={songs[0].duration}
-                plays={songs[0].plays}
-                imageUrl={songs[0].imageUrl}
-                onPlay={() => addPlay(songs[0].id)}
-              />
-              <section className="mt-5">
-                <h3 className="text-center mb-4">Recomendadas</h3>
-                <SongCarousel
-                  songs={songs}
-                  scores={scores}
-                  onPlay={addPlay}
-                />
-              </section>
-              <section className="mt-5">
-                <h3 className="text-center mb-4">Álbumes</h3>
-                <AlbumCarousel albums={albums} />
-              </section>
-              <TopLists songs={songs} scores={scores} />
+              <FeaturedSong imageUrl={songs[0].imageUrl} />
+              <p className="tagline text-center mt-4">
+                La mejor red social para los amantes de la música
+              </p>
+              <div className="text-center mt-4 mb-2">
+                <Link
+                  to="/register"
+                  className="btn btn-success btn-lg register-cta"
+                >
+                  ¡Registrate gratis ahora!
+                </Link>
+              </div>
+              <Reveal>
+                <section className="mt-5">
+                  <h3 className="text-center mb-4">Canciones Recomendadas</h3>
+                  <SongCarousel
+                    songs={songs}
+                    scores={scores}
+                    onPlay={addPlay}
+                  />
+                </section>
+              </Reveal>
+              <Reveal>
+                <FeaturesSection />
+              </Reveal>
+              <Reveal>
+                <section className="mt-5">
+                  <h3 className="text-center mb-4">Álbumes recomendados</h3>
+                  <AlbumCarousel albums={albums} />
+                </section>
+              </Reveal>
+              <Reveal>
+                <TopLists songs={songs} scores={scores} />
+              </Reveal>
             </Container>
           }
         />
