@@ -3,11 +3,53 @@
 }
 
 .navbar-custom {
-  background-color: #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  margin: 0 auto;
   padding: 0.75rem 1rem;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  background: transparent;
   justify-content: center;
   gap: 1rem;
+  -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 65%, transparent 100%);
+  transition: background-color 0.2s ease;
+}
+
+.navbar-custom:hover {
+  background-color: rgb(0 0 0 / 0.15);
+}
+
+@media (min-width: 576px) {
+  .navbar-custom {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .navbar-custom {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-custom {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .navbar-custom {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .navbar-custom {
+    max-width: 1320px;
+  }
 }
 
 .navbar-toggle {
@@ -219,6 +261,11 @@
   border-radius: 10px;
   padding: 0.9rem 2.5rem;
   font-weight: 700;
+}
+
+.song-carousel .song-card .card-img-top {
+  height: 160px;
+  object-fit: cover;
 }
 
 .song-card {
@@ -773,28 +820,32 @@
 
 .featured-song {
   position: relative;
-  margin: 0 auto 3rem;
+  margin: -108px -1rem 3rem;
 }
 
 .featured-song-image {
   display: block;
   width: 100%;
-  max-height: 560px;
+  max-height: 760px;
   object-fit: cover;
   -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    #000 22%,
-    #000 78%,
-    transparent 100%
-  );
+      to right,
+      transparent 0%,
+      #000 22%,
+      #000 78%,
+      transparent 100%
+    ),
+    linear-gradient(to top, transparent 5%, #000 35%);
   mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    #000 22%,
-    #000 78%,
-    transparent 100%
-  );
+      to right,
+      transparent 0%,
+      #000 22%,
+      #000 78%,
+      transparent 100%
+    ),
+    linear-gradient(to top, transparent 5%, #000 35%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
 
 .featured-song-overlay {

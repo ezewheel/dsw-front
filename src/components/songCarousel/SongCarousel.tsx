@@ -27,12 +27,14 @@ const SongCarousel = ({ songs, scores, onPlay }: SongCarouselProps) => {
 
     const splide = new Splide(splideRef.current, {
       type: "loop",
-      perPage: 3,
+      perPage: 5,
       autoplay: true,
-      gap: "1rem",
+      gap: "0.75rem",
       arrows: false,
       breakpoints: {
-        992: { perPage: 2 },
+        1200: { perPage: 4 },
+        992: { perPage: 3 },
+        768: { perPage: 2 },
         576: { perPage: 1 },
       },
       pagination: false,
@@ -46,7 +48,11 @@ const SongCarousel = ({ songs, scores, onPlay }: SongCarouselProps) => {
   }, []);
 
   return (
-    <div className="splide" ref={splideRef} aria-label="Carrusel de canciones">
+    <div
+      className="splide song-carousel"
+      ref={splideRef}
+      aria-label="Carrusel de canciones"
+    >
       <div className="splide__track">
         <ul className="splide__list">
           {songs.map((song) => (
