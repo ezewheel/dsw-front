@@ -1,18 +1,33 @@
 import { useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Alert, Button, Container, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/auth-context";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    if (form.checkValidity()) {
-      navigate("/");
-    } else {
+    if (!form.checkValidity()) {
       setValidated(true);
+      return;
+    }
+    setLoading(true);
+    setError("");
+    try {
+      await login({ email, password });
+      navigate("/");
+    } catch {
+      setError("Email o contraseña incorrectos");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -29,7 +44,13 @@ const Login = () => {
         >
           <Form.Group className="mb-3" controlId="login-email">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder="tu@email.com" required />
+            <Form.Control
+              type="email"
+              placeholder="tu@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
             <Form.Control.Feedback type="invalid">
               Ingresá un email válido.
             </Form.Control.Feedback>
@@ -40,6 +61,8 @@ const Login = () => {
             <Form.Control
               type="password"
               placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
             />
@@ -55,8 +78,10 @@ const Login = () => {
             className="mb-3"
           />
 
-          <Button variant="primary" type="submit" className="w-100">
-            Iniciar sesión
+          {error && <Alert variant="danger">{error}</Alert>}
+
+          <Button variant="primary" type="submit" className="w-100" disabled={loading}>
+            {loading ? "Ingresando..." : "Iniciar sesión"}
           </Button>
         </Form>
 

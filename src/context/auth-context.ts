@@ -1,0 +1,24 @@
+import { createContext, useContext } from "react";
+import type { LoginRequest, User } from "../types/auth.types";
+
+export interface AuthContextValue {
+  user: User | null;
+  token: string | null;
+  loading: boolean;
+  login: (credentials: LoginRequest) => Promise<void>;
+  logout: () => void;
+}
+
+export const AuthContext = createContext<AuthContextValue | undefined>(
+  undefined,
+);
+
+export const useAuth = (): AuthContextValue => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("useAuth debe usarse dentro de un AuthProvider");
+  }
+
+  return context;
+};
