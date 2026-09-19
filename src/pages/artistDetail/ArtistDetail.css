@@ -43,7 +43,7 @@
   display: flex;
   gap: 1.25rem;
   align-items: center;
-  background: rgb(255 255 255 / 0.08);
+  background: var(--bg-overlay);
   border-radius: 12px;
   padding: 1rem 1.25rem;
   margin-bottom: 1.25rem;

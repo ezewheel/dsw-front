@@ -11,7 +11,9 @@
 .app-navbar-inner {
   max-width: 72rem;
   margin: 0 auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
 }
 
 .app-navbar-brand {
@@ -25,7 +27,6 @@
 }
 
 .app-navbar-center {
-  flex: 1 1 0%;
   display: flex;
   justify-content: center;
 }
@@ -33,15 +34,20 @@
 .app-navbar-links {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 1rem;
 }
 
 .app-navbar-link {
   color: #d1d5db;
-  font-size: 0.875rem;
   text-decoration: none;
 }
 
 .app-navbar-link:hover {
   color: #fff;
+}
+
+.app-navbar-user-icon {
+  display: block;
+  font-size: 1.75rem;
 }

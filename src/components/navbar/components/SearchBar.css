@@ -1,32 +1,130 @@
-.searchbar {
+.searchbar-wrapper {
   position: relative;
 }
 
-.searchbar-icon {
+.searchbar {
+  display: flex;
+  align-items: center;
+  height: 2.5rem;
+  width: 32rem;
+  background: var(--bg-searchbar);
+  border: 1px solid rgb(255 255 255 / 0.18);
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+.searchbar-results {
   position: absolute;
-  right: 0.75rem;
-  top: 0.25rem;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: var(--bg-searchbar);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.4);
+  z-index: 60;
+}
+
+.searchbar-result {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
   color: #fff;
+  text-decoration: none;
+}
+
+.searchbar-result:hover {
+  background: var(--bg-overlay-strong);
+}
+
+.searchbar-result img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.375rem;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.searchbar-result-info {
+  min-width: 0;
+}
+
+.searchbar-result-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.searchbar-result-meta {
+  font-size: 0.75rem;
+  color: rgb(255 255 255 / 0.6);
+}
+
+.searchbar-results-empty {
+  padding: 0.75rem;
+  font-size: 0.85rem;
+  color: rgb(255 255 255 / 0.6);
+  text-align: center;
+}
+
+.searchbar-type {
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  padding: 0 1rem;
+  border-right: 1px solid rgb(255 255 255 / 0.18);
+  transition: background 0.2s ease-in-out;
+}
+
+.searchbar-type:hover {
+  background: var(--bg-overlay-medium);
+}
+
+.searchbar-type:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.searchbar-type option {
+  background: var(--bg);
+  color: #fff;
+  padding: 0.5rem;
 }
 
 .searchbar-input {
-  width: 100%;
-  border-radius: 9999px;
-  background-color: rgba(255, 255, 255, 0.3);
-  color: #fff;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  padding: 0.25rem 2.25rem 0.25rem 1rem;
+  flex: 1;
+  min-width: 0;
   border: none;
   outline: none;
+  background: transparent;
+  color: #fff;
+  padding: 0.4rem 0.75rem;
+  caret-color: #fff;
 }
 
 .searchbar-input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgb(255 255 255 / 0.7);
 }
 
-@media (min-width: 640px) {
-  .searchbar {
-    width: 37.5rem;
-  }
+.searchbar-icon {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+  border: none;
+  background: transparent;
+  color: rgb(255 255 255 / 0.8);
+  cursor: pointer;
+}
+
+.searchbar-icon:hover {
+  color: #fff;
 }

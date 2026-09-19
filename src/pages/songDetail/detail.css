@@ -22,7 +22,7 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: rgb(255 255 255 / 0.08);
+  background: var(--bg-overlay);
   border-radius: 16px;
 }
 
@@ -115,7 +115,7 @@
 }
 
 .recommendations {
-  background: rgb(255 255 255 / 0.08);
+  background: var(--bg-overlay);
   border-radius: 12px;
   padding: 1.25rem;
   position: sticky;
@@ -140,7 +140,7 @@
 }
 
 .recommendation-card:hover {
-  background: rgb(255 255 255 / 0.1);
+  background: var(--bg-overlay-medium);
 }
 
 .recommendation-card img {
@@ -168,7 +168,7 @@
 }
 
 .comment-form {
-  background: rgb(255 255 255 / 0.08);
+  background: var(--bg-overlay);
   padding: 1.5rem;
   border-radius: 12px;
   max-width: 640px;
@@ -181,7 +181,7 @@
 
 .comment-form textarea,
 .comment-form .form-control {
-  background: rgb(255 255 255 / 0.1);
+  background: var(--bg-overlay-medium);
   color: var(--text);
   border-color: rgb(255 255 255 / 0.25);
 }
@@ -219,7 +219,7 @@
 }
 
 .comment-card {
-  background: rgb(255 255 255 / 0.08);
+  background: var(--bg-overlay);
   border-radius: 10px;
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;

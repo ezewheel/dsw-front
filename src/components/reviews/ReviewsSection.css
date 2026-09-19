@@ -22,7 +22,7 @@
   display: flex;
   align-items: flex-start;
   gap: 1.25rem;
-  background: #3a3a3a;
+  background: var(--bg-card);
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
 }

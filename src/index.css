@@ -1,29 +1,12 @@
-@font-face {
-  font-family: "Vegur";
-  src: url("/fonts/Vegur-Regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Vegur";
-  src: url("/fonts/Vegur-Bold.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Vegur";
-  src: url("/fonts/Vegur-Light.otf") format("opentype");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
-  --bg: #535353;
+  --bg: #1c1c1c;
+  --bg-card: #3a3a3a;
+  --bg-elevated: #1f2937;
+  --bg-overlay-soft: rgb(255 255 255 / 0.06);
+  --bg-overlay: rgb(255 255 255 / 0.08);
+  --bg-overlay-medium: rgb(255 255 255 / 0.1);
+  --bg-overlay-strong: rgb(255 255 255 / 0.12);
+  --bg-searchbar: rgb(255 255 255 / 0.15);
   --text: #f5f0ea;
   --text-muted: #b3a898;
 }
@@ -34,9 +17,9 @@
 
 body {
   margin: 0;
-  background-color: #1c1c1c;
+  background-color: var(--bg);
   color: var(--text);
-  font-family: "Vegur", system-ui, sans-serif;
+  font-family: "Roboto", system-ui, sans-serif;
 }
 
 .song-title-link {
