@@ -1,75 +1,55 @@
-# React + TypeScript + Vite
+# Propuesta TP DSW
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Grupo
 
-Currently, two official plugins are available:
+### Integrantes
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 55306 - Peirone Iracelay, Bruno Santino
+- 53797 - Rueda, Ezequiel Matias
 
-## React Compiler
+### Repositorios
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [frontend app](https://github.com/ezewheel/dsw-front)
+- [backend app](https://github.com/ezewheel/dsw-back)
 
-## Expanding the ESLint configuration
+## Tema
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Descripción
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+El sistema consiste en una plataforma para opinar sobre música. Le dará al usuario la posibilidad de buscar artistas, álbumes y canciones y puntuar y reseñar las mismas. Funcionará como una red social donde los usuarios podrán consultar las puntuaciones y reseñas propias y de otros usuarios, asi como seguir a otros usuarios para ser estar al tanto de las puntuaciones y reseñas que estos dejaron.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Modelo
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+![imagen del modelo](https://raw.githubusercontent.com/ezewheel/dsw-back/refs/heads/develop/domain_model.png)
 
-```
+## Alcance Funcional
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### Alcance Mínimo
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+#### Regularidad:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Req                     | Detalle                                                                                                                                                                                                                                                                                                                                                   |
+| :---------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CRUD simple             | 1. CRUD Usuario<br>2. CRUD EntidadMusical\*                                                                                                                                                                                                                                                                                                               |
+| CRUD dependiente        | 1. CRUD Interacción {depende de} CRUD EntidadMusical y CRUD Usuario                                                                                                                                                                                                                                                                                       |
+| Listado<br>+<br>detalle | 1. Listado de álbumes filtrado por artista, muestra imagen, nombre, cantidad de canciones y puntuación => detalle muestra listado de canciones, información del álbum, las reviews de los usuarios.<br>2. Listado de canciones filtrado por álbum muestra título, duración y puntuación => detalle muestra las reseñas de los usuarios de la canción.<br> |
+| CUU/Epic                | 1. Puntuar y reseñar una entidad musical                                                                                                                                                                                                                                                                                                                  |
 
-```
+\*Una entidad musical es un artista, álbum o canción
+
+\*Nota: las entidades musicales se crean para guardar su puntuación y opiniones. Su información se traerá de una API externa.
+
+#### Aprobación:
+
+| Req      | Detalle                                                                                                           |
+| :------- | :---------------------------------------------------------------------------------------------------------------- |
+| CRUD     | 1. CRUD Seguimiento {depende de} CRUD Usuario<br>2. CRUD Favorito {depende de} CRUD Usuario y CRUD EntidadMusical |
+| CUU/Epic | 1. Ver listado de puntuaciones y reseñas de usuarios seguidos y entidades musicales favoritas<br>                 |
+
+### Alcance Adicional Voluntario
+
+| Req      | Detalle |
+| :------- | :------ |
+| Listados | 1.      |
+| CUU/Epic | 1.      |
+| Otros    | 1.      |
