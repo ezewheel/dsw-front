@@ -1,0 +1,32 @@
+.searchbar {
+  position: relative;
+}
+
+.searchbar-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.25rem;
+  color: #fff;
+}
+
+.searchbar-input {
+  width: 100%;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem 2.25rem 0.25rem 1rem;
+  border: none;
+  outline: none;
+}
+
+.searchbar-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (min-width: 640px) {
+  .searchbar {
+    width: 37.5rem;
+  }
+}

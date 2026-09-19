@@ -1,3 +1,5 @@
+import "./ReviewsSection.css";
+
 type Review = {
   song: string;
   author: string;

@@ -1,3 +1,5 @@
+import "./FeaturesSection.css";
+
 type Feature = {
   title: string;
   text: string;
@@ -9,12 +11,12 @@ const FEATURES: Feature[] = [
     text: "Compartí tu opinión sobre tus canciones y álbumes favoritos. Escribí reseñas, expresá lo que te transmitieron y descubrí las opiniones de otros usuarios.",
   },
   {
-    title: "Calificar cada canción en una escala de cinco estrellas",
+    title: "Calificar cada canción",
     text: "Dale a cada canción una puntuación de una a cinco estrellas según cuánto te haya gustado. Tus calificaciones ayudan a descubrir qué canciones son las favoritas de la comunidad.",
   },
   {
-    title: "Escuchar cualquier canción y álbum que desees",
-    text: "Explorá una amplia variedad de canciones y álbumes, descubrí nuevos artistas y escuchá tus temas favoritos desde un mismo lugar.",
+    title: "Interactuar con otros usuarios",
+    text: "Conectá con personas que comparten tus mismos gustos musicales. Comentá, likeá y seguí a otros usuarios para construir una comunidad de amantes de la música.",
   },
 ];
 

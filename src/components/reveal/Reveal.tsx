@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode } from "react";
+import "./Reveal.css";
 
 type RevealProps = {
   children: ReactNode;

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import "./detail.css";
 
 type Song = {
   id: number;

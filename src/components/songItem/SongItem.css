@@ -1,0 +1,39 @@
+.song-card {
+  height: 100%;
+  margin-bottom: 1.5rem;
+  background-color: #3a3a3a;
+  color: #fff;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.song-card .card-body {
+  background-color: #3a3a3a;
+  color: #fff;
+}
+
+.song-card .card-title {
+  color: #fff;
+}
+
+.song-card .card-subtitle {
+  color: #cfcfcf;
+}
+
+.song-card:hover {
+  transform: scale(0.97);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.25);
+}
+
+.song-card .card-img-top {
+  height: 320px;
+  object-fit: cover;
+}
+
+.song-plays {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
