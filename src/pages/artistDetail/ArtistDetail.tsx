@@ -1,5 +1,7 @@
 import { Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import "./ArtistDetail.css";
+import "../songDetail/detail.css";
 
 type Song = {
   id: number;

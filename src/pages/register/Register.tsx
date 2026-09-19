@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import "../login/auth.css";
 
 const Register = () => {
   const navigate = useNavigate();

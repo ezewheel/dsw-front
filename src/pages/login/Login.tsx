@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Alert, Button, Container, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/auth-context";
+import { useAuth } from "../../context/auth-context";
+import "./auth.css";
 
 const Login = () => {
   const navigate = useNavigate();

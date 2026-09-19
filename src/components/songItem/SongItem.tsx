@@ -1,5 +1,6 @@
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "./SongItem.css";
 
 type SongItemProps = {
   id: number;

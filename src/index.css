@@ -38,3 +38,25 @@ body {
   color: var(--text);
   font-family: "Vegur", system-ui, sans-serif;
 }
+
+.song-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.song-title-link:hover {
+  text-decoration: underline;
+}
+
+.artist-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.artist-link:hover {
+  text-decoration: underline;
+}
+
+.comments-empty {
+  color: var(--text-muted);
+}
