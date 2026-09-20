@@ -1,4 +1,3 @@
-import { Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import "./ArtistDetail.css";
 import "../songDetail/detail.css";
@@ -35,10 +34,10 @@ const ArtistDetail = ({ songs, scores }: ArtistDetailProps) => {
 
   if (artistSongs.length === 0) {
     return (
-      <Container className="artist-detail">
+      <div className="app-container artist-detail">
         <p>Artista no encontrado.</p>
         <Link to="/">Volver al inicio</Link>
-      </Container>
+      </div>
     );
   }
 
@@ -62,7 +61,7 @@ const ArtistDetail = ({ songs, scores }: ArtistDetailProps) => {
   });
 
   return (
-    <Container className="artist-detail">
+    <div className="app-container artist-detail">
       <Link to="/" className="song-detail-back">
         ← Volver
       </Link>
@@ -126,7 +125,7 @@ const ArtistDetail = ({ songs, scores }: ArtistDetailProps) => {
           </div>
         ))}
       </section>
-    </Container>
+    </div>
   );
 };
 

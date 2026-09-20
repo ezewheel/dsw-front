@@ -1,3 +1,7 @@
+.top-list-title {
+  margin-bottom: 1rem;
+}
+
 .top-list {
   background: var(--bg-overlay-soft);
   border: 1px solid rgb(255 255 255 / 0.08);

@@ -5,8 +5,9 @@ import {
   login as loginRequest,
   logout as logoutRequest,
   me,
+  register as registerRequest,
 } from "../services/auth.service";
-import type { LoginRequest, User } from "../types/auth.types";
+import type { LoginRequest, RegisterRequest, User } from "../types/auth.types";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -49,6 +50,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(result.user);
   };
 
+  const register = async (credentials: RegisterRequest) => {
+    const result = await registerRequest(credentials);
+    tokenRef.current = result.token;
+    setToken(result.token);
+    setUser(result.user);
+  };
+
   const logout = () => {
     logoutRequest();
     tokenRef.current = null;
@@ -57,7 +65,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, token, loading, login, register, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

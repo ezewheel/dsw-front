@@ -1,0 +1,108 @@
+.register-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgb(0 0 0 / 0.6);
+  backdrop-filter: blur(4px);
+  animation: overlay-in 0.15s ease-out;
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.register-modal {
+  width: 100%;
+  max-width: 460px;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  background-color: var(--bg-card);
+  color: #fff;
+  border-radius: 16px;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  box-shadow: 0 24px 64px rgb(0 0 0 / 0.5);
+  animation: modal-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .register-modal-overlay,
+  .register-modal {
+    animation: none;
+  }
+}
+
+.register-modal-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.register-modal-header::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 75%;
+  height: 1px;
+  background-color: rgb(255 255 255 / 0.12);
+}
+
+.register-modal-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.register-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: rgb(255 255 255 / 0.7);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.register-modal-close:hover {
+  color: #fff;
+  background-color: rgb(255 255 255 / 0.1);
+}
+
+.register-modal-body {
+  padding: 1.5rem;
+}

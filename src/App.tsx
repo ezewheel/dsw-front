@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/navbar/NavBar";
+import { AuthModalsProvider } from "./components/authModals/AuthModalsProvider";
 import Home from "./pages/home/Home";
-import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
 import SongDetail from "./pages/songDetail/SongDetail";
 import ArtistDetail from "./pages/artistDetail/ArtistDetail";
@@ -54,7 +54,7 @@ function App() {
   };
 
   return (
-    <>
+    <AuthModalsProvider>
       <NavBar />
       <Routes>
         <Route
@@ -73,7 +73,6 @@ function App() {
             />
           }
         />
-        <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route
           path="/artist/:name"
@@ -91,7 +90,7 @@ function App() {
           }
         />
       </Routes>
-    </>
+    </AuthModalsProvider>
   );
 }
 

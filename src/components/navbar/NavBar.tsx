@@ -1,14 +1,13 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { useAuth } from "../../context/auth-context";
+import { useAuthModals } from "../authModals/auth-modals-context";
 import SearchBar from "./components/SearchBar";
-import LoginModal from "../loginModal/LoginModal";
 import "./NavBar.css";
 
 function NavBar() {
   const { user } = useAuth();
-  const [showLogin, setShowLogin] = useState(false);
+  const { openLogin, openRegister } = useAuthModals();
 
   return (
     <nav className="app-navbar">
@@ -31,19 +30,21 @@ function NavBar() {
               <button
                 type="button"
                 className="app-navbar-link app-navbar-btn"
-                onClick={() => setShowLogin(true)}
+                onClick={openRegister}
+              >
+                Registrarse
+              </button>
+              <button
+                type="button"
+                className="app-navbar-link app-navbar-btn"
+                onClick={openLogin}
               >
                 Iniciar sesión
               </button>
-              <Link to="/register" className="app-navbar-link">
-                Registrarse
-              </Link>
             </>
           )}
         </div>
       </div>
-
-      <LoginModal show={showLogin} onHide={() => setShowLogin(false)} />
     </nav>
   );
 }

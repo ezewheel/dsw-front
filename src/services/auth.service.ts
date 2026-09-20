@@ -1,10 +1,23 @@
 import api from "../api/client";
-import type { LoginRequest, LoginResponse, User } from "../types/auth.types";
+import type {
+  LoginRequest,
+  LoginResponse,
+  RegisterRequest,
+  User,
+} from "../types/auth.types";
 
 const TOKEN_KEY = "token";
 
 export const login = async (credentials: LoginRequest): Promise<LoginResponse> => {
   const { data } = await api.post<LoginResponse>("/auth/login", credentials);
+  localStorage.setItem(TOKEN_KEY, data.token);
+  return data;
+};
+
+export const register = async (
+  credentials: RegisterRequest,
+): Promise<LoginResponse> => {
+  const { data } = await api.post<LoginResponse>("/auth/register", credentials);
   localStorage.setItem(TOKEN_KEY, data.token);
   return data;
 };

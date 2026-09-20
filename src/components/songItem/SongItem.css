@@ -1,25 +1,15 @@
 .song-card {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   margin-bottom: 1.5rem;
   background-color: var(--bg-card);
   color: #fff;
+  border-radius: 12px;
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
-}
-
-.song-card .card-body {
-  background-color: var(--bg-card);
-  color: #fff;
-}
-
-.song-card .card-title {
-  color: #fff;
-}
-
-.song-card .card-subtitle {
-  color: #cfcfcf;
 }
 
 .song-card:hover {
@@ -27,13 +17,49 @@
   box-shadow: 0 8px 20px rgb(0 0 0 / 0.25);
 }
 
-.song-card .card-img-top {
+.song-card-img {
+  width: 100%;
   height: 320px;
   object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.song-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem;
+}
+
+.song-card-title {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.song-card-subtitle {
+  color: #cfcfcf;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.song-card-score {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.song-card-duration {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
 }
 
 .song-plays {
   color: var(--text-muted);
   font-size: 0.85rem;
   margin-bottom: 0.5rem;
+}
+
+.song-card-play {
+  margin-top: auto;
 }

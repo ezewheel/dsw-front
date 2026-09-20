@@ -1,42 +1,237 @@
-.login-modal .modal-content {
+.login-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgb(0 0 0 / 0.6);
+  backdrop-filter: blur(4px);
+  animation: overlay-in 0.15s ease-out;
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.login-modal {
+  width: 100%;
+  max-width: 460px;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
   background-color: var(--bg-card);
   color: #fff;
-  border: none;
   border-radius: 16px;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  box-shadow: 0 24px 64px rgb(0 0 0 / 0.5);
+  animation: modal-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.login-modal .modal-header {
-  border-bottom: 1px solid rgb(255 255 255 / 0.12);
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.login-modal .modal-title {
-  color: #fff;
+@media (prefers-reduced-motion: reduce) {
+  .login-modal-overlay,
+  .login-modal {
+    animation: none;
+  }
+}
+
+.login-modal-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+}
+
+.login-modal-header::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 75%;
+  height: 1px;
+  background-color: rgb(255 255 255 / 0.12);
+}
+
+.login-modal-title {
+  margin: 0;
+  font-size: 1.25rem;
   font-weight: 700;
-}
-
-.login-modal .modal-header .btn-close {
-  filter: invert(1);
-}
-
-.login-modal-subtitle {
-  color: #cfcfcf;
-  margin-bottom: 1.5rem;
-}
-
-.login-modal .form-label {
   color: #fff;
 }
 
-.login-modal .form-control {
-  background-color: var(--bg-overlay-strong);
-  color: #fff;
-  border-color: rgb(255 255 255 / 0.25);
+.login-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: rgb(255 255 255 / 0.7);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
-.login-modal .form-control::placeholder {
-  color: rgb(255 255 255 / 0.5);
+.login-modal-close:hover {
+  color: #fff;
+  background-color: rgb(255 255 255 / 0.1);
 }
 
-.login-modal .form-check-label {
+.login-modal-body {
+  padding: 1.5rem;
+}
+
+/* --- Formulario --- */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: rgb(255 255 255 / 0.85);
+}
+
+.form-input {
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  background-color: rgb(255 255 255 / 0.06);
   color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.form-input::placeholder {
+  color: rgb(255 255 255 / 0.35);
+}
+
+.form-input:focus {
+  border-color: #a855f7;
+  background-color: rgb(255 255 255 / 0.09);
+  box-shadow: 0 0 0 3px rgb(168 85 247 / 0.2);
+}
+
+.form-feedback {
+  display: none;
+  margin: 0;
+  font-size: 0.75rem;
+  color: #f87171;
+}
+
+.was-validated .form-input:invalid ~ .form-feedback {
+  display: block;
+}
+
+.was-validated .form-input:invalid {
+  border-color: #f87171;
+}
+
+.alert {
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.8125rem;
+}
+
+.alert-danger {
+  background-color: rgb(248 113 113 / 0.12);
+  border: 1px solid rgb(248 113 113 / 0.3);
+  color: #fca5a5;
+}
+
+.app-btn {
+  padding: 0.7rem 1.25rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    filter 0.15s ease,
+    transform 0.1s ease;
+}
+
+.app-btn:active {
+  transform: scale(0.98);
+}
+
+.app-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.app-btn-primary {
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  color: #fff;
+}
+
+.app-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.app-btn-block {
+  width: 100%;
+}
+
+.auth-alt {
+  margin: 1.1rem 0 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: rgb(255 255 255 / 0.6);
+}
+
+.auth-link {
+  color: #c084fc;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-link-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
 }
