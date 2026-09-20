@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Alert, Button, Container, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
 import "./auth.css";
@@ -33,58 +32,69 @@ const Login = () => {
   };
 
   return (
-    <Container className="auth-page">
+    <div className="app-container auth-page">
       <div className="auth-card">
         <h2 className="auth-title">Iniciar sesión</h2>
         <p className="auth-subtitle">Ingresá a tu cuenta para continuar</p>
-        <Form
+        <form
           noValidate
-          validated={validated}
           onSubmit={handleSubmit}
-          className="auth-form"
+          className={`auth-form${validated ? " was-validated" : ""}`}
         >
-          <Form.Group className="mb-3" controlId="login-email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
+          <div className="form-field">
+            <label className="form-label" htmlFor="login-email">
+              Email
+            </label>
+            <input
+              id="login-email"
               type="email"
+              className="form-input"
               placeholder="tu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <Form.Control.Feedback type="invalid">
-              Ingresá un email válido.
-            </Form.Control.Feedback>
-          </Form.Group>
+            <p className="form-feedback">Ingresá un email válido.</p>
+          </div>
 
-          <Form.Group className="mb-3" controlId="login-password">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control
+          <div className="form-field">
+            <label className="form-label" htmlFor="login-password">
+              Contraseña
+            </label>
+            <input
+              id="login-password"
               type="password"
+              className="form-input"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
             />
-            <Form.Control.Feedback type="invalid">
+            <p className="form-feedback">
               La contraseña debe tener al menos 6 caracteres.
-            </Form.Control.Feedback>
-          </Form.Group>
+            </p>
+          </div>
 
-          <Form.Check
-            type="checkbox"
-            id="login-remember"
-            label="Recordarme"
-            className="mb-3"
-          />
+          <label className="checkbox-field">
+            <input type="checkbox" />
+            Recordarme
+          </label>
 
-          {error && <Alert variant="danger">{error}</Alert>}
+          {error && (
+            <div className="alert alert-danger" role="alert">
+              {error}
+            </div>
+          )}
 
-          <Button variant="primary" type="submit" className="w-100" disabled={loading}>
+          <button
+            type="submit"
+            className="app-btn app-btn-primary app-btn-block"
+            disabled={loading}
+          >
             {loading ? "Ingresando..." : "Iniciar sesión"}
-          </Button>
-        </Form>
+          </button>
+        </form>
 
         <p className="auth-alt">
           ¿No tenés cuenta?{" "}
@@ -93,7 +103,7 @@ const Login = () => {
           </Link>
         </p>
       </div>
-    </Container>
+    </div>
   );
 };
 

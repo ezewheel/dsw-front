@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../login/auth.css";
 
@@ -19,88 +18,106 @@ const Register = () => {
   };
 
   return (
-    <Container className="auth-page">
+    <div className="app-container auth-page">
       <div className="auth-card">
         <h2 className="auth-title">Registrarse</h2>
         <p className="auth-subtitle">Creá tu cuenta gratuita</p>
-        <Form
+        <form
           noValidate
-          validated={validated}
           onSubmit={handleSubmit}
-          className="auth-form"
+          className={`auth-form${validated ? " was-validated" : ""}`}
         >
           <div className="auth-row">
-            <Form.Group className="mb-3 auth-field" controlId="register-name">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control placeholder="Juan" required />
-              <Form.Control.Feedback type="invalid">
-                Ingresá tu nombre.
-              </Form.Control.Feedback>
-            </Form.Group>
+            <div className="form-field auth-field">
+              <label className="form-label" htmlFor="register-name">
+                Nombre
+              </label>
+              <input
+                id="register-name"
+                className="form-input"
+                placeholder="Juan"
+                required
+              />
+              <p className="form-feedback">Ingresá tu nombre.</p>
+            </div>
 
-            <Form.Group
-              className="mb-3 auth-field"
-              controlId="register-lastname"
-            >
-              <Form.Label>Apellido</Form.Label>
-              <Form.Control placeholder="Pérez" required />
-              <Form.Control.Feedback type="invalid">
-                Ingresá tu apellido.
-              </Form.Control.Feedback>
-            </Form.Group>
+            <div className="form-field auth-field">
+              <label className="form-label" htmlFor="register-lastname">
+                Apellido
+              </label>
+              <input
+                id="register-lastname"
+                className="form-input"
+                placeholder="Pérez"
+                required
+              />
+              <p className="form-feedback">Ingresá tu apellido.</p>
+            </div>
           </div>
 
-          <Form.Group className="mb-3" controlId="register-email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder="tu@email.com" required />
-            <Form.Control.Feedback type="invalid">
-              Ingresá un email válido.
-            </Form.Control.Feedback>
-          </Form.Group>
+          <div className="form-field">
+            <label className="form-label" htmlFor="register-email">
+              Email
+            </label>
+            <input
+              id="register-email"
+              type="email"
+              className="form-input"
+              placeholder="tu@email.com"
+              required
+            />
+            <p className="form-feedback">Ingresá un email válido.</p>
+          </div>
 
-          <Form.Group className="mb-3" controlId="register-password">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control
+          <div className="form-field">
+            <label className="form-label" htmlFor="register-password">
+              Contraseña
+            </label>
+            <input
+              id="register-password"
               type="password"
+              className="form-input"
               placeholder="••••••••"
               required
               minLength={6}
             />
-            <Form.Control.Feedback type="invalid">
+            <p className="form-feedback">
               La contraseña debe tener al menos 6 caracteres.
-            </Form.Control.Feedback>
-          </Form.Group>
+            </p>
+          </div>
 
-          <Form.Group
-            className="mb-3"
-            controlId="register-confirm-password"
-          >
-            <Form.Label>Confirmar contraseña</Form.Label>
-            <Form.Control type="password" placeholder="••••••••" required />
-            <Form.Control.Feedback type="invalid">
-              Confirmá tu contraseña.
-            </Form.Control.Feedback>
-          </Form.Group>
+          <div className="form-field">
+            <label className="form-label" htmlFor="register-confirm-password">
+              Confirmar contraseña
+            </label>
+            <input
+              id="register-confirm-password"
+              type="password"
+              className="form-input"
+              placeholder="••••••••"
+              required
+            />
+            <p className="form-feedback">Confirmá tu contraseña.</p>
+          </div>
 
-          <Form.Check
-            type="checkbox"
-            id="register-terms"
-            label="Acepto los términos y condiciones"
-            className="mb-3"
-            checked={acceptedTerms}
-            onChange={(e) => setAcceptedTerms(e.target.checked)}
-            isInvalid={validated && !acceptedTerms}
-          />
+          <label className="checkbox-field">
+            <input
+              type="checkbox"
+              checked={acceptedTerms}
+              onChange={(e) => setAcceptedTerms(e.target.checked)}
+            />
+            Acepto los términos y condiciones
+          </label>
           {validated && !acceptedTerms && (
-            <div className="invalid-feedback d-block mb-2">
+            <p className="form-feedback form-feedback-visible">
               Debes aceptar los términos y condiciones.
-            </div>
+            </p>
           )}
 
-          <Button variant="primary" type="submit" className="w-100">
+          <button type="submit" className="app-btn app-btn-primary app-btn-block">
             Crear cuenta
-          </Button>
-        </Form>
+          </button>
+        </form>
 
         <p className="auth-alt">
           ¿Ya tenés cuenta?{" "}
@@ -109,7 +126,7 @@ const Register = () => {
           </Link>
         </p>
       </div>
-    </Container>
+    </div>
   );
 };
 

@@ -16,24 +16,6 @@
   color: #fff;
 }
 
-.auth-card .form-label {
-  color: #fff;
-}
-
-.auth-card .form-control {
-  background-color: var(--bg-overlay-strong);
-  color: #fff;
-  border-color: rgb(255 255 255 / 0.25);
-}
-
-.auth-card .form-control::placeholder {
-  color: rgb(255 255 255 / 0.5);
-}
-
-.auth-card .form-check-label {
-  color: #fff;
-}
-
 .auth-title {
   text-align: center;
   font-weight: 700;

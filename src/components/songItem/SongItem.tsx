@@ -1,4 +1,3 @@
-import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./SongItem.css";
 
@@ -32,15 +31,19 @@ const SongItem = ({
   onPlay,
 }: SongItemProps) => {
   return (
-    <Card className="song-card">
-      <Card.Img variant="top" src={imageUrl} />
-      <Card.Body className="d-flex flex-column">
-        <Card.Title>
+    <div className="song-card">
+      <img
+        src={imageUrl}
+        alt={`Portada de ${title}`}
+        className="song-card-img"
+      />
+      <div className="song-card-body">
+        <h5 className="song-card-title">
           <Link to={`/song/${id}`} className="song-title-link">
             {title}
           </Link>
-        </Card.Title>
-        <Card.Subtitle>
+        </h5>
+        <div className="song-card-subtitle">
           <Link
             to={`/artist/${encodeURIComponent(artist)}`}
             className="artist-link"
@@ -54,17 +57,23 @@ const SongItem = ({
           >
             {album}
           </Link>
-        </Card.Subtitle>
-        <div>{score === null ? "Sin puntaje" : `${score.toFixed(1)} / 5`}</div>
-        <p>{formatDuration(duration)}</p>
+        </div>
+        <div className="song-card-score">
+          {score === null ? "Sin puntaje" : `${score.toFixed(1)} / 5`}
+        </div>
+        <p className="song-card-duration">{formatDuration(duration)}</p>
         <p className="song-plays">
           {plays.toLocaleString("es-AR")} reproducciones
         </p>
-        <Button variant="primary" className="mt-auto" onClick={onPlay}>
+        <button
+          type="button"
+          className="app-btn app-btn-primary song-card-play"
+          onClick={onPlay}
+        >
           Reproducir
-        </Button>
-      </Card.Body>
-    </Card>
+        </button>
+      </div>
+    </div>
   );
 };
 

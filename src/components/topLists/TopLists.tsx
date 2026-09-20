@@ -5,7 +5,7 @@ import "./TopLists.css";
 const TopLists = () => {
   return (
     <>
-      <h3 className="text-center mb-4">Listas de popularidad</h3>
+      <h3 className="text-center top-lists-title">Listas de popularidad</h3>
       <div className="top-lists">
         <TopListColumn
           title="Artistas mejor puntuados"

@@ -67,8 +67,17 @@
   justify-content: center;
   width: 52px;
   height: 52px;
+  border: none;
   border-radius: 50%;
+  background-color: #0d6efd;
+  color: #fff;
+  cursor: pointer;
   margin-top: 1.25rem;
+  transition: filter 0.15s ease;
+}
+
+.btn-play:hover {
+  filter: brightness(1.12);
 }
 
 .btn-play svg {
@@ -180,14 +189,23 @@
 }
 
 .comment-form textarea,
-.comment-form .form-control {
+.comment-form .form-input {
   background: var(--bg-overlay-medium);
   color: var(--text);
   border-color: rgb(255 255 255 / 0.25);
 }
 
-.comment-form textarea::placeholder {
+.comment-form textarea::placeholder,
+.comment-form .form-input::placeholder {
   color: var(--text-muted);
+}
+
+.comment-form .form-feedback {
+  color: #dc3545;
+}
+
+.form-feedback-visible {
+  display: block;
 }
 
 .star-selector {

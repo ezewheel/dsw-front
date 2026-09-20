@@ -1,3 +1,11 @@
+.featured-songs-section {
+  margin-top: 3rem;
+}
+
+.featured-songs-title {
+  margin-bottom: 1.5rem;
+}
+
 .featured-songs-list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);

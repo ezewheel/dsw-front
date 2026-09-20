@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import "./detail.css";
 
@@ -75,10 +74,10 @@ const SongDetail = ({
 
   if (!song) {
     return (
-      <Container className="song-detail">
+      <div className="app-container song-detail">
         <p>Canción no encontrada.</p>
         <Link to="/">Volver al inicio</Link>
-      </Container>
+      </div>
     );
   }
 
@@ -106,7 +105,7 @@ const SongDetail = ({
   };
 
   return (
-    <Container className="song-detail">
+    <div className="app-container song-detail">
       <Link to="/" className="song-detail-back">
         ← Volver
       </Link>
@@ -154,8 +153,8 @@ const SongDetail = ({
               )}
             </div>
           </div>
-          <Button
-            variant="primary"
+          <button
+            type="button"
             className="btn-play"
             aria-label="Reproducir"
             onClick={() => addPlay(song.id)}
@@ -169,48 +168,48 @@ const SongDetail = ({
             >
               <path d="M8 5v14l11-7z" />
             </svg>
-          </Button>
+          </button>
         </div>
       </div>
 
       <div className="references-wrapper">
         <section className="comments-section">
           <h3>Comentarios y valoración</h3>
-          <Form
+          <form
             noValidate
-            validated={validated}
             onSubmit={handleSubmit}
-            className="comment-form"
+            className={`comment-form${validated ? " was-validated" : ""}`}
           >
-            <Form.Group className="mb-3" controlId="comment-rating">
-              <Form.Label>Tu puntuación</Form.Label>
+            <div className="form-field">
+              <label className="form-label">Tu puntuación</label>
               <StarSelector value={rating} onChange={setRating} />
               {validated && rating === 0 && (
-                <div className="invalid-feedback d-block">
+                <p className="form-feedback form-feedback-visible">
                   Elegí una puntuación.
-                </div>
+                </p>
               )}
-            </Form.Group>
+            </div>
 
-            <Form.Group className="mb-3" controlId="comment-text">
-              <Form.Label>Tu opinión</Form.Label>
-              <Form.Control
-                as="textarea"
+            <div className="form-field">
+              <label className="form-label" htmlFor="comment-text">
+                Tu opinión
+              </label>
+              <textarea
+                id="comment-text"
                 rows={4}
+                className="form-input"
                 placeholder="¿Qué opinás de esta canción?"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 required
               />
-              <Form.Control.Feedback type="invalid">
-                Escribí tu opinión.
-              </Form.Control.Feedback>
-            </Form.Group>
+              <p className="form-feedback">Escribí tu opinión.</p>
+            </div>
 
-            <Button variant="primary" type="submit">
+            <button type="submit" className="app-btn app-btn-primary">
               Publicar comentario
-            </Button>
-          </Form>
+            </button>
+          </form>
 
           <div className="comments-list">
             {songComments.length === 0 ? (
@@ -262,7 +261,7 @@ const SongDetail = ({
           )}
         </aside>
       </div>
-    </Container>
+    </div>
   );
 };
 

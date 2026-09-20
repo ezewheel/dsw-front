@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Alert, Button, Container, Form } from "react-bootstrap";
 import "../login/auth.css";
 
 const Profile = () => {
@@ -18,85 +17,111 @@ const Profile = () => {
   };
 
   return (
-    <Container className="auth-page">
+    <div className="app-container auth-page">
       <div className="auth-card">
         <h2 className="auth-title">Mi perfil</h2>
         <p className="auth-subtitle">Editá los datos de tu cuenta</p>
         {saved && (
-          <Alert variant="success" onClose={() => setSaved(false)} dismissible>
-            Tus datos se guardaron correctamente.
-          </Alert>
+          <div className="alert alert-success" role="alert">
+            <span>Tus datos se guardaron correctamente.</span>
+            <button
+              type="button"
+              className="alert-close"
+              aria-label="Cerrar"
+              onClick={() => setSaved(false)}
+            >
+              ×
+            </button>
+          </div>
         )}
-        <Form
+        <form
           noValidate
-          validated={validated}
           onSubmit={handleSubmit}
-          className="auth-form"
+          className={`auth-form${validated ? " was-validated" : ""}`}
         >
           <div className="auth-row">
-            <Form.Group className="mb-3 auth-field" controlId="profile-name">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control placeholder="Juan" defaultValue="Juan" required />
-              <Form.Control.Feedback type="invalid">
-                Ingresá tu nombre.
-              </Form.Control.Feedback>
-            </Form.Group>
+            <div className="form-field auth-field">
+              <label className="form-label" htmlFor="profile-name">
+                Nombre
+              </label>
+              <input
+                id="profile-name"
+                className="form-input"
+                placeholder="Juan"
+                defaultValue="Juan"
+                required
+              />
+              <p className="form-feedback">Ingresá tu nombre.</p>
+            </div>
 
-            <Form.Group
-              className="mb-3 auth-field"
-              controlId="profile-lastname"
-            >
-              <Form.Label>Apellido</Form.Label>
-              <Form.Control placeholder="Pérez" defaultValue="Pérez" required />
-              <Form.Control.Feedback type="invalid">
-                Ingresá tu apellido.
-              </Form.Control.Feedback>
-            </Form.Group>
+            <div className="form-field auth-field">
+              <label className="form-label" htmlFor="profile-lastname">
+                Apellido
+              </label>
+              <input
+                id="profile-lastname"
+                className="form-input"
+                placeholder="Pérez"
+                defaultValue="Pérez"
+                required
+              />
+              <p className="form-feedback">Ingresá tu apellido.</p>
+            </div>
           </div>
 
-          <Form.Group className="mb-3" controlId="profile-email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
+          <div className="form-field">
+            <label className="form-label" htmlFor="profile-email">
+              Email
+            </label>
+            <input
+              id="profile-email"
               type="email"
+              className="form-input"
               placeholder="tu@email.com"
               defaultValue="juan@email.com"
               required
             />
-            <Form.Control.Feedback type="invalid">
-              Ingresá un email válido.
-            </Form.Control.Feedback>
-          </Form.Group>
+            <p className="form-feedback">Ingresá un email válido.</p>
+          </div>
 
-          <Form.Group className="mb-3" controlId="profile-password">
-            <Form.Label>Contraseña actual</Form.Label>
-            <Form.Control
+          <div className="form-field">
+            <label className="form-label" htmlFor="profile-password">
+              Contraseña actual
+            </label>
+            <input
+              id="profile-password"
               type="password"
+              className="form-input"
               placeholder="••••••••"
               required
               minLength={6}
             />
-            <Form.Control.Feedback type="invalid">
+            <p className="form-feedback">
               Ingresá tu contraseña actual.
-            </Form.Control.Feedback>
-          </Form.Group>
+            </p>
+          </div>
 
-          <Form.Group
-            className="mb-3"
-            controlId="profile-new-password"
-          >
-            <Form.Label>Nueva contraseña</Form.Label>
-            <Form.Control
+          <div className="form-field">
+            <label className="form-label" htmlFor="profile-new-password">
+              Nueva contraseña
+            </label>
+            <input
+              id="profile-new-password"
               type="password"
+              className="form-input"
               placeholder="Dejalo vacío para no cambiarla"
             />
-          </Form.Group>
+          </div>
 
-          <Button variant="primary" type="submit" className="w-100">
+          <button
+            type="submit"
+            className="app-btn app-btn-primary app-btn-block"
+          >
             Guardar cambios
-          </Button>
-        </Form>
+          </button>
+        </form>
       </div>
-    </Container>
+    </div>
   );
 };
 

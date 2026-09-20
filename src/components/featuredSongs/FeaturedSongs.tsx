@@ -21,8 +21,10 @@ const FeaturedSongs = ({ songs, scores, onPlay }: FeaturedSongsProps) => {
   const featured = songs.slice(0, 5);
 
   return (
-    <section className="mt-5">
-      <h3 className="text-center mb-4">Canciones recomendadas</h3>
+    <section className="featured-songs-section">
+      <h3 className="text-center featured-songs-title">
+        Canciones recomendadas
+      </h3>
       <div className="featured-songs-list">
         {featured.map((song) => (
           <SongItem

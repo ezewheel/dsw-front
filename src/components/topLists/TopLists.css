@@ -1,3 +1,7 @@
+.top-lists-title {
+  margin-bottom: 1.5rem;
+}
+
 .top-lists {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

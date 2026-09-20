@@ -12,7 +12,7 @@ type TopListColumnProps = {
 const TopListColumn = ({ title, entries, imageAlt }: TopListColumnProps) => {
   return (
     <section className="top-list">
-      <h3 className="text-center mb-4">{title}</h3>
+      <h3 className="text-center top-list-title">{title}</h3>
       {entries.map((entry, i) => (
         <div className="top-item" key={entry.to}>
           <span className="top-rank">{i + 1}</span>

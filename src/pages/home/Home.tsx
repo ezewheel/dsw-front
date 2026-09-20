@@ -1,4 +1,3 @@
-import { Container } from "react-bootstrap";
 import HeroImage from "../../components/heroImage/HeroImage";
 import HeroCta from "../../components/heroCta/HeroCta";
 import FeaturedSongs from "../../components/featuredSongs/FeaturedSongs";
@@ -17,7 +16,7 @@ type HomeProps = {
 
 const Home = ({ songs, scores, addPlay }: HomeProps) => {
   return (
-    <Container className="catalog">
+    <div className="app-container catalog">
       <HeroImage />
       <HeroCta />
       <Reveal>
@@ -32,7 +31,7 @@ const Home = ({ songs, scores, addPlay }: HomeProps) => {
       <Reveal>
         <ReviewsSection />
       </Reveal>
-    </Container>
+    </div>
   );
 };
 

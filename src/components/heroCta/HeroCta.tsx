@@ -9,13 +9,13 @@ const HeroCta = () => {
     <>
       {!user && (
         <>
-          <p className="tagline text-center mt-4">
+          <p className="tagline hero-cta-tagline">
             La mejor red social para los amantes de la música
           </p>
-          <div className="text-center mt-4 mb-2">
+          <div className="text-center hero-cta-action">
             <Link
               to="/register"
-              className="btn btn-success btn-lg register-cta"
+              className="app-btn app-btn-success app-btn-lg register-cta"
             >
               ¡Registrate gratis ahora!
             </Link>
