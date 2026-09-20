@@ -22,6 +22,10 @@ body {
   font-family: "Roboto", system-ui, sans-serif;
 }
 
+body.modal-open {
+  padding-right: 0 !important;
+}
+
 .song-title-link {
   color: inherit;
   text-decoration: none;

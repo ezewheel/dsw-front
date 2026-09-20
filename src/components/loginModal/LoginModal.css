@@ -1,0 +1,42 @@
+.login-modal .modal-content {
+  background-color: var(--bg-card);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+}
+
+.login-modal .modal-header {
+  border-bottom: 1px solid rgb(255 255 255 / 0.12);
+}
+
+.login-modal .modal-title {
+  color: #fff;
+  font-weight: 700;
+}
+
+.login-modal .modal-header .btn-close {
+  filter: invert(1);
+}
+
+.login-modal-subtitle {
+  color: #cfcfcf;
+  margin-bottom: 1.5rem;
+}
+
+.login-modal .form-label {
+  color: #fff;
+}
+
+.login-modal .form-control {
+  background-color: var(--bg-overlay-strong);
+  color: #fff;
+  border-color: rgb(255 255 255 / 0.25);
+}
+
+.login-modal .form-control::placeholder {
+  color: rgb(255 255 255 / 0.5);
+}
+
+.login-modal .form-check-label {
+  color: #fff;
+}

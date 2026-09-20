@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import LoginModal from "../../components/loginModal/LoginModal";
 import "../login/auth.css";
 
 const Register = () => {
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -104,11 +106,17 @@ const Register = () => {
 
         <p className="auth-alt">
           ¿Ya tenés cuenta?{" "}
-          <Link to="/login" className="auth-link">
+          <button
+            type="button"
+            className="auth-link auth-link-btn"
+            onClick={() => setShowLogin(true)}
+          >
             Iniciá sesión
-          </Link>
+          </button>
         </p>
       </div>
+
+      <LoginModal show={showLogin} onHide={() => setShowLogin(false)} />
     </Container>
   );
 };

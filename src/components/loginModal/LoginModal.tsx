@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { Alert, Button, Container, Form } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Alert, Button, Form, Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
-import "./auth.css";
+import "./LoginModal.css";
 
-const Login = () => {
+type LoginModalProps = {
+  show: boolean;
+  onHide: () => void;
+};
+
+const LoginModal = ({ show, onHide }: LoginModalProps) => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [email, setEmail] = useState("");
@@ -24,6 +29,7 @@ const Login = () => {
     setError("");
     try {
       await login({ email, password });
+      onHide();
       navigate("/");
     } catch {
       setError("Email o contraseña incorrectos");
@@ -33,10 +39,14 @@ const Login = () => {
   };
 
   return (
-    <Container className="auth-page">
-      <div className="auth-card">
-        <h2 className="auth-title">Iniciar sesión</h2>
-        <p className="auth-subtitle">Ingresá a tu cuenta para continuar</p>
+    <Modal show={show} onHide={onHide} centered className="login-modal">
+      <Modal.Header closeButton>
+        <Modal.Title>Iniciar sesión</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p className="login-modal-subtitle">
+          Ingresá a tu cuenta para continuar
+        </p>
         <Form
           noValidate
           validated={validated}
@@ -81,20 +91,18 @@ const Login = () => {
 
           {error && <Alert variant="danger">{error}</Alert>}
 
-          <Button variant="primary" type="submit" className="w-100" disabled={loading}>
+          <Button
+            variant="primary"
+            type="submit"
+            className="w-100"
+            disabled={loading}
+          >
             {loading ? "Ingresando..." : "Iniciar sesión"}
           </Button>
         </Form>
-
-        <p className="auth-alt">
-          ¿No tenés cuenta?{" "}
-          <Link to="/register" className="auth-link">
-            Registrate
-          </Link>
-        </p>
-      </div>
-    </Container>
+      </Modal.Body>
+    </Modal>
   );
 };
 
-export default Login;
+export default LoginModal;

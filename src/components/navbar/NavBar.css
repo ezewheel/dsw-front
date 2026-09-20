@@ -47,6 +47,15 @@
   color: #fff;
 }
 
+.app-navbar-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .app-navbar-user-icon {
   display: block;
   font-size: 1.75rem;

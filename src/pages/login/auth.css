@@ -72,6 +72,15 @@
   text-decoration: none;
 }
 
+.auth-link-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .auth-link:hover {
   text-decoration: underline;
 }
