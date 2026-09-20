@@ -197,15 +197,6 @@
   cursor: not-allowed;
 }
 
-.app-btn-primary {
-  background: linear-gradient(135deg, #a855f7, #6366f1);
-  color: #fff;
-}
-
-.app-btn-primary:hover:not(:disabled) {
-  filter: brightness(1.08);
-}
-
 .app-btn-block {
   width: 100%;
 }

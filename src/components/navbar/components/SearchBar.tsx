@@ -75,7 +75,7 @@ function SearchBar() {
       searchMusicalEntity(trimmed, API_TYPE[searchType])
         .then((items) => {
           if (!active) return;
-          setResults(items.slice(0, 5));
+          setResults(items.slice(0, 10));
           setOpen(true);
         })
         .catch(() => {
@@ -165,29 +165,43 @@ function SearchBar() {
           ) : results.length === 0 ? (
             <div className="searchbar-results-empty">Sin resultados</div>
           ) : (
-            results.map((result) => (
-<Link
-                  key={resultKey(result)}
-                  to={resultRoute(result)}
-                  className="searchbar-result"
-                  onClick={() => setOpen(false)}
-                >
-                  {resultImage(result) && (
-                    <img
-                      src={resultImage(result)}
-                      alt={`Portada de ${resultTitle(result)}`}
-                    />
-                  )}
-                  <div className="searchbar-result-info">
-                    <div className="searchbar-result-title">
-                      {resultTitle(result)}
+            <>
+              <div className="searchbar-results-list">
+                {results.map((result) => (
+                  <Link
+                    key={resultKey(result)}
+                    to={resultRoute(result)}
+                    className="searchbar-result"
+                    onClick={() => setOpen(false)}
+                  >
+                    {resultImage(result) && (
+                      <img
+                        src={resultImage(result)}
+                        alt={`Portada de ${resultTitle(result)}`}
+                      />
+                    )}
+                    <div className="searchbar-result-info">
+                      <div className="searchbar-result-title">
+                        {resultTitle(result)}
+                      </div>
+                      <div className="searchbar-result-meta">
+                        {resultSubtitle(result)}
+                      </div>
                     </div>
-                    <div className="searchbar-result-meta">
-                      {resultSubtitle(result)}
-                    </div>
-                  </div>
-                </Link>
-            ))
+                  </Link>
+                ))}
+              </div>
+
+              <Link
+                to={`/advanced-search?query=${encodeURIComponent(
+                  query.trim(),
+                )}&type=${searchType}`}
+                className="searchbar-more app-btn app-btn-primary app-btn-block"
+                onClick={() => setOpen(false)}
+              >
+                Ver más
+              </Link>
+            </>
           )}
         </div>
       )}
