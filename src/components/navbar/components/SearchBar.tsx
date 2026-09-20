@@ -27,13 +27,18 @@ const resultTitle = (result: SearchResult): string => {
 };
 
 const resultSubtitle = (result: SearchResult): string => {
-  return "artist" in result ? result.artist.name : "Artista";
+  return "artist" in result ? (result.artist?.name ?? "") : "Artista";
 };
 
 const resultImage = (result: SearchResult): string => {
-  return "picture_medium" in result
-    ? result.picture_medium
-    : result.album.cover_medium;
+  switch (result.type) {
+    case "artist":
+      return result.picture_medium ?? "";
+    case "album":
+      return result.cover_medium ?? "";
+    case "track":
+      return result.album?.cover_medium ?? "";
+  }
 };
 
 const resultRoute = (result: SearchResult): string => {
@@ -161,25 +166,27 @@ function SearchBar() {
             <div className="searchbar-results-empty">Sin resultados</div>
           ) : (
             results.map((result) => (
-              <Link
-                key={resultKey(result)}
-                to={resultRoute(result)}
-                className="searchbar-result"
-                onClick={() => setOpen(false)}
-              >
-                <img
-                  src={resultImage(result)}
-                  alt={`Portada de ${resultTitle(result)}`}
-                />
-                <div className="searchbar-result-info">
-                  <div className="searchbar-result-title">
-                    {resultTitle(result)}
+<Link
+                  key={resultKey(result)}
+                  to={resultRoute(result)}
+                  className="searchbar-result"
+                  onClick={() => setOpen(false)}
+                >
+                  {resultImage(result) && (
+                    <img
+                      src={resultImage(result)}
+                      alt={`Portada de ${resultTitle(result)}`}
+                    />
+                  )}
+                  <div className="searchbar-result-info">
+                    <div className="searchbar-result-title">
+                      {resultTitle(result)}
+                    </div>
+                    <div className="searchbar-result-meta">
+                      {resultSubtitle(result)}
+                    </div>
                   </div>
-                  <div className="searchbar-result-meta">
-                    {resultSubtitle(result)}
-                  </div>
-                </div>
-              </Link>
+                </Link>
             ))
           )}
         </div>

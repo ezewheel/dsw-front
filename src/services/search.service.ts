@@ -6,8 +6,8 @@ export interface SearchTrack {
   externalId: string;
   type: "track";
   title: string;
-  artist: { name: string };
-  album: { cover_medium: string };
+  artist?: { name: string };
+  album?: { cover_medium?: string };
   averageRating: number | null;
 }
 
@@ -15,8 +15,8 @@ export interface SearchAlbum {
   externalId: string;
   type: "album";
   title: string;
-  artist: { name: string };
-  album: { cover_medium: string };
+  cover_medium?: string;
+  artist?: { name: string };
   averageRating: number | null;
 }
 
@@ -24,7 +24,7 @@ export interface SearchArtist {
   externalId: string;
   type: "artist";
   name: string;
-  picture_medium: string;
+  picture_medium?: string;
   averageRating: number | null;
 }
 
