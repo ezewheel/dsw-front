@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import {
   searchMusicalEntity,
@@ -21,6 +21,8 @@ const API_TYPE: Record<LocalSearchType, SearchApiType> = {
   album: "album",
   artist: "artist",
 };
+
+const SEARCH_LIMIT = 10;
 
 const resultTitle = (result: SearchResult): string => {
   return "title" in result ? result.title : result.name;
@@ -56,6 +58,7 @@ const resultKey = (result: SearchResult): string =>
   `${result.type}-${result.externalId}`;
 
 function SearchBar() {
+  const navigate = useNavigate();
   const [searchType, setSearchType] = useState<LocalSearchType>("song");
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -70,12 +73,12 @@ function SearchBar() {
 
     let active = true;
 
-    const timer = window.setTimeout(() => {
+const timer = window.setTimeout(() => {
       setLoading(true);
-      searchMusicalEntity(trimmed, API_TYPE[searchType])
-        .then((items) => {
+      searchMusicalEntity(trimmed, API_TYPE[searchType], { limit: SEARCH_LIMIT })
+        .then((response) => {
           if (!active) return;
-          setResults(items.slice(0, 10));
+          setResults(response.results.slice(0, SEARCH_LIMIT));
           setOpen(true);
         })
         .catch(() => {
@@ -104,6 +107,12 @@ function SearchBar() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const trimmed = query.trim();
+    if (!trimmed) return;
+    setOpen(false);
+    navigate(
+      `/advanced-search?query=${encodeURIComponent(trimmed)}&type=${API_TYPE[searchType]}`,
+    );
   }
 
   function handleFocus() {
@@ -195,7 +204,7 @@ function SearchBar() {
               <Link
                 to={`/advanced-search?query=${encodeURIComponent(
                   query.trim(),
-                )}&type=${searchType}`}
+                )}&type=${API_TYPE[searchType]}`}
                 className="searchbar-more app-btn app-btn-primary app-btn-block"
                 onClick={() => setOpen(false)}
               >

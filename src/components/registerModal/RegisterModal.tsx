@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
+import PasswordInput from "../authModals/PasswordInput";
 import "./RegisterModal.css";
 
 type RegisterModalProps = { show: boolean; onHide: () => void };
@@ -141,19 +142,15 @@ const RegisterModal = ({ show, onHide }: RegisterModalProps) => {
               <label className="form-label" htmlFor="register-modal-password">
                 Contraseña
               </label>
-              <input
+              <PasswordInput
                 id="register-modal-password"
-                type="password"
-                className="form-input"
-                placeholder="••••••••"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
+                placeholder="••••••••"
                 required
                 minLength={8}
+                feedback="La contraseña debe tener al menos 8 caracteres."
               />
-              <p className="form-feedback">
-                La contraseña debe tener al menos 8 caracteres.
-              </p>
             </div>
 
             <div className="form-field">
@@ -163,17 +160,15 @@ const RegisterModal = ({ show, onHide }: RegisterModalProps) => {
               >
                 Confirmar contraseña
               </label>
-              <input
+              <PasswordInput
                 id="register-modal-confirm-password"
-                type="password"
-                className="form-input"
-                placeholder="••••••••"
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
+                placeholder="••••••••"
                 required
                 minLength={8}
+                feedback="Confirmá tu contraseña."
               />
-              <p className="form-feedback">Confirmá tu contraseña.</p>
             </div>
 
             {error && (

@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
+import PasswordInput from "../authModals/PasswordInput";
 import "./LoginModal.css";
 
 type LoginModalProps = { show: boolean; onHide: () => void };
@@ -109,19 +110,15 @@ const LoginModal = ({ show, onHide }: LoginModalProps) => {
               <label className="form-label" htmlFor="login-password">
                 Contraseña
               </label>
-              <input
+              <PasswordInput
                 id="login-password"
-                type="password"
-                className="form-input"
-                placeholder="••••••••"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
+                placeholder="••••••••"
                 required
                 minLength={8}
+                feedback="La contraseña debe tener al menos 8 caracteres."
               />
-              <p className="form-feedback">
-                La contraseña debe tener al menos 8 caracteres.
-              </p>
             </div>
 
             {error && (
