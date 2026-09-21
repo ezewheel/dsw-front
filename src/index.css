@@ -9,6 +9,8 @@
   --bg-searchbar: rgb(255 255 255 / 0.15);
   --text: #f5f0ea;
   --text-muted: #b3a898;
+  --btn-primary-start: #a855f7;
+  --btn-primary-end: #6366f1;
 }
 
 * {
@@ -61,8 +63,16 @@ body {
 }
 
 .app-btn-primary {
-  background-color: #0d6efd;
+  background-image: linear-gradient(
+    135deg,
+    var(--btn-primary-start),
+    var(--btn-primary-end)
+  );
   color: #fff;
+}
+
+.app-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
 }
 
 .app-btn-success {

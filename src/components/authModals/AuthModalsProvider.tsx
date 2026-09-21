@@ -30,8 +30,8 @@ export const AuthModalsProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AuthModalsContext.Provider value={value}>
       {children}
-      <LoginModal show={loginOpen} onHide={() => setLoginOpen(false)} />
-      <RegisterModal show={registerOpen} onHide={() => setRegisterOpen(false)} />
+      {loginOpen && <LoginModal show={loginOpen} onHide={() => setLoginOpen(false)} />}
+      {registerOpen && <RegisterModal show={registerOpen} onHide={() => setRegisterOpen(false)} />}
     </AuthModalsContext.Provider>
   );
 };

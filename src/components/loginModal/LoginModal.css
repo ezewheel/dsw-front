@@ -56,7 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 1.5rem;
+  padding: 1.25rem 1.5rem 0.5rem 1.5rem;
 }
 
 .login-modal-header::after {
@@ -65,7 +65,7 @@
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
-  width: 75%;
+  width: 90%;
   height: 1px;
   background-color: rgb(255 255 255 / 0.12);
 }
@@ -195,15 +195,6 @@
 .app-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-.app-btn-primary {
-  background: linear-gradient(135deg, #a855f7, #6366f1);
-  color: #fff;
-}
-
-.app-btn-primary:hover:not(:disabled) {
-  filter: brightness(1.08);
 }
 
 .app-btn-block {

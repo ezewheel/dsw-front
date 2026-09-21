@@ -4,14 +4,11 @@ import NavBar from "./components/navbar/NavBar";
 import { AuthModalsProvider } from "./components/authModals/AuthModalsProvider";
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
+import AdvancedSearch from "./pages/advancedSearch/AdvancedSearch";
 import SongDetail from "./pages/songDetail/SongDetail";
 import ArtistDetail from "./pages/artistDetail/ArtistDetail";
 import AlbumDetail from "./pages/albumDetail/AlbumDetail";
-import {
-  initialComments,
-  initialSongs,
-  type Comment,
-} from "./data/mockData";
+import { initialComments, initialSongs, type Comment } from "./data/mockData";
 
 const averageScore = (list: Comment[] | undefined): number | null => {
   if (!list || list.length === 0) return null;
@@ -74,7 +71,11 @@ function App() {
           }
         />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/artist/:name" element={<ArtistDetail />} />
+        <Route path="/advanced-search" element={<AdvancedSearch />} />
+        <Route
+          path="/artist/:name"
+          element={<ArtistDetail songs={songs} scores={scores} />}
+        />
         <Route
           path="/album/:name"
           element={

@@ -6,9 +6,10 @@ export interface SearchTrack {
   externalId: string;
   type: "track";
   title: string;
-  artist?: { name: string };
-  album?: { cover_medium?: string };
+  artist: { id: number; name: string };
+  album: { id: number; title: string; cover_medium?: string };
   averageRating: number | null;
+  reviewsCount: number;
 }
 
 export interface SearchAlbum {
@@ -16,8 +17,9 @@ export interface SearchAlbum {
   type: "album";
   title: string;
   cover_medium?: string;
-  artist?: { name: string };
+  artist: { id: number; name: string };
   averageRating: number | null;
+  reviewsCount: number;
 }
 
 export interface SearchArtist {
@@ -26,17 +28,24 @@ export interface SearchArtist {
   name: string;
   picture_medium?: string;
   averageRating: number | null;
+  reviewsCount: number;
 }
 
 export type SearchResult = SearchTrack | SearchAlbum | SearchArtist;
 
+export interface SearchResponse {
+  results: SearchResult[];
+  total: number;
+  hasMore: boolean;
+}
+
 export const searchMusicalEntity = async (
   query: string,
   type: SearchApiType,
-): Promise<SearchResult[]> => {
-  const { data } = await api.get<{ results: SearchResult[] }>(
-    "/musical-entity/search",
-    { params: { query, type } },
-  );
-  return data.results;
+  options?: { limit?: number; index?: number },
+): Promise<SearchResponse> => {
+  const { data } = await api.get<SearchResponse>("/musical-entity/search", {
+    params: { query, type, ...options },
+  });
+  return data;
 };
