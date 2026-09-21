@@ -13,9 +13,6 @@ type PaginationProps = {
   windowSize?: number;
 };
 
-// Calcula la ventana de páginas a mostrar, centrada en la actual.
-// No se recorta si se pasa del total: esas páginas se muestran
-// igual, pero deshabilitadas (para no "saltar" mostrando la última).
 function getPageWindow(current: number, windowSize: number): number[] {
   const start = Math.max(1, current - Math.floor(windowSize / 2));
   return Array.from({ length: windowSize }, (_, i) => start + i);

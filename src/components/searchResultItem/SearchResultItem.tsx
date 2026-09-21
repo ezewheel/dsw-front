@@ -4,7 +4,7 @@ import type { SearchResult } from "../../services/search.service";
 import "./SearchResultItem.css";
 
 const formatRating = (rating: number | null): string =>
-  rating === null ? "Sin puntaje" : rating.toFixed(1);
+  rating === null ? "—" : rating.toFixed(1);
 
 const resultRoute = (result: SearchResult): string => {
   switch (result.type) {
@@ -34,7 +34,7 @@ const resultTitle = (result: SearchResult): string =>
 const resultSubtitle = (result: SearchResult): string => {
   switch (result.type) {
     case "track":
-      return `${result.artist.name} - ${result.album.title}`;
+      return `${result.artist.name} · ${result.album.title}`;
     case "album":
       return result.artist.name;
     case "artist":
@@ -62,10 +62,13 @@ const SearchResultItem = ({ result }: { result: SearchResult }) => {
       </div>
 
       <div className="search-result-stats">
-        <span>{result.reviewsCount} reviews</span>
         <span className="search-result-rating">
-          {result.averageRating !== null && <FaStar aria-hidden="true" />}
+          <FaStar aria-hidden="true" />
           {formatRating(result.averageRating)}
+        </span>
+        <span className="search-result-reviews">
+          {result.reviewsCount}{" "}
+          {result.reviewsCount === 1 ? "reseña" : "reseñas"}
         </span>
       </div>
     </Link>
