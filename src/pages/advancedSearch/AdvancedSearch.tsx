@@ -37,9 +37,12 @@ const AdvancedSearch = () => {
   const [error, setError] = useState("");
 
   // Nueva búsqueda (cambia query o tipo) siempre arranca en la página 1.
-  useEffect(() => {
+  const searchKey = `${apiType}:${query.trim()}`;
+  const [appliedSearchKey, setAppliedSearchKey] = useState(searchKey);
+  if (appliedSearchKey !== searchKey) {
+    setAppliedSearchKey(searchKey);
     setPage(1);
-  }, [query, apiType]);
+  }
 
   useEffect(() => {
     const trimmed = query.trim();

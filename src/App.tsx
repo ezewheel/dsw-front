@@ -19,9 +19,6 @@ function App() {
   const [songs, setSongs] = useState(initialSongs);
   const [comments, setComments] =
     useState<Record<number, Comment[]>>(initialComments);
-  const [albumComments, setAlbumComments] = useState<Record<string, Comment[]>>(
-    {},
-  );
 
   const addPlay = (id: number) => {
     setSongs((prev) =>
@@ -40,13 +37,6 @@ function App() {
     setComments((prev) => ({
       ...prev,
       [songId]: [...(prev[songId] ?? []), comment],
-    }));
-  };
-
-  const addAlbumComment = (albumName: string, comment: Comment) => {
-    setAlbumComments((prev) => ({
-      ...prev,
-      [albumName]: [...(prev[albumName] ?? []), comment],
     }));
   };
 
@@ -72,17 +62,7 @@ function App() {
         />
         <Route path="/profile" element={<Profile />} />
         <Route path="/artist/:name" element={<ArtistDetail />} />
-        <Route
-          path="/album/:name"
-          element={
-            <AlbumDetail
-              songs={songs}
-              scores={scores}
-              albumComments={albumComments}
-              addAlbumComment={addAlbumComment}
-            />
-          }
-        />
+        <Route path="/album/:name" element={<AlbumDetail />} />
         <Route path="/advanced-search" element={<AdvancedSearch />} />
       </Routes>
     </AuthModalsProvider>
