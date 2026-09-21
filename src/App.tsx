@@ -74,10 +74,7 @@ function App() {
           }
         />
         <Route path="/profile" element={<Profile />} />
-        <Route
-          path="/artist/:name"
-          element={<ArtistDetail songs={songs} scores={scores} />}
-        />
+        <Route path="/artist/:name" element={<ArtistDetail />} />
         <Route
           path="/album/:name"
           element={

@@ -120,9 +120,6 @@ const AlbumDetail = ({
 
   return (
     <div className="app-container album-detail">
-      <Link to="/" className="song-detail-back">
-        ← Volver
-      </Link>
       <div className="song-detail-card">
         <div className="song-detail-cover">
           <img
