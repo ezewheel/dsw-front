@@ -7,6 +7,7 @@ import {
 } from "../../services/artist.service";
 import TopTracksSection from "../../components/topTracksSection/TopTracksSection";
 import AlbumCarousel from "../../components/albumCarousel/AlbumCarousel";
+import EntityReviews from "../../components/entityReviews/EntityReviews";
 import "./ArtistDetail.css";
 import "../songDetail/detail.css";
 
@@ -107,6 +108,7 @@ const ArtistDetail = () => {
 
       <TopTracksSection topTracks={artist.topTracks} albums={artist.albums} />
       <AlbumCarousel key={artist.externalId} albums={artist.albums} />
+      <EntityReviews entityType="artist" externalId={artist.externalId} />
     </div>
   );
 };

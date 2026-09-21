@@ -34,7 +34,7 @@ export const getArtistDetail = async (id: string): Promise<ArtistDetail> => {
 export const getArtistIdByName = async (
   name: string,
 ): Promise<string | null> => {
-  const results = await searchMusicalEntity(name, "artist");
+  const { results } = await searchMusicalEntity(name, "artist");
   const normalized = name.trim().toLowerCase();
   const match =
     results.find(
