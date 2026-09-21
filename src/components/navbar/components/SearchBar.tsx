@@ -48,7 +48,7 @@ const resultRoute = (result: SearchResult): string => {
     case "album":
       return `/album/${encodeURIComponent(result.title)}`;
     case "artist":
-      return `/artist/${encodeURIComponent(result.name)}`;
+      return `/artist/${result.externalId}`;
   }
 };
 

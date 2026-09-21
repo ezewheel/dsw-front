@@ -1,0 +1,177 @@
+.artist-albums h2 {
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.album-carousel-section h2 {
+  border-top: 1px solid rgb(255 255 255 / 0.15);
+  padding-top: 1.5rem;
+}
+
+.album-carousel-section {
+  --per-page: 5;
+  --item-gap: 1.1rem;
+}
+
+.album-carousel {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.album-carousel-track {
+  display: flex;
+  gap: var(--item-gap);
+  overflow: hidden;
+  margin: 0 4rem;
+  padding: 0.5rem 0 1rem;
+  scroll-behavior: smooth;
+}
+
+/* when everything fits on one page there's nothing to slide, so just
+   center the group instead of leaving it hugging the left edge */
+.album-carousel-track.single-page {
+  justify-content: center;
+}
+
+.album-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  background: rgb(20 20 20 / 0.82);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: opacity 0.2s ease, background 0.2s ease, border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.album-carousel-arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+.album-carousel-arrow:hover:not(:disabled) {
+  background: rgb(58 58 58 / 0.9);
+  border-color: rgb(255 255 255 / 0.34);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.album-carousel-arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.album-carousel-arrow-prev {
+  left: 0.5rem;
+}
+
+.album-carousel-arrow-next {
+  right: 0.5rem;
+}
+
+/* exactly --per-page items fill the row edge to edge, so the group
+   reads as centered instead of leaving a lopsided gap on one side */
+.album-carousel-item {
+  flex: 0 0 auto;
+  width: calc(
+    (100% - (var(--per-page) - 1) * var(--item-gap)) / var(--per-page)
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: inherit;
+  background: var(--bg-overlay-soft);
+  border: 1px solid rgb(255 255 255 / 0.07);
+  border-radius: 14px;
+  padding: 0.55rem;
+  transition: transform 0.25s ease, border-color 0.25s ease,
+    background 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (max-width: 575.98px) {
+  .album-carousel-section {
+    --item-gap: 0.75rem;
+  }
+
+  .album-carousel-arrow {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+.album-carousel-item:hover,
+.album-carousel-item:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgb(255 255 255 / 0.2);
+  background: var(--bg-overlay);
+  box-shadow: 0 14px 30px rgb(0 0 0 / 0.35);
+}
+
+.album-carousel-cover-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgb(0 0 0 / 0.28);
+  background: var(--bg-overlay);
+}
+
+.album-carousel-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.album-carousel-item:hover .album-carousel-cover {
+  transform: scale(1.06);
+}
+
+.album-carousel-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1.25;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.album-carousel-year {
+  font-size: 0.74rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: rgb(255 255 255 / 0.06);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .album-carousel-track {
+    scroll-behavior: auto;
+  }
+
+  .album-carousel-item,
+  .album-carousel-cover,
+  .album-carousel-cover-wrap {
+    transition: none;
+  }
+}
