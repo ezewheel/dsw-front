@@ -18,7 +18,6 @@ const LoginModal = ({ show, onHide }: LoginModalProps) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Cierra con Escape y bloquea el scroll del body mientras el modal está abierto.
   useEffect(() => {
     if (!show) return;
 

@@ -28,8 +28,6 @@
   scroll-behavior: smooth;
 }
 
-/* when everything fits on one page there's nothing to slide, so just
-   center the group instead of leaving it hugging the left edge */
 .album-carousel-track.single-page {
   justify-content: center;
 }
@@ -52,7 +50,10 @@
   box-shadow: 0 8px 24px rgb(0 0 0 / 0.45);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  transition: opacity 0.2s ease, background 0.2s ease, border-color 0.2s ease,
+  transition:
+    opacity 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
     transform 0.2s ease;
 }
 
@@ -80,8 +81,6 @@
   right: 0.5rem;
 }
 
-/* exactly --per-page items fill the row edge to edge, so the group
-   reads as centered instead of leaving a lopsided gap on one side */
 .album-carousel-item {
   flex: 0 0 auto;
   width: calc(
@@ -98,8 +97,11 @@
   border: 1px solid rgb(255 255 255 / 0.07);
   border-radius: 14px;
   padding: 0.55rem;
-  transition: transform 0.25s ease, border-color 0.25s ease,
-    background 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 @media (max-width: 575.98px) {

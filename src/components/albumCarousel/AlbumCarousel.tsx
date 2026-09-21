@@ -10,15 +10,10 @@ type AlbumCarouselProps = {
 const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
   const trackRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(0);
-  // the carousel always shows 5 albums per page (--per-page in the CSS);
-  // read it back so the paging math always matches what's on screen
   const [perPage, setPerPage] = useState(5);
 
   const totalPages = Math.max(1, Math.ceil(albums.length / perPage));
 
-  // clamp the page to the current range during render: the number of
-  // pages can shrink if the viewport/per-page changes, and clamping here
-  // avoids mutating state from an effect
   const safePage = Math.min(page, totalPages - 1);
 
   useEffect(() => {
@@ -27,10 +22,8 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
 
     const measure = () => {
       const currentPerPage =
-        parseInt(
-          getComputedStyle(track).getPropertyValue("--per-page"),
-          10,
-        ) || 5;
+        parseInt(getComputedStyle(track).getPropertyValue("--per-page"), 10) ||
+        5;
       setPerPage(currentPerPage);
     };
 
@@ -40,9 +33,6 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
     return () => observer.disconnect();
   }, []);
 
-  // scroll the track natively to the first album of the current page;
-  // using the real scroll container is far more reliable than a manual
-  // transform, since programmatic scroll always reveals the new items
   useEffect(() => {
     const track = trackRef.current;
     const items = track?.querySelectorAll<HTMLElement>(".album-carousel-item");

@@ -105,8 +105,6 @@
   padding: 1.5rem;
 }
 
-/* --- Formulario --- */
-
 .auth-form {
   display: flex;
   flex-direction: column;

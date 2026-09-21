@@ -48,7 +48,6 @@ const AdvancedSearch = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Nueva búsqueda (cambia query o tipo) siempre arranca en la página 1.
   const searchKey = `${apiType}:${query.trim()}`;
   const [appliedSearchKey, setAppliedSearchKey] = useState(searchKey);
   if (appliedSearchKey !== searchKey) {
@@ -154,7 +153,7 @@ const AdvancedSearch = () => {
           )}
         </div>
 
-        {!loading && (
+        {!loading && !error && (
           <aside className="advanced-search-filters">
             <h2 className="advanced-search-filters-title">Filtrar por tipo</h2>
             <div
