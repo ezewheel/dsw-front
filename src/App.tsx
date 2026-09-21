@@ -71,11 +71,7 @@ function App() {
           }
         />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/advanced-search" element={<AdvancedSearch />} />
-        <Route
-          path="/artist/:name"
-          element={<ArtistDetail songs={songs} scores={scores} />}
-        />
+        <Route path="/artist/:name" element={<ArtistDetail />} />
         <Route
           path="/album/:name"
           element={
@@ -87,6 +83,7 @@ function App() {
             />
           }
         />
+        <Route path="/advanced-search" element={<AdvancedSearch />} />
       </Routes>
     </AuthModalsProvider>
   );
