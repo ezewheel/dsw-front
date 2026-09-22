@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/navbar/NavBar";
+import Footer from "./components/footer/Footer";
 import { AuthModalsProvider } from "./components/authModals/AuthModalsProvider";
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
@@ -42,26 +43,31 @@ function App() {
 
   return (
     <AuthModalsProvider>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/song/:id"
-          element={
-            <SongDetail
-              songs={songs}
-              comments={comments}
-              scores={scores}
-              addComment={addComment}
-              addPlay={addPlay}
+      <div className="app-shell">
+        <NavBar />
+        <main className="app-main">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/song/:id"
+              element={
+                <SongDetail
+                  songs={songs}
+                  comments={comments}
+                  scores={scores}
+                  addComment={addComment}
+                  addPlay={addPlay}
+                />
+              }
             />
-          }
-        />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/artist/:name" element={<ArtistDetail />} />
-        <Route path="/album/:name" element={<AlbumDetail />} />
-        <Route path="/advanced-search" element={<AdvancedSearch />} />
-      </Routes>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/artist/:name" element={<ArtistDetail />} />
+            <Route path="/album/:name" element={<AlbumDetail />} />
+            <Route path="/advanced-search" element={<AdvancedSearch />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </AuthModalsProvider>
   );
 }

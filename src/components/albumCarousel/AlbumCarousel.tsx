@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
 import type { ArtistAlbum } from "../../services/artist.service";
 import "./AlbumCarousel.css";
 
@@ -105,11 +106,24 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
                 />
               </div>
               <span className="album-carousel-title">{album.title}</span>
-              {album.release_date && (
-                <span className="album-carousel-year">
-                  {album.release_date.slice(0, 4)}
-                </span>
-              )}
+              <div className="album-carousel-meta">
+                {album.release_date && (
+                  <span className="album-carousel-year">
+                    {album.release_date.slice(0, 4)}
+                  </span>
+                )}
+                {album.averageRating !== null &&
+                  album.averageRating !== undefined && (
+                    <span className="album-carousel-rating">
+                      ·
+                      <FaStar
+                        className="album-carousel-rating-star"
+                        aria-hidden="true"
+                      />
+                      {album.averageRating.toFixed(1)}
+                    </span>
+                  )}
+              </div>
             </Link>
           ))}
         </div>

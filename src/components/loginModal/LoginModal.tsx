@@ -1,5 +1,4 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
 import PasswordInput from "../authModals/PasswordInput";
@@ -8,7 +7,6 @@ import "./LoginModal.css";
 type LoginModalProps = { show: boolean; onHide: () => void };
 
 const LoginModal = ({ show, onHide }: LoginModalProps) => {
-  const navigate = useNavigate();
   const { login } = useAuth();
   const { openRegister } = useAuthModals();
 
@@ -51,7 +49,6 @@ const LoginModal = ({ show, onHide }: LoginModalProps) => {
     try {
       await login({ email, password });
       onHide();
-      navigate("/");
     } catch {
       setError("Email o contraseña incorrectos");
     } finally {

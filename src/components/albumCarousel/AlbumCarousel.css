@@ -143,6 +143,26 @@
   overflow: hidden;
 }
 
+.album-carousel-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.album-carousel-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.album-carousel-rating-star {
+  font-size: 0.8em;
+  color: #f5c518;
+}
+
 .album-carousel-year {
   font-size: 0.72rem;
   font-weight: 500;

@@ -5,7 +5,12 @@
   width: 100%;
   z-index: 50;
   background-color: transparent;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
+}
+
+.app-navbar-solid {
+  background-color: #141414;
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
 }
 
 .app-navbar-inner {
@@ -94,7 +99,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-  background-color: var(--bg-elevated);
+  background-color: var(--bg-searchbar);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgb(255 255 255 / 0.1);
   border-radius: 0.75rem;
   box-shadow: 0 12px 32px rgb(0 0 0 / 0.4);

@@ -26,10 +26,12 @@ const FeaturesSection = () => {
       <h2 className="features-title">BeatGround te permite...</h2>
       <div className="features-list">
         {FEATURES.map((feature, i) => (
-          <div
-            className={`feature-row ${i % 2 === 1 ? "feature-row--right" : ""}`}
-            key={feature.title}
-          >
+          <div className="feature-row" key={feature.title}>
+            <div className="feature-marker">
+              <span className="feature-index">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </div>
             <div className="feature-copy">
               <h3 className="feature-title">{feature.title}</h3>
               <p className="feature-text">{feature.text}</p>

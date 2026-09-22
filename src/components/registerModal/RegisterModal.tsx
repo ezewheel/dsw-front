@@ -1,5 +1,4 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
 import PasswordInput from "../authModals/PasswordInput";
@@ -8,7 +7,6 @@ import "./RegisterModal.css";
 type RegisterModalProps = { show: boolean; onHide: () => void };
 
 const RegisterModal = ({ show, onHide }: RegisterModalProps) => {
-  const navigate = useNavigate();
   const { register } = useAuth();
   const { openLogin } = useAuthModals();
 
@@ -60,7 +58,6 @@ const RegisterModal = ({ show, onHide }: RegisterModalProps) => {
     try {
       await register({ email, password, nickname });
       onHide();
-      navigate("/");
     } catch (axiosError) {
       const message = (
         axiosError as { response?: { data?: { message?: string } } }

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
@@ -9,7 +9,7 @@ import "./NavBar.css";
 function NavBar() {
   const { user, logout } = useAuth();
   const { openLogin, openRegister } = useAuthModals();
-  const navigate = useNavigate();
+  const location = useLocation();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -32,11 +32,14 @@ function NavBar() {
   const handleLogout = () => {
     setShowDropdown(false);
     logout();
-    navigate("/");
   };
 
+  const solid = location.pathname !== "/";
+
   return (
-    <nav className="app-navbar">
+    <nav
+      className={`app-navbar${solid ? " app-navbar-solid" : ""}`}
+    >
       <div className="app-navbar-inner">
         <Link to="/" className="app-navbar-brand">
           <img src="/images/logo-white.webp" alt="BeatGround" />
