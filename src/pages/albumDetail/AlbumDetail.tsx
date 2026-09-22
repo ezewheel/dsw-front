@@ -5,6 +5,7 @@ import {
   getAlbumIdByTitle,
   type AlbumDetail as AlbumDetailData,
 } from "../../services/album.service";
+import EntityReviews from "../../components/entityReviews/EntityReviews";
 import "./AlbumDetail.css";
 
 const formatDuration = (seconds: number) => {
@@ -135,6 +136,8 @@ const AlbumDetail = () => {
           ))}
         </div>
       </section>
+
+      <EntityReviews entityType="album" externalId={album.externalId} />
     </div>
   );
 };

@@ -1,7 +1,13 @@
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import type { TopListEntry } from "./topData";
 import "./TopListColumn.css";
+
+export type TopListEntry = {
+  name: string;
+  imageUrl: string;
+  score: number;
+  to: string;
+};
 
 type TopListColumnProps = {
   title: string;
@@ -16,7 +22,16 @@ const TopListColumn = ({ title, entries, imageAlt }: TopListColumnProps) => {
       {entries.map((entry, i) => (
         <div className="top-item" key={entry.to}>
           <span className="top-rank">{i + 1}</span>
-          <img src={entry.imageUrl} alt={imageAlt(entry)} />
+          {entry.imageUrl ? (
+            <img src={entry.imageUrl} alt={imageAlt(entry)} />
+          ) : (
+            <div
+              className="top-item-cover-placeholder"
+              aria-label={imageAlt(entry)}
+            >
+              ♪
+            </div>
+          )}
           <div className="top-info">
             <Link to={entry.to} className="song-title-link">
               {entry.name}

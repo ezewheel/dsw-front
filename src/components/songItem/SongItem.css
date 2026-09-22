@@ -19,9 +19,18 @@
 
 .song-card-img {
   width: 100%;
-  height: 320px;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 12px 12px 0 0;
+}
+
+.song-card-img-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-card);
+  color: var(--text-muted);
+  font-size: 3rem;
 }
 
 .song-card-body {

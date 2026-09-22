@@ -44,10 +44,7 @@ function App() {
     <AuthModalsProvider>
       <NavBar />
       <Routes>
-        <Route
-          path="/"
-          element={<Home songs={songs} scores={scores} addPlay={addPlay} />}
-        />
+        <Route path="/" element={<Home />} />
         <Route
           path="/song/:id"
           element={

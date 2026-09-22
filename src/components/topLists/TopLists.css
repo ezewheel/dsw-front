@@ -2,6 +2,11 @@
   margin-bottom: 1.5rem;
 }
 
+.top-lists-status {
+  text-align: center;
+  color: var(--text-muted);
+}
+
 .top-lists {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
