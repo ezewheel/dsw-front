@@ -5,6 +5,7 @@ import {
   type EntityReview,
 } from "../../services/reviews.service";
 import Pagination from "../pagination/Pagination";
+import ReviewForm from "../reviewForm/ReviewForm";
 import "./EntityReviews.css";
 
 const PAGE_SIZE = 10;
@@ -33,6 +34,7 @@ const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const safePage = Math.min(page, Math.max(1, totalPages));
 
@@ -64,30 +66,26 @@ const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
     return () => {
       active = false;
     };
-  }, [entityType, externalId, safePage]);
-
-  if (loading) {
-    return (
-      <section className="entity-reviews">
-        <h2 className="entity-reviews-title">Reseñas</h2>
-        <p className="entity-reviews-empty">Cargando reseñas...</p>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section className="entity-reviews">
-        <h2 className="entity-reviews-title">Reseñas</h2>
-        <p className="entity-reviews-empty">No se pudieron cargar las reseñas.</p>
-      </section>
-    );
-  }
+  }, [entityType, externalId, safePage, refreshKey]);
 
   return (
     <section className="entity-reviews">
       <h2 className="entity-reviews-title">Reseñas</h2>
-      {reviews === null || reviews.length === 0 ? (
+      <ReviewForm
+        entityType={entityType}
+        externalId={externalId}
+        onSubmitted={() => {
+          setPage(1);
+          setRefreshKey((key) => key + 1);
+        }}
+      />
+      {loading ? (
+        <p className="entity-reviews-empty">Cargando reseñas...</p>
+      ) : error ? (
+        <p className="entity-reviews-empty">
+          No se pudieron cargar las reseñas.
+        </p>
+      ) : reviews === null || reviews.length === 0 ? (
         <p className="entity-reviews-empty">
           Todavía no hay reseñas para esta entidad. ¡Sé el primero!
         </p>

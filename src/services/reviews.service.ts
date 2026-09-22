@@ -1,4 +1,5 @@
 import api from "../api/client";
+import { getToken } from "./auth.service";
 import type { SearchApiType } from "./search.service";
 
 export interface EntityReviewUser {
@@ -53,6 +54,27 @@ export interface ReviewedSong {
   reviewsCount: number;
   reviewedAt: string;
 }
+
+export interface CreateReviewInput {
+  value: number;
+  content?: string;
+}
+
+export const createReview = async (
+  type: SearchApiType,
+  externalId: string,
+  input: CreateReviewInput,
+): Promise<EntityReview> => {
+  const token = getToken();
+  const { data } = await api.post<EntityReview>(
+    `/musical-entity/${type}/${externalId}/reviews`,
+    input,
+    {
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    },
+  );
+  return data;
+};
 
 export const getEntityReviews = async (
   type: SearchApiType,
