@@ -91,7 +91,7 @@ export const getEntityReviews = async (
 export const getLatestReviews = async (
   limit: number = 20,
 ): Promise<LatestReview[]> => {
-  const { data } = await api.get<LatestReview[]>("/interaction/reviews/latest", {
+const { data } = await api.get<LatestReview[]>("/interaction/reviews/latest", {
     params: { limit },
   });
   return data;
