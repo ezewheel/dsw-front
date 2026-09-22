@@ -67,7 +67,7 @@ export const createReview = async (
 ): Promise<EntityReview> => {
   const token = getToken();
   const { data } = await api.post<EntityReview>(
-    `/musical-entity/${type}/${externalId}/reviews`,
+    `/interaction/${type}/${externalId}/reviews`,
     input,
     {
       headers: token ? { Authorization: `Bearer ${token}` } : undefined,
@@ -82,7 +82,7 @@ export const getEntityReviews = async (
   options?: { page?: number; pageSize?: number },
 ): Promise<EntityReviewsResult> => {
   const { data } = await api.get<EntityReviewsResult>(
-    `/musical-entity/${type}/${externalId}/reviews`,
+    `/interaction/${type}/${externalId}/reviews`,
     { params: options },
   );
   return data;
@@ -91,7 +91,7 @@ export const getEntityReviews = async (
 export const getLatestReviews = async (
   limit: number = 20,
 ): Promise<LatestReview[]> => {
-  const { data } = await api.get<LatestReview[]>("/musical-entity/reviews/latest", {
+  const { data } = await api.get<LatestReview[]>("/interaction/reviews/latest", {
     params: { limit },
   });
   return data;
@@ -101,7 +101,7 @@ export const getLatestReviewedSongs = async (
   limit: number = 5,
 ): Promise<ReviewedSong[]> => {
   const { data } = await api.get<ReviewedSong[]>(
-    "/musical-entity/latest-reviewed-songs",
+    "/interaction/latest-reviewed-songs",
     { params: { limit } },
   );
   return data;
