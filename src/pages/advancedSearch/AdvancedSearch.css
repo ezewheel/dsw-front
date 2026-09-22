@@ -31,12 +31,6 @@
   }
 }
 
-.advanced-search-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
 .advanced-search-layout {
   display: grid;
   grid-template-columns: 1fr;

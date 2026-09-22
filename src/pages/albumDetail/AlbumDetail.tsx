@@ -6,6 +6,7 @@ import {
   type AlbumDetail as AlbumDetailData,
 } from "../../services/album.service";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
+import { FaCompactDisc } from "react-icons/fa";
 import "./AlbumDetail.css";
 
 const formatDuration = (seconds: number) => {
@@ -64,7 +65,7 @@ const AlbumDetail = () => {
 
   if (loading) {
     return (
-      <div className="app-container album-detail">
+      <div className="app-container album-detail loading-message">
         <p>Cargando álbum...</p>
       </div>
     );
@@ -73,8 +74,19 @@ const AlbumDetail = () => {
   if (error || album === null) {
     return (
       <div className="app-container album-detail">
-        <p>Álbum no encontrado.</p>
-        <Link to="/">Volver al inicio</Link>
+        <div className="album-not-found">
+          <span className="album-not-found-icon" aria-hidden="true">
+            <FaCompactDisc />
+          </span>
+          <h1 className="album-not-found-title">Álbum no encontrado</h1>
+          <p className="album-not-found-text">
+            No encontramos un álbum con ese nombre, o el servicio no está
+            disponible en este momento.
+          </p>
+          <Link to="/" className="app-btn app-btn-primary album-not-found-cta">
+            Volver al inicio
+          </Link>
+        </div>
       </div>
     );
   }
@@ -121,10 +133,7 @@ const AlbumDetail = () => {
               className="album-song-row"
               key={song.externalId}
             >
-              <img
-                src={album.cover_medium}
-                alt={`Portada de ${song.title}`}
-              />
+              <img src={album.cover_medium} alt={`Portada de ${song.title}`} />
               <div className="album-song-row-info">
                 <div className="album-song-row-title">{song.title}</div>
                 <div className="recommendation-meta">

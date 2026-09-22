@@ -1,62 +1,74 @@
 import { Link } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
 import type {
   ArtistAlbum,
   ArtistTopTrack,
 } from "../../services/artist.service";
 import "./TopTracksSection.css";
 
-type TopTracksSectionProps = {
+interface TopTracksSectionProps {
   topTracks: ArtistTopTrack[];
   albums: ArtistAlbum[];
-};
-
-const formatRating = (value: number | null): string =>
-  value === null || value === undefined
-    ? "Sin puntaje"
-    : `${value.toFixed(1)} / 5`;
+}
 
 const TopTracksSection = ({ topTracks, albums }: TopTracksSectionProps) => {
-  if (topTracks.length === 0) {
-    return (
-      <section className="artist-top-tracks">
-        <h2>Las 5 canciones mejor puntuadas</h2>
-        <p>No hay canciones mejor puntuadas para este artista.</p>
-      </section>
-    );
-  }
-
   const albumCover = new Map(
     albums.map((album) => [album.title, album.cover_big]),
   );
 
+  const tracks = topTracks.slice(0, 5);
+
+  if (tracks.length === 0) {
+    return (
+      <section className="top-tracks">
+        <h2 className="top-tracks-header">Canciones mejor valoradas</h2>
+        <p className="top-tracks-empty">
+          Todavía no hay canciones puntuadas para este artista.
+        </p>
+      </section>
+    );
+  }
+
   return (
-    <section className="artist-top-tracks">
-      <h2>Las 5 canciones mejor puntuadas</h2>
-      {topTracks.slice(0, 5).map((track) => (
-        <div className="artist-song-card" key={track.externalId}>
-          <img
-            src={albumCover.get(track.album.title) ?? track.album.cover_medium}
-            alt={`Portada del álbum ${track.album.title}`}
-            className="artist-song-cover"
-          />
-          <div className="artist-song-info">
-            <h3>
+    <section className="top-tracks">
+      <h2 className="top-tracks-header">Canciones mejor valoradas</h2>
+      <ol className="top-tracks-list">
+        {tracks.map((track, index) => (
+          <li className="top-tracks-item" key={track.externalId}>
+            <span className="top-tracks-rank">{index + 1}</span>
+            <img
+              src={
+                albumCover.get(track.album.title) ?? track.album.cover_medium
+              }
+              alt={`Portada del álbum ${track.album.title}`}
+              className="top-tracks-cover"
+            />
+            <div className="top-tracks-meta">
               <Link
                 to={`/song/${track.externalId}`}
-                className="artist-link artist-song-title"
+                className="top-tracks-title"
               >
                 {track.title}
               </Link>
-            </h3>
-            <div className="artist-song-info-foot">
-              <p className="artist-song-album">{track.album.title}</p>
-              <span className="artist-song-score">
-                {formatRating(track.averageRating)}
-              </span>
+              <p className="top-tracks-album">{track.album.title}</p>
             </div>
-          </div>
-        </div>
-      ))}
+            <span className="top-tracks-score">
+              {track.averageRating === null ||
+              track.averageRating === undefined ? (
+                "Sin puntaje"
+              ) : (
+                <>
+                  {track.averageRating.toFixed(1)}
+                  <FaStar
+                    className="top-tracks-score-star"
+                    aria-hidden="true"
+                  />
+                </>
+              )}
+            </span>
+          </li>
+        ))}
+      </ol>
     </section>
   );
 };

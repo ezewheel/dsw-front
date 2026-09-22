@@ -204,3 +204,7 @@ body {
 .comments-empty {
   color: var(--text-muted);
 }
+
+.loading-message {
+  text-align: center;
+}
