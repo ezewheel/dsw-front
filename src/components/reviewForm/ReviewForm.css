@@ -1,0 +1,39 @@
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: var(--bg-overlay);
+  border-radius: 10px;
+}
+
+.review-form .form-field {
+  margin-bottom: 0;
+}
+
+.review-form-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.review-form .form-feedback-visible {
+  display: block;
+}
+
+.review-form-login {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.review-form-login-text {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.review-form .alert {
+  margin: 0;
+}
