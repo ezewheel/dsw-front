@@ -4,7 +4,10 @@ import {
   getEntityReviews,
   type EntityReview,
 } from "../../services/reviews.service";
+import Pagination from "../pagination/Pagination";
 import "./EntityReviews.css";
+
+const PAGE_SIZE = 10;
 
 const formatDate = (iso: string): string =>
   new Intl.DateTimeFormat("es-AR", { dateStyle: "long" }).format(new Date(iso));
@@ -26,8 +29,12 @@ type EntityReviewsProps = {
 
 const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
   const [reviews, setReviews] = useState<EntityReview[] | null>(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  const safePage = Math.min(page, Math.max(1, totalPages));
 
   useEffect(() => {
     let active = true;
@@ -38,9 +45,13 @@ const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
       setReviews(null);
 
       try {
-        const all = await getEntityReviews(entityType, externalId);
+        const result = await getEntityReviews(entityType, externalId, {
+          page: safePage,
+          pageSize: PAGE_SIZE,
+        });
         if (!active) return;
-        setReviews(all.filter((review) => review.content !== null));
+        setReviews(result.items);
+        setTotalPages(result.totalPages);
       } catch {
         if (active) setError(true);
       } finally {
@@ -53,7 +64,7 @@ const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
     return () => {
       active = false;
     };
-  }, [entityType, externalId]);
+  }, [entityType, externalId, safePage]);
 
   if (loading) {
     return (
@@ -81,22 +92,29 @@ const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
           Todavía no hay reseñas para esta entidad. ¡Sé el primero!
         </p>
       ) : (
-        <div className="entity-reviews-list">
-          {reviews.map((review) => (
-            <article className="entity-review-card" key={review.id}>
-              <div className="entity-review-header">
-                <span className="entity-review-author">
-                  {review.user.nickname}
-                </span>
-                <Stars value={review.value} />
-              </div>
-              <p className="entity-review-text">{review.content}</p>
-              <div className="entity-review-date">
-                {formatDate(review.createdAt)}
-              </div>
-            </article>
-          ))}
-        </div>
+        <>
+          <div className="entity-reviews-list">
+            {reviews.map((review) => (
+              <article className="entity-review-card" key={review.id}>
+                <div className="entity-review-header">
+                  <span className="entity-review-author">
+                    {review.user.nickname}
+                  </span>
+                  <Stars value={review.value} />
+                </div>
+                <p className="entity-review-text">{review.content}</p>
+                <div className="entity-review-date">
+                  {formatDate(review.createdAt)}
+                </div>
+              </article>
+            ))}
+          </div>
+          <Pagination
+            currentPage={safePage}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
+        </>
       )}
     </section>
   );

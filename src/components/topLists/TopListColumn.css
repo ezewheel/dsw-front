@@ -3,6 +3,7 @@
 }
 
 .top-list {
+  min-width: 0;
   background: var(--bg-overlay-soft);
   border: 1px solid rgb(255 255 255 / 0.08);
   border-radius: 12px;
@@ -41,6 +42,20 @@
   flex-shrink: 0;
 }
 
+.top-item-cover-placeholder {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  flex-shrink: 0;
+  font-size: 1.4rem;
+  color: rgb(255 255 255 / 0.35);
+  background: var(--bg-overlay-strong);
+  user-select: none;
+}
+
 .top-info {
   min-width: 0;
   flex: 1;
@@ -50,7 +65,8 @@
   display: block;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  -webkit-mask-image: linear-gradient(90deg, #000 78%, transparent 100%);
+  mask-image: linear-gradient(90deg, #000 78%, transparent 100%);
 }
 
 .top-rating {

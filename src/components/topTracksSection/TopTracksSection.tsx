@@ -33,24 +33,24 @@ const TopTracksSection = ({ topTracks, albums }: TopTracksSectionProps) => {
     <section className="artist-top-tracks">
       <h2>Las 5 canciones mejor puntuadas</h2>
       {topTracks.slice(0, 5).map((track) => (
-        <div className="song-card" key={track.externalId}>
+        <div className="artist-song-card" key={track.externalId}>
           <img
             src={albumCover.get(track.album.title) ?? track.album.cover_medium}
             alt={`Portada del álbum ${track.album.title}`}
-            className="song-cover"
+            className="artist-song-cover"
           />
-          <div className="song-info">
+          <div className="artist-song-info">
             <h3>
               <Link
                 to={`/song/${track.externalId}`}
-                className="artist-link song-title"
+                className="artist-link artist-song-title"
               >
                 {track.title}
               </Link>
             </h3>
-            <div className="song-info-foot">
-              <p className="song-album">{track.album.title}</p>
-              <span className="song-score">
+            <div className="artist-song-info-foot">
+              <p className="artist-song-album">{track.album.title}</p>
+              <span className="artist-song-score">
                 {formatRating(track.averageRating)}
               </span>
             </div>

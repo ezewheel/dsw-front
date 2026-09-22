@@ -2,6 +2,11 @@
   margin-bottom: 1.5rem;
 }
 
+.featured-songs-status {
+  text-align: center;
+  color: var(--text-muted);
+}
+
 .featured-songs-list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
