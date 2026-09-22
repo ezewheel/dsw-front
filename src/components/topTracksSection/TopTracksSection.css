@@ -1,76 +1,96 @@
-.artist-top-tracks h2 {
-  margin-bottom: 1.25rem;
+.top-tracks {
+  flex: 1;
+  min-width: 0;
+}
+
+.top-tracks-header {
+  margin: 0 0 1.25rem;
+  text-align: left;
+}
+
+.top-tracks-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-tracks-item {
+  display: grid;
+  grid-template-columns: 1.5rem 52px 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgb(255 255 255 / 0.06);
+}
+
+.top-tracks-item:last-child {
+  border-bottom: none;
+}
+
+.top-tracks-rank {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
   text-align: center;
 }
 
-.artist-song-card {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  background: var(--bg-overlay);
-  border-radius: 12px;
-  padding: 0.75rem 1rem;
-  margin: 0 auto 0.75rem;
-  width: 50%;
-}
-
-.artist-song-cover {
-  width: 84px;
-  height: 84px;
+.top-tracks-cover {
+  width: 52px;
+  height: 52px;
   object-fit: cover;
-  border-radius: 8px;
-  flex-shrink: 0;
-  box-shadow: 0 8px 20px rgb(0 0 0 / 0.25);
+  border-radius: 4px;
 }
 
-.artist-song-info {
-  height: 84px;
+.top-tracks-meta {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  overflow: hidden;
+  gap: 0.15rem;
 }
 
-.artist-song-info h3 {
-  margin: 0.3rem 0 0.1rem;
-  font-weight: 700;
-  font-size: 1.05rem;
+.top-tracks-title {
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.artist-song-info h3 a {
-  font-size: 1.05rem;
+.top-tracks-title:visited {
+  color: var(--text);
 }
 
-.artist-song-info-foot {
-  margin-top: auto;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.1rem;
+.top-tracks-title:hover {
+  color: var(--text);
+  text-decoration: underline;
 }
 
-.artist-song-album {
-  color: var(--text-muted);
-  font-size: 0.85rem;
+.top-tracks-album {
   margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.artist-song-score {
-  color: var(--text-muted);
+.top-tracks-score {
   font-size: 0.85rem;
+  margin-right: 0.6rem;
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
 @media (max-width: 575.98px) {
-  .artist-song-card {
-    flex-direction: column;
-    text-align: center;
+  .top-tracks-item {
+    grid-template-columns: 1.2rem 44px 1fr;
+  }
+
+  .top-tracks-score {
+    grid-column: 3;
+    justify-self: start;
   }
 }

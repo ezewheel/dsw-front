@@ -11,10 +11,10 @@ import EntityReviews from "../../components/entityReviews/EntityReviews";
 import "./ArtistDetail.css";
 import "../songDetail/detail.css";
 
-const formatRating = (value: number | null): string =>
-  value === null || value === undefined
-    ? "Sin puntaje"
-    : `${value.toFixed(1)} / 5`;
+function formatRating(value: number | null): string {
+  if (value === null || value === undefined) return "Sin puntaje";
+  return `${value.toFixed(1)} / 5`;
+}
 
 const ArtistDetail = () => {
   const { name } = useParams();
@@ -25,37 +25,35 @@ const ArtistDetail = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    let active = true;
+    let cancelled = false;
 
-    const load = async () => {
+    async function load() {
       setLoading(true);
       setError(false);
       setArtist(null);
 
       try {
         const trimmed = reference.trim();
-        if (trimmed === "") {
-          throw new Error("Referencia vacía");
-        }
+        if (!trimmed) throw new Error("Referencia vacía");
+
         const id = /^\d+$/.test(trimmed)
           ? trimmed
           : await getArtistIdByName(trimmed);
-        if (id === null) {
-          throw new Error("Artista no encontrado");
-        }
+
+        if (!id) throw new Error("Artista no encontrado");
+
         const detail = await getArtistDetail(id);
-        if (active) setArtist(detail);
+        if (!cancelled) setArtist(detail);
       } catch {
-        if (active) setError(true);
+        if (!cancelled) setError(true);
       } finally {
-        if (active) setLoading(false);
+        if (!cancelled) setLoading(false);
       }
-    };
+    }
 
     load();
-
     return () => {
-      active = false;
+      cancelled = true;
     };
   }, [reference]);
 
@@ -67,7 +65,7 @@ const ArtistDetail = () => {
     );
   }
 
-  if (error || artist === null) {
+  if (error || !artist) {
     return (
       <div className="app-container artist-detail">
         <p>Artista no encontrado.</p>
@@ -77,9 +75,9 @@ const ArtistDetail = () => {
   }
 
   const ratedTracks = artist.topTracks.filter(
-    (track) => track.averageRating !== null && track.averageRating !== undefined,
+    (t) => t.averageRating !== null && t.averageRating !== undefined,
   );
-  const rating =
+  const avgRating =
     ratedTracks.length > 0
       ? ratedTracks.reduce((acc, t) => acc + (t.averageRating as number), 0) /
         ratedTracks.length
@@ -87,26 +85,22 @@ const ArtistDetail = () => {
 
   return (
     <div className="app-container artist-detail">
-      <header className="artist-hero">
-        <div className="artist-hero-media">
+      <div className="artist-detail-top">
+        <header className="artist-hero">
           <img
             src={artist.picture_big}
             alt={`Imagen de ${artist.name}`}
-            className="artist-image"
+            className="artist-hero-img"
           />
-          <h1>{artist.name}</h1>
-          <div className="artist-facts">
-            <span className="artist-rating">{formatRating(rating)}</span>
-            <span className="artist-facts-dot">•</span>
-            <span>
-              {artist.albums.length} álbum
-              {artist.albums.length === 1 ? "" : "es"}
-            </span>
+          <div className="artist-hero-overlay">
+            <h1>{artist.name}</h1>
+            <span className="artist-rating">{formatRating(avgRating)}</span>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <TopTracksSection topTracks={artist.topTracks} albums={artist.albums} />
+        <TopTracksSection topTracks={artist.topTracks} albums={artist.albums} />
+      </div>
+
       <AlbumCarousel key={artist.externalId} albums={artist.albums} />
       <EntityReviews entityType="artist" externalId={artist.externalId} />
     </div>
