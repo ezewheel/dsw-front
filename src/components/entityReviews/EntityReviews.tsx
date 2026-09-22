@@ -14,10 +14,7 @@ const formatDate = (iso: string): string =>
   new Intl.DateTimeFormat("es-AR", { dateStyle: "long" }).format(new Date(iso));
 
 const Stars = ({ value }: { value: number }) => (
-  <span
-    className="entity-reviews-stars"
-    aria-label={`${value} de 5 estrellas`}
-  >
+  <span className="entity-reviews-stars" aria-label={`${value} de 5 estrellas`}>
     {"★".repeat(value)}
     <span className="entity-reviews-stars-empty">{"★".repeat(5 - value)}</span>
   </span>
@@ -71,49 +68,65 @@ const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
   return (
     <section className="entity-reviews">
       <h2 className="entity-reviews-title">Reseñas</h2>
-      <ReviewForm
-        entityType={entityType}
-        externalId={externalId}
-        onSubmitted={() => {
-          setPage(1);
-          setRefreshKey((key) => key + 1);
-        }}
-      />
-      {loading ? (
-        <p className="entity-reviews-empty">Cargando reseñas...</p>
-      ) : error ? (
-        <p className="entity-reviews-empty">
-          No se pudieron cargar las reseñas.
-        </p>
-      ) : reviews === null || reviews.length === 0 ? (
-        <p className="entity-reviews-empty">
-          Todavía no hay reseñas para esta entidad. ¡Sé el primero!
-        </p>
-      ) : (
-        <>
-          <div className="entity-reviews-list">
-            {reviews.map((review) => (
-              <article className="entity-review-card" key={review.id}>
-                <div className="entity-review-header">
-                  <span className="entity-review-author">
-                    {review.user.nickname}
-                  </span>
-                  <Stars value={review.value} />
-                </div>
-                <p className="entity-review-text">{review.content}</p>
-                <div className="entity-review-date">
-                  {formatDate(review.createdAt)}
-                </div>
-              </article>
-            ))}
-          </div>
-          <Pagination
-            currentPage={safePage}
-            totalPages={totalPages}
-            onPageChange={setPage}
+      <div className="entity-reviews-layout">
+        <div className="entity-reviews-side">
+          <h3 className="entity-reviews-side-title">Dejá tu reseña</h3>
+          <ReviewForm
+            entityType={entityType}
+            externalId={externalId}
+            onSubmitted={() => {
+              setPage(1);
+              setRefreshKey((key) => key + 1);
+            }}
           />
-        </>
-      )}
+        </div>
+        <div className="entity-reviews-main">
+          {loading ? (
+            <p className="entity-reviews-empty">Cargando reseñas...</p>
+          ) : error ? (
+            <p className="entity-reviews-empty">
+              No se pudieron cargar las reseñas.
+            </p>
+          ) : reviews === null || reviews.length === 0 ? (
+            <p className="entity-reviews-empty">
+              Todavía no hay reseñas para esta entidad. ¡Sé el primero!
+            </p>
+          ) : (
+            <>
+              <div className="entity-reviews-list">
+                {reviews.map((review) => {
+                  const initial = review.user.nickname.charAt(0).toUpperCase();
+
+                  return (
+                    <article className="entity-review-item" key={review.id}>
+                      <span className="entity-review-avatar" aria-hidden="true">
+                        {initial}
+                      </span>
+                      <div className="entity-review-body">
+                        <div className="entity-review-header">
+                          <span className="entity-review-author">
+                            {review.user.nickname}
+                          </span>
+                          <Stars value={review.value} />
+                        </div>
+                        <p className="entity-review-text">{review.content}</p>
+                        <span className="entity-review-date">
+                          {formatDate(review.createdAt)}
+                        </span>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+              <Pagination
+                currentPage={safePage}
+                totalPages={totalPages}
+                onPageChange={setPage}
+              />
+            </>
+          )}
+        </div>
+      </div>
     </section>
   );
 };

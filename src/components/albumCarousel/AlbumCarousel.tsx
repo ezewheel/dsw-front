@@ -54,7 +54,7 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
   if (albums.length === 0) {
     return (
       <section className="artist-albums">
-        <h2>Álbumes</h2>
+        <h2>Discografía</h2>
         <p>No hay álbumes para este artista.</p>
       </section>
     );
@@ -62,7 +62,7 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
 
   return (
     <section className="artist-albums album-carousel-section">
-      <h2>Álbumes</h2>
+      <h2>Discografía</h2>
       <div className="album-carousel">
         <button
           type="button"

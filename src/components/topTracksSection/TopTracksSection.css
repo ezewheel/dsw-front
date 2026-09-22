@@ -8,6 +8,11 @@
   text-align: left;
 }
 
+.top-tracks-empty {
+  margin: 0;
+  color: var(--text-muted);
+}
+
 .top-tracks-list {
   list-style: none;
   margin: 0;
@@ -78,10 +83,18 @@
 }
 
 .top-tracks-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   font-size: 0.85rem;
   margin-right: 0.6rem;
   color: var(--text-muted);
   white-space: nowrap;
+}
+
+.top-tracks-score-star {
+  font-size: 0.85em;
+  color: #f5c518;
 }
 
 @media (max-width: 575.98px) {

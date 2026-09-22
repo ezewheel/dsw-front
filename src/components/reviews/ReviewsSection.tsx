@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getLatestReviews, type LatestReview } from "../../services/reviews.service";
+import {
+  getLatestReviews,
+  type LatestReview,
+} from "../../services/reviews.service";
 import type { SearchApiType } from "../../services/search.service";
 import Reveal from "../reveal/Reveal";
 import "./ReviewsSection.css";
@@ -78,14 +81,17 @@ const ReviewsSection = () => {
 
       {!loading && !error && reviews !== null && reviews.length > 0 && (
         <div className="reviews-list">
-{reviews.map((review) => {
+          {reviews.map((review) => {
             const href = entityHref(review.entity);
             const title = review.entity.title ?? "Contenido no disponible";
-            const content = href !== null ? (
-              <Link to={href} className="review-song-link">{title}</Link>
-            ) : (
-              <span className="review-song">{title}</span>
-            );
+            const content =
+              href !== null ? (
+                <Link to={href} className="review-song-link">
+                  {title}
+                </Link>
+              ) : (
+                <span className="review-song">{title}</span>
+              );
 
             return (
               <Reveal key={review.id}>
@@ -97,7 +103,10 @@ const ReviewsSection = () => {
                       alt={`Portada de ${title}`}
                     />
                   ) : (
-                    <div className="review-cover review-cover-placeholder" aria-hidden="true">
+                    <div
+                      className="review-cover review-cover-placeholder"
+                      aria-hidden="true"
+                    >
                       ♪
                     </div>
                   )}
@@ -107,8 +116,8 @@ const ReviewsSection = () => {
                       <Stars value={Math.round(review.value)} />
                     </div>
                     <div className="review-author">
-                      {review.user.nickname} ·{" "}
-                      {TYPE_LABELS[review.entity.type]} · {formatDate(review.createdAt)}
+                      {review.user.nickname} · {TYPE_LABELS[review.entity.type]}{" "}
+                      · {formatDate(review.createdAt)}
                     </div>
                     <p className="review-text">{review.content}</p>
                   </div>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
 import type {
   ArtistAlbum,
   ArtistTopTrack,
@@ -10,11 +11,6 @@ interface TopTracksSectionProps {
   albums: ArtistAlbum[];
 }
 
-function formatRating(value: number | null): string {
-  if (value === null || value === undefined) return "Sin puntaje";
-  return `${value.toFixed(1)} / 5`;
-}
-
 const TopTracksSection = ({ topTracks, albums }: TopTracksSectionProps) => {
   const albumCover = new Map(
     albums.map((album) => [album.title, album.cover_big]),
@@ -22,9 +18,20 @@ const TopTracksSection = ({ topTracks, albums }: TopTracksSectionProps) => {
 
   const tracks = topTracks.slice(0, 5);
 
+  if (tracks.length === 0) {
+    return (
+      <section className="top-tracks">
+        <h2 className="top-tracks-header">Canciones mejor valoradas</h2>
+        <p className="top-tracks-empty">
+          Todavía no hay canciones puntuadas para este artista.
+        </p>
+      </section>
+    );
+  }
+
   return (
     <section className="top-tracks">
-      <h2 className="top-tracks-header">Top 5 canciones</h2>
+      <h2 className="top-tracks-header">Canciones mejor valoradas</h2>
       <ol className="top-tracks-list">
         {tracks.map((track, index) => (
           <li className="top-tracks-item" key={track.externalId}>
@@ -46,7 +53,18 @@ const TopTracksSection = ({ topTracks, albums }: TopTracksSectionProps) => {
               <p className="top-tracks-album">{track.album.title}</p>
             </div>
             <span className="top-tracks-score">
-              {formatRating(track.averageRating)}
+              {track.averageRating === null ||
+              track.averageRating === undefined ? (
+                "Sin puntaje"
+              ) : (
+                <>
+                  {track.averageRating.toFixed(1)}
+                  <FaStar
+                    className="top-tracks-score-star"
+                    aria-hidden="true"
+                  />
+                </>
+              )}
             </span>
           </li>
         ))}

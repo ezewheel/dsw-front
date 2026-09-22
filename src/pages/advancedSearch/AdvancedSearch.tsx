@@ -6,7 +6,7 @@ import {
   type SearchApiType,
   type SearchResult,
 } from "../../services/search.service";
-import SearchResultItem from "../../components/searchResultItem/SearchResultItem";
+import SearchResultsList from "../../components/searchResultsList/SearchResultsList";
 import Pagination from "../../components/pagination/Pagination";
 import "./AdvancedSearch.css";
 
@@ -135,14 +135,7 @@ const AdvancedSearch = () => {
 
           {!loading && !error && results.length > 0 && (
             <>
-              <div className="advanced-search-list">
-                {results.map((result) => (
-                  <SearchResultItem
-                    key={`${result.type}-${result.externalId}`}
-                    result={result}
-                  />
-                ))}
-              </div>
+              <SearchResultsList results={results} />
 
               <Pagination
                 currentPage={page}

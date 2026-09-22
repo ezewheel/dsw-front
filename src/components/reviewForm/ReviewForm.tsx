@@ -85,11 +85,22 @@ const ReviewForm = ({
       onSubmit={handleSubmit}
       noValidate
     >
-      <div className="form-field">
+<div className="form-field">
         <span className="form-label" id="review-form-rating-label">
           Tu puntuación
         </span>
-        <StarRating value={value} onChange={setValue} size="md" />
+        <div className="review-form-rating">
+          <StarRating value={value} onChange={setValue} size="md" />
+          {value > 0 && (
+            <button
+              type="button"
+              className="review-form-clear"
+              onClick={() => setValue(0)}
+            >
+              Eliminar
+            </button>
+          )}
+        </div>
         {validated && value === 0 && (
           <p className="form-feedback form-feedback-visible" role="alert">
             Elegí una puntuación, puede ser de a media estrella.
