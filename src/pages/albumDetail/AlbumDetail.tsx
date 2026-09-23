@@ -6,7 +6,8 @@ import {
   type AlbumDetail as AlbumDetailData,
 } from "../../services/album.service";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
-import { FaCompactDisc } from "react-icons/fa";
+import SongList from "../../components/songList/SongList";
+import { FaCompactDisc, FaStar } from "react-icons/fa";
 import "./AlbumDetail.css";
 
 const formatDuration = (seconds: number) => {
@@ -14,11 +15,6 @@ const formatDuration = (seconds: number) => {
   const s = seconds % 60;
   return `${m}:${s.toString().padStart(2, "0")} min`;
 };
-
-const formatRating = (value: number | null): string =>
-  value === null || value === undefined
-    ? "Sin puntaje"
-    : `${value.toFixed(1)} / 5`;
 
 const AlbumDetail = () => {
   const { name } = useParams();
@@ -65,7 +61,7 @@ const AlbumDetail = () => {
 
   if (loading) {
     return (
-      <div className="app-container album-detail loading-message">
+      <div className="app-container album-detail">
         <p>Cargando álbum...</p>
       </div>
     );
@@ -97,54 +93,71 @@ const AlbumDetail = () => {
 
   return (
     <div className="app-container album-detail">
-      <header className="album-hero">
-        <div className="album-hero-media">
-          <img
-            src={album.cover_big}
-            alt={`Portada de ${album.title}`}
-            className="album-image"
-          />
-          <div className="album-info-overlay">
-            <span className="album-rating">
-              {formatRating(album.averageRating)}
-            </span>
-            <h1>{album.title}</h1>
-            <Link to={artistRoute} className="artist-link album-artist">
+      <div className="album-detail-top">
+        <header className="album-hero">
+          <div className="album-hero-media">
+            <img
+              src={album.cover_big}
+              alt={`Portada de ${album.title}`}
+              className="album-hero-img"
+            />
+            <div className="album-hero-overlay">
+              <h1>{album.title}</h1>
+              <span
+                className={`album-rating${
+                  album.averageRating === null ||
+                  album.averageRating === undefined
+                    ? " album-rating-missing"
+                    : ""
+                }`}
+              >
+                {album.averageRating === null ||
+                album.averageRating === undefined ? (
+                  "Sin puntaje"
+                ) : (
+                  <>
+                    {album.averageRating.toFixed(1)}
+                    <FaStar className="album-rating-star" aria-hidden="true" />
+                  </>
+                )}
+              </span>
+            </div>
+          </div>
+          <div className="album-hero-info">
+            <Link to={artistRoute} className="artist-link album-hero-artist">
               {album.artist.name}
             </Link>
-            <div className="album-meta">
+            <div className="album-hero-meta">
               <span>
                 {album.songs.length} canción
                 {album.songs.length === 1 ? "" : "es"}
               </span>
               <span className="album-facts-dot">•</span>
               <span>{formatDuration(album.duration)}</span>
+              {album.release_date && (
+                <>
+                  <span className="album-facts-dot">•</span>
+                  <span>{album.release_date.slice(0, 4)}</span>
+                </>
+              )}
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <section className="album-songs-section">
-        <h2>Canciones del álbum</h2>
-        <div className="album-song-list">
-          {album.songs.map((song) => (
-            <Link
-              to={`/song/${song.externalId}`}
-              className="album-song-row"
-              key={song.externalId}
-            >
-              <img src={album.cover_medium} alt={`Portada de ${song.title}`} />
-              <div className="album-song-row-info">
-                <div className="album-song-row-title">{song.title}</div>
-                <div className="recommendation-meta">
-                  {formatRating(song.averageRating)} ·{" "}
-                  {formatDuration(song.duration)}
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+        <section className="album-songs-section">
+          <SongList
+            title="Canciones del álbum"
+            showRank={false}
+            songs={album.songs.map((song) => ({
+              externalId: song.externalId,
+              title: song.title,
+              subtitle: formatDuration(song.duration),
+              cover: album.cover_medium,
+              averageRating: song.averageRating,
+            }))}
+          />
+        </section>
+      </div>
 
       <EntityReviews entityType="album" externalId={album.externalId} />
     </div>

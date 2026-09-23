@@ -67,7 +67,7 @@ const ReviewsSection = () => {
 
   return (
     <section className="reviews-section">
-      <h2 className="reviews-title">Reseñas que capaz te interesen</h2>
+      <h2 className="reviews-title">Últimas reseñas</h2>
 
       {loading && <p className="reviews-empty">Cargando reseñas...</p>}
 
