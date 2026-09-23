@@ -5,7 +5,7 @@ import {
   getArtistIdByName,
   type ArtistDetail as ArtistDetailData,
 } from "../../services/artist.service";
-import TopTracksSection from "../../components/topTracksSection/TopTracksSection";
+import SongList from "../../components/songList/SongList";
 import AlbumCarousel from "../../components/albumCarousel/AlbumCarousel";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import { getEntityReviews } from "../../services/reviews.service";
@@ -103,15 +103,28 @@ const ArtistDetail = () => {
     );
   }
 
-  const ratedTracks = artist.topTracks.filter(
+  const ratingTracks = artist.topTracks.filter(
     (t) => t.averageRating !== null && t.averageRating !== undefined,
   );
   const tracksAverage =
-    ratedTracks.length > 0
-      ? ratedTracks.reduce((acc, t) => acc + (t.averageRating as number), 0) /
-        ratedTracks.length
+    ratingTracks.length > 0
+      ? ratingTracks.reduce(
+          (acc, t) => acc + (t.averageRating as number),
+          0,
+        ) / ratingTracks.length
       : null;
   const avgRating = artistScore ?? tracksAverage;
+
+  const albumCovers = new Map(
+    artist.albums.map((album) => [album.title, album.cover_big]),
+  );
+  const trackItems = artist.topTracks.map((track) => ({
+    externalId: track.externalId,
+    title: track.title,
+    subtitle: track.album.title,
+    cover: albumCovers.get(track.album.title) ?? track.album.cover_medium,
+    averageRating: track.averageRating,
+  }));
 
   return (
     <div className="app-container artist-detail">
@@ -141,7 +154,7 @@ const ArtistDetail = () => {
           </div>
         </header>
 
-        <TopTracksSection topTracks={artist.topTracks} albums={artist.albums} />
+        <SongList title="Canciones mejor valoradas" songs={trackItems} />
       </div>
 
       <AlbumCarousel key={artist.externalId} albums={artist.albums} />
