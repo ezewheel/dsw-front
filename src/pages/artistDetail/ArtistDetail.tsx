@@ -11,7 +11,7 @@ import EntityReviews from "../../components/entityReviews/EntityReviews";
 import { getEntityReviews } from "../../services/reviews.service";
 import { FaStar, FaUser } from "react-icons/fa";
 import "./ArtistDetail.css";
-import "../songDetail/detail.css";
+import "../trackDetail/detail.css";
 
 const ArtistDetail = () => {
   const { name } = useParams();

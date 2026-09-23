@@ -70,7 +70,9 @@
   font-size: 0.9rem;
 }
 
-.entity-reviews-side .review-form-login {layou
+.entity-reviews-side .review-form-login {
+  display: flex;
+  flex-direction: column;
   gap: 0.85rem;
   text-align: left;
   align-items: flex-start;
