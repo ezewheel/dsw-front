@@ -11,7 +11,6 @@ type PasswordInputProps = {
   placeholder?: string;
   required?: boolean;
   minLength?: number;
-  autoFocus?: boolean;
   feedback?: string;
 };
 
@@ -22,7 +21,6 @@ const PasswordInput = ({
   placeholder,
   required,
   minLength,
-  autoFocus,
   feedback,
 }: PasswordInputProps) => {
   const [visible, setVisible] = useState(false);
@@ -39,7 +37,6 @@ const PasswordInput = ({
         required={required}
         minLength={minLength}
         maxLength={MAX_PASSWORD_LENGTH}
-        autoFocus={autoFocus}
       />
       <button
         type="button"

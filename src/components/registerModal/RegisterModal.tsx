@@ -1,13 +1,12 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { getErrorMessage } from "../../api/client";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
 import PasswordInput from "../authModals/PasswordInput";
-import "./RegisterModal.css";
+import Modal from "../modal/Modal";
+import "../authModals/auth-form.css";
 
-type RegisterModalProps = { show: boolean; onHide: () => void };
-
-const RegisterModal = ({ show, onHide }: RegisterModalProps) => {
+const RegisterModal = ({ onClose }: { onClose: () => void }) => {
   const { register } = useAuth();
   const { openLogin } = useAuthModals();
 
@@ -18,24 +17,6 @@ const RegisterModal = ({ show, onHide }: RegisterModalProps) => {
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!show) return;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onHide();
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
-    };
-  }, [show, onHide]);
-
-  if (!show) return null;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -58,7 +39,7 @@ const RegisterModal = ({ show, onHide }: RegisterModalProps) => {
 
     try {
       await register({ email, password, nickname });
-      onHide();
+      onClose();
     } catch (registerError) {
       setError(
         getErrorMessage(
@@ -71,134 +52,104 @@ const RegisterModal = ({ show, onHide }: RegisterModalProps) => {
     }
   };
 
-  const switchToLogin = () => {
-    onHide();
-    openLogin();
-  };
-
   return (
-    <div className="register-modal-overlay" onClick={onHide}>
-      <div
-        className="register-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="register-modal-title"
-        onClick={(event) => event.stopPropagation()}
+    <Modal title="Creá tu cuenta en BeatGround" onClose={onClose}>
+      <form
+        noValidate
+        onSubmit={handleSubmit}
+        className={`auth-form${validated ? " was-validated" : ""}`}
       >
-        <div className="register-modal-header">
-          <h2 id="register-modal-title" className="register-modal-title">
-            Creá tu cuenta en BeatGround
-          </h2>
-          <button
-            type="button"
-            className="register-modal-close"
-            aria-label="Cerrar"
-            onClick={onHide}
-          >
-            ×
-          </button>
+        <div className="form-field">
+          <label className="form-label" htmlFor="register-modal-nickname">
+            Nickname
+          </label>
+          <input
+            id="register-modal-nickname"
+            type="text"
+            className="form-input"
+            placeholder="usuario123"
+            value={nickname}
+            onChange={(event) => setNickname(event.target.value)}
+            required
+          />
+          <p className="form-feedback">Ingresá un nickname.</p>
         </div>
 
-        <div className="register-modal-body">
-          <form
-            noValidate
-            onSubmit={handleSubmit}
-            className={`auth-form${validated ? " was-validated" : ""}`}
-          >
-            <div className="form-field">
-              <label className="form-label" htmlFor="register-modal-nickname">
-                Nickname
-              </label>
-              <input
-                id="register-modal-nickname"
-                type="text"
-                className="form-input"
-                placeholder="usuario123"
-                value={nickname}
-                onChange={(event) => setNickname(event.target.value)}
-                autoFocus
-                required
-              />
-              <p className="form-feedback">Ingresá un nickname.</p>
-            </div>
-
-            <div className="form-field">
-              <label className="form-label" htmlFor="register-modal-email">
-                Email
-              </label>
-              <input
-                id="register-modal-email"
-                type="email"
-                className="form-input"
-                placeholder="tu@email.com"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                required
-              />
-              <p className="form-feedback">Ingresá un email válido.</p>
-            </div>
-
-            <div className="form-field">
-              <label className="form-label" htmlFor="register-modal-password">
-                Contraseña
-              </label>
-              <PasswordInput
-                id="register-modal-password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="••••••••"
-                required
-                minLength={8}
-                feedback="La contraseña debe tener al menos 8 caracteres."
-              />
-            </div>
-
-            <div className="form-field">
-              <label
-                className="form-label"
-                htmlFor="register-modal-confirm-password"
-              >
-                Confirmar contraseña
-              </label>
-              <PasswordInput
-                id="register-modal-confirm-password"
-                value={confirmPassword}
-                onChange={(event) => setConfirmPassword(event.target.value)}
-                placeholder="••••••••"
-                required
-                minLength={8}
-                feedback="Confirmá tu contraseña."
-              />
-            </div>
-
-            {error && (
-              <div className="alert alert-danger" role="alert">
-                {error}
-              </div>
-            )}
-
-            <button
-              type="submit"
-              className="app-btn app-btn-primary app-btn-block"
-              disabled={loading}
-            >
-              {loading ? "Creando cuenta..." : "Crear cuenta"}
-            </button>
-          </form>
-
-          <p className="auth-alt">
-            ¿Ya tenés cuenta?{" "}
-            <button
-              type="button"
-              className="auth-link auth-link-btn"
-              onClick={switchToLogin}
-            >
-              Iniciá sesión
-            </button>
-          </p>
+        <div className="form-field">
+          <label className="form-label" htmlFor="register-modal-email">
+            Email
+          </label>
+          <input
+            id="register-modal-email"
+            type="email"
+            className="form-input"
+            placeholder="tu@email.com"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            required
+          />
+          <p className="form-feedback">Ingresá un email válido.</p>
         </div>
-      </div>
-    </div>
+
+        <div className="form-field">
+          <label className="form-label" htmlFor="register-modal-password">
+            Contraseña
+          </label>
+          <PasswordInput
+            id="register-modal-password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder="••••••••"
+            required
+            minLength={8}
+            feedback="La contraseña debe tener al menos 8 caracteres."
+          />
+        </div>
+
+        <div className="form-field">
+          <label
+            className="form-label"
+            htmlFor="register-modal-confirm-password"
+          >
+            Confirmar contraseña
+          </label>
+          <PasswordInput
+            id="register-modal-confirm-password"
+            value={confirmPassword}
+            onChange={(event) => setConfirmPassword(event.target.value)}
+            placeholder="••••••••"
+            required
+            minLength={8}
+            feedback="Confirmá tu contraseña."
+          />
+        </div>
+
+        {error && (
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        )}
+
+        <button
+          type="submit"
+          className="app-btn app-btn-primary app-btn-block"
+          disabled={loading}
+        >
+          {loading ? "Creando cuenta..." : "Crear cuenta"}
+        </button>
+      </form>
+
+      <p className="auth-alt">
+        ¿Ya tenés cuenta?{" "}
+        <button
+          type="button"
+          className="auth-link auth-link-btn"
+          onClick={openLogin}
+        >
+          Iniciá sesión
+        </button>
+      </p>
+    </Modal>
   );
 };
 
