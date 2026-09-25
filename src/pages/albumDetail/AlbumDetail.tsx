@@ -4,15 +4,10 @@ import { getAlbumDetail } from "../../api/musical-entity";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import SongList from "../../components/songList/SongList";
 import { entityPath } from "../../utils/routes";
+import { formatCount, formatDuration } from "../../utils/format";
 import { useFetch } from "../../hooks/useFetch";
 import { FaCompactDisc, FaStar } from "react-icons/fa";
 import "./AlbumDetail.css";
-
-const formatDuration = (seconds: number) => {
-  const m = Math.floor(seconds / 60);
-  const s = seconds % 60;
-  return `${m}:${s.toString().padStart(2, "0")} min`;
-};
 
 const AlbumDetail = () => {
   const { id = "" } = useParams();
@@ -90,8 +85,7 @@ const AlbumDetail = () => {
             </Link>
             <div className="album-hero-meta">
               <span>
-                {album.songs.length} canción
-                {album.songs.length === 1 ? "" : "es"}
+                {formatCount(album.songs.length, "canción", "canciones")}
               </span>
               <span className="album-facts-dot">•</span>
               <span>{formatDuration(album.duration)}</span>

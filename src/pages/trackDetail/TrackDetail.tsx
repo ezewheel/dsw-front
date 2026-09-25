@@ -8,6 +8,7 @@ import {
 import SameAlbumTracksSection from "../../components/sameAlbumTracks/SameAlbumTracksSection";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import { entityPath } from "../../utils/routes";
+import { formatCount, formatDuration } from "../../utils/format";
 import { useFetch } from "../../hooks/useFetch";
 import {
   FaStar,
@@ -18,12 +19,6 @@ import {
   FaCompactDisc,
 } from "react-icons/fa";
 import "./TrackDetail.css";
-
-const formatDuration = (seconds: number) => {
-  const m = Math.floor(seconds / 60);
-  const s = seconds % 60;
-  return `${m}:${s.toString().padStart(2, "0")} min`;
-};
 
 const loadTrackPage = async (id: string) => {
   const track = await getTrackDetail(id);
@@ -138,8 +133,11 @@ const TrackDetail = () => {
                 aria-hidden="true"
               />
               <span className="track-hero-ratings">
-                {track.ratingsCount}{" "}
-                {track.ratingsCount === 1 ? "calificación" : "calificaciones"}
+                {formatCount(
+                  track.ratingsCount,
+                  "calificación",
+                  "calificaciones",
+                )}
               </span>
             </div>
           </div>

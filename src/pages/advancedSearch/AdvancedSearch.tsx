@@ -9,6 +9,7 @@ import {
 import SearchResultsList from "../../components/searchResultsList/SearchResultsList";
 import Pagination from "../../components/pagination/Pagination";
 import { useFetch } from "../../hooks/useFetch";
+import { formatCount } from "../../utils/format";
 import "./AdvancedSearch.css";
 
 const TYPE_OPTIONS: Record<MusicalEntityType, string> = {
@@ -82,7 +83,9 @@ const AdvancedSearch = () => {
         )}
       </h1>
       {!loading && !error && hasQuery && total > 0 && (
-        <p className="advanced-search-count">Mostrando {total} resultados</p>
+        <p className="advanced-search-count">
+          Mostrando {formatCount(total, "resultado", "resultados")}
+        </p>
       )}
       <div className="advanced-search-layout">
         <div className="advanced-search-main">

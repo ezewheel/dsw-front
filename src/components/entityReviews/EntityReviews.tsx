@@ -2,15 +2,13 @@ import { useCallback, useState } from "react";
 import type { MusicalEntityType } from "../../api/musical-entity";
 import { getEntityReviews } from "../../api/reviews";
 import { useFetch } from "../../hooks/useFetch";
+import { formatDate } from "../../utils/format";
 import Pagination from "../pagination/Pagination";
 import ReviewForm from "../reviewForm/ReviewForm";
 import StarRating from "../starRating/StarRating";
 import "./EntityReviews.css";
 
 const PAGE_SIZE = 10;
-
-const formatDate = (iso: string): string =>
-  new Intl.DateTimeFormat("es-AR", { dateStyle: "long" }).format(new Date(iso));
 
 type EntityReviewsProps = {
   entityType: MusicalEntityType;

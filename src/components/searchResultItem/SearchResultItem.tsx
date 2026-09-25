@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FaStar, FaMusic } from "react-icons/fa";
 import type { SearchResult } from "../../api/musical-entity";
 import { entityPath } from "../../utils/routes";
+import { formatCount } from "../../utils/format";
 import "./SearchResultItem.css";
 
 const formatRating = (rating: number | null): string =>
@@ -60,8 +61,7 @@ const SearchResultItem = ({ result }: { result: SearchResult }) => {
           {formatRating(result.averageRating)}
         </span>
         <span className="search-result-reviews">
-          {result.reviewsCount}{" "}
-          {result.reviewsCount === 1 ? "reseña" : "reseñas"}
+          {formatCount(result.reviewsCount, "reseña", "reseñas")}
         </span>
       </div>
     </Link>

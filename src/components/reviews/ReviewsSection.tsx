@@ -4,15 +4,13 @@ import { ENTITY_TYPE_LABELS } from "../../api/musical-entity";
 import Reveal from "../reveal/Reveal";
 import StarRating from "../starRating/StarRating";
 import { entityPath } from "../../utils/routes";
+import { formatDate } from "../../utils/format";
 import { useFetch } from "../../hooks/useFetch";
 import "./ReviewsSection.css";
 
 const LATEST_REVIEWS_LIMIT = 5;
 
 const loadLatestReviews = () => getLatestReviews(LATEST_REVIEWS_LIMIT);
-
-const formatDate = (iso: string): string =>
-  new Intl.DateTimeFormat("es-AR", { dateStyle: "long" }).format(new Date(iso));
 
 const ReviewsSection = () => {
   const { data: reviews, loading, error } = useFetch(loadLatestReviews);

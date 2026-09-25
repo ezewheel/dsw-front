@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { entityPath } from "../../../utils/routes";
+import { formatDuration } from "../../../utils/format";
 import "./SongItem.css";
 
 type SongItemProps = {
@@ -12,12 +13,6 @@ type SongItemProps = {
   score: number | null;
   duration: number;
   imageUrl: string;
-};
-
-const formatDuration = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")} min`;
 };
 
 const StarRating = ({ score }: { score: number | null }) => {
