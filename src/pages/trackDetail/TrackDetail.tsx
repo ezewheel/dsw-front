@@ -11,7 +11,6 @@ import {
 } from "../../services/album.service";
 import SameAlbumTracksSection from "../../components/sameAlbumTracks/SameAlbumTracksSection";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
-import { getEntityReviews } from "../../services/reviews.service";
 import {
   FaStar,
   FaMusic,
@@ -33,10 +32,8 @@ const TrackDetail = () => {
 
   const [track, setTrack] = useState<TrackDetailData | null>(null);
   const [albumSongs, setAlbumSongs] = useState<AlbumSong[]>([]);
-  const [reviewsCount, setReviewsCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [score, setScore] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -46,8 +43,6 @@ const TrackDetail = () => {
       setError(false);
       setTrack(null);
       setAlbumSongs([]);
-      setReviewsCount(0);
-      setScore(null);
 
       try {
         if (!trackId.trim()) throw new Error("Referencia vacía");
@@ -55,28 +50,6 @@ const TrackDetail = () => {
         const detail = await getTrackDetail(trackId);
         if (cancelled) return;
         setTrack(detail);
-
-        try {
-          const reviews = await getEntityReviews("track", trackId, {
-            page: 1,
-            pageSize: 50,
-          });
-          const values = reviews.items
-            .map((review) => review.value)
-            .filter((value): value is number => typeof value === "number");
-          if (cancelled) return;
-          setReviewsCount(reviews.total);
-          setScore(
-            values.length > 0
-              ? values.reduce((acc, value) => acc + value, 0) / values.length
-              : null,
-          );
-        } catch {
-          if (!cancelled) {
-            setReviewsCount(0);
-            setScore(null);
-          }
-        }
 
         try {
           const albumId = await getAlbumIdByTitle(detail.album.title);
@@ -142,14 +115,14 @@ const TrackDetail = () => {
               <h1>{track.title}</h1>
               <span
                 className={`track-rating${
-                  score === null ? " track-rating-missing" : ""
+                  track.averageRating === null ? " track-rating-missing" : ""
                 }`}
               >
-                {score === null ? (
+                {track.averageRating === null ? (
                   "Sin puntaje"
                 ) : (
                   <>
-                    {score.toFixed(1)}
+                    {track.averageRating.toFixed(1)}
                     <FaStar className="track-rating-star" aria-hidden="true" />
                   </>
                 )}
@@ -195,8 +168,9 @@ const TrackDetail = () => {
                 className="track-meta-icon"
                 aria-hidden="true"
               />
-              <span className="track-hero-reviews">
-                {reviewsCount} reseña{reviewsCount === 1 ? "" : "s"}
+              <span className="track-hero-ratings">
+                {track.ratingsCount}{" "}
+                {track.ratingsCount === 1 ? "calificación" : "calificaciones"}
               </span>
             </div>
           </div>

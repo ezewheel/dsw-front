@@ -23,6 +23,7 @@ export type ArtistDetail = {
   externalId: string;
   name: string;
   picture_big: string;
+  averageRating: number | null;
   topTracks: ArtistTopTrack[];
   albums: ArtistAlbum[];
 };

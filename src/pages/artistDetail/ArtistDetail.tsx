@@ -8,7 +8,6 @@ import {
 import SongList from "../../components/songList/SongList";
 import AlbumCarousel from "../../components/albumCarousel/AlbumCarousel";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
-import { getEntityReviews } from "../../services/reviews.service";
 import { FaStar, FaUser } from "react-icons/fa";
 import "./ArtistDetail.css";
 
@@ -18,7 +17,6 @@ const ArtistDetail = () => {
   const [artist, setArtist] = useState<ArtistDetailData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [artistScore, setArtistScore] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -27,7 +25,6 @@ const ArtistDetail = () => {
       setLoading(true);
       setError(false);
       setArtist(null);
-      setArtistScore(null);
 
       try {
         const trimmed = reference.trim();
@@ -42,24 +39,6 @@ const ArtistDetail = () => {
         const detail = await getArtistDetail(id);
         if (cancelled) return;
         setArtist(detail);
-
-        try {
-          const reviews = await getEntityReviews("artist", id, {
-            page: 1,
-            pageSize: 50,
-          });
-          const values = reviews.items
-            .map((review) => review.value)
-            .filter((value): value is number => typeof value === "number");
-          if (cancelled) return;
-          setArtistScore(
-            values.length > 0
-              ? values.reduce((acc, value) => acc + value, 0) / values.length
-              : null,
-          );
-        } catch {
-          if (!cancelled) setArtistScore(null);
-        }
       } catch {
         if (!cancelled) setError(true);
       } finally {
@@ -101,18 +80,6 @@ const ArtistDetail = () => {
     );
   }
 
-  const ratingTracks = artist.topTracks.filter(
-    (t) => t.averageRating !== null && t.averageRating !== undefined,
-  );
-  const tracksAverage =
-    ratingTracks.length > 0
-      ? ratingTracks.reduce(
-          (acc, t) => acc + (t.averageRating as number),
-          0,
-        ) / ratingTracks.length
-      : null;
-  const avgRating = artistScore ?? tracksAverage;
-
   const albumCovers = new Map(
     artist.albums.map((album) => [album.title, album.cover_big]),
   );
@@ -137,14 +104,14 @@ const ArtistDetail = () => {
             <h1>{artist.name}</h1>
             <span
               className={`artist-rating${
-                avgRating === null ? " artist-rating-missing" : ""
+                artist.averageRating === null ? " artist-rating-missing" : ""
               }`}
             >
-              {avgRating === null ? (
+              {artist.averageRating === null ? (
                 "Sin puntaje"
               ) : (
                 <>
-                  {avgRating.toFixed(1)}
+                  {artist.averageRating.toFixed(1)}
                   <FaStar className="artist-rating-star" aria-hidden="true" />
                 </>
               )}
