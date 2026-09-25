@@ -21,7 +21,6 @@ import {
   FaCompactDisc,
 } from "react-icons/fa";
 import "./TrackDetail.css";
-import "./detail.css";
 
 const formatDuration = (seconds: number) => {
   const m = Math.floor(seconds / 60);

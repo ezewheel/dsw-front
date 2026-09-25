@@ -4,7 +4,6 @@ import FeatureSection from "../../components/FeatureSection/FeatureSection";
 import TopLists from "../../components/topLists/TopLists";
 import ReviewsSection from "../../components/reviews/ReviewsSection";
 import Reveal from "../../components/reveal/Reveal";
-import "./Home.css";
 
 const Home = () => {
   return (
