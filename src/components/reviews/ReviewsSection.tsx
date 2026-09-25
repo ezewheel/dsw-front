@@ -7,6 +7,7 @@ import {
 import type { SearchApiType } from "../../services/search.service";
 import Reveal from "../reveal/Reveal";
 import StarRating from "../starRating/StarRating";
+import { entityPath } from "../../utils/routes";
 import "./ReviewsSection.css";
 
 const TYPE_LABELS: Record<SearchApiType, string> = {
@@ -19,14 +20,6 @@ const LATEST_REVIEWS_LIMIT = 5;
 
 const formatDate = (iso: string): string =>
   new Intl.DateTimeFormat("es-AR", { dateStyle: "long" }).format(new Date(iso));
-
-const entityHref = (entity: LatestReview["entity"]): string | null => {
-  if (entity.type === "track") return `/song/${entity.externalId}`;
-  if (!entity.title) return null;
-  return entity.type === "artist"
-    ? `/artist/${encodeURIComponent(entity.title)}`
-    : `/album/${encodeURIComponent(entity.title)}`;
-};
 
 const ReviewsSection = () => {
   const [reviews, setReviews] = useState<LatestReview[] | null>(null);
@@ -76,16 +69,7 @@ const ReviewsSection = () => {
       {!loading && !error && reviews !== null && reviews.length > 0 && (
         <div className="reviews-list">
           {reviews.map((review) => {
-            const href = entityHref(review.entity);
             const title = review.entity.title ?? "Contenido no disponible";
-            const content =
-              href !== null ? (
-                <Link to={href} className="review-song-link">
-                  {title}
-                </Link>
-              ) : (
-                <span className="review-song">{title}</span>
-              );
 
             return (
               <Reveal key={review.id}>
@@ -106,7 +90,15 @@ const ReviewsSection = () => {
                   )}
                   <div className="review-content">
                     <div className="review-header">
-                      {content}
+                      <Link
+                        to={entityPath(
+                          review.entity.type,
+                          review.entity.externalId,
+                        )}
+                        className="review-song-link"
+                      >
+                        {title}
+                      </Link>
                       <StarRating value={review.value} readOnly size="sm" />
                     </div>
                     <div className="review-author">

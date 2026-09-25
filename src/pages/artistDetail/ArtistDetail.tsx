@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   getArtistDetail,
-  getArtistIdByName,
   type ArtistDetail as ArtistDetailData,
 } from "../../services/artist.service";
 import SongList from "../../components/songList/SongList";
@@ -12,7 +11,7 @@ import { FaStar, FaUser } from "react-icons/fa";
 import "./ArtistDetail.css";
 
 const ArtistDetail = () => {
-  const { name: reference = "" } = useParams();
+  const { id = "" } = useParams();
 
   const [artist, setArtist] = useState<ArtistDetailData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -27,15 +26,6 @@ const ArtistDetail = () => {
       setArtist(null);
 
       try {
-        const trimmed = reference.trim();
-        if (!trimmed) throw new Error("Referencia vacía");
-
-        const id = /^\d+$/.test(trimmed)
-          ? trimmed
-          : await getArtistIdByName(trimmed);
-
-        if (!id) throw new Error("Artista no encontrado");
-
         const detail = await getArtistDetail(id);
         if (cancelled) return;
         setArtist(detail);
@@ -50,7 +40,7 @@ const ArtistDetail = () => {
     return () => {
       cancelled = true;
     };
-  }, [reference]);
+  }, [id]);
 
   if (loading) {
     return (
@@ -69,7 +59,7 @@ const ArtistDetail = () => {
           </span>
           <h1 className="artist-not-found-title">Artista no encontrado</h1>
           <p className="artist-not-found-text">
-            No encontramos un artista con ese nombre, o el servicio no está
+            No encontramos un artista con ese id, o el servicio no está
             disponible en este momento.
           </p>
           <Link to="/" className="app-btn app-btn-primary artist-not-found-cta">

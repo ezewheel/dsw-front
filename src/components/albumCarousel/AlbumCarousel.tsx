@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import type { ArtistAlbum } from "../../services/artist.service";
+import { entityPath } from "../../utils/routes";
 import "./AlbumCarousel.css";
 
 type AlbumCarouselProps = {
@@ -92,7 +93,7 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
         >
           {albums.map((album) => (
             <Link
-              to={`/album/${encodeURIComponent(album.title)}`}
+              to={entityPath("album", album.externalId)}
               className="album-carousel-item"
               key={album.externalId}
             >

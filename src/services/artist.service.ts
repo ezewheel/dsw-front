@@ -1,5 +1,4 @@
 import api from "../api/client";
-import { searchMusicalEntity } from "./search.service";
 
 export type ArtistTopTrack = {
   externalId: string;
@@ -31,17 +30,4 @@ export type ArtistDetail = {
 export const getArtistDetail = async (id: string): Promise<ArtistDetail> => {
   const { data } = await api.get<ArtistDetail>(`/musical-entity/artist/${id}`);
   return data;
-};
-
-export const getArtistIdByName = async (
-  name: string,
-): Promise<string | null> => {
-const { results } = await searchMusicalEntity(name, "artist");
-  const normalized = name.trim().toLowerCase();
-  const match =
-    results.find(
-      (r) => r.type === "artist" && r.name.trim().toLowerCase() === normalized,
-    ) ?? results.find((r) => r.type === "artist");
-
-  return match?.type === "artist" ? match.externalId : null;
 };

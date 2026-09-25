@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
+import { entityPath } from "../../../utils/routes";
 import "./SongItem.css";
 
 type SongItemProps = {
   id: string;
   title: string;
   artist: string;
+  artistId: number | null;
   album: string;
+  albumId: number | null;
   score: number | null;
   duration: number;
   imageUrl: string;
@@ -38,12 +41,14 @@ const SongItem = ({
   id,
   title,
   artist,
+  artistId,
   album,
+  albumId,
   score,
   duration,
   imageUrl,
 }: SongItemProps) => {
-  const hasSubtitle = Boolean(artist || album);
+  const hasSubtitle = artistId !== null || albumId !== null;
 
   return (
     <div className="song-card">
@@ -66,27 +71,23 @@ const SongItem = ({
 
       <div className="song-card-body">
         <h5 className="song-card-title">
-          <Link to={`/song/${id}`} className="song-title-link">
+          <Link to={entityPath("track", id)} className="song-title-link">
             {title}
           </Link>
         </h5>
 
         {hasSubtitle && (
           <div className="song-card-subtitle">
-            {artist && (
-              <Link
-                to={`/artist/${encodeURIComponent(artist)}`}
-                className="artist-link"
-              >
+            {artistId !== null && (
+              <Link to={entityPath("artist", artistId)} className="artist-link">
                 {artist}
               </Link>
             )}
-            {artist && album && <span className="song-card-dot"> · </span>}
-            {album && (
-              <Link
-                to={`/album/${encodeURIComponent(album)}`}
-                className="artist-link"
-              >
+            {artistId !== null && albumId !== null && (
+              <span className="song-card-dot"> · </span>
+            )}
+            {albumId !== null && (
+              <Link to={entityPath("album", albumId)} className="artist-link">
                 {album}
               </Link>
             )}

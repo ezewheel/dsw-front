@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
+import { entityPath } from "../../utils/routes";
 import "./SongList.css";
 
 export type TrackItem = {
@@ -32,7 +33,10 @@ export const SongListItem = ({
       loading="lazy"
     />
     <div className="song-list-meta">
-      <Link to={`/song/${song.externalId}`} className="song-list-title">
+      <Link
+        to={entityPath("track", song.externalId)}
+        className="song-list-title"
+      >
         {song.title}
       </Link>
       {song.subtitle && (

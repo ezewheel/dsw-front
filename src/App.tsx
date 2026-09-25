@@ -17,10 +17,10 @@ function App() {
         <main className="app-main">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/song/:id" element={<TrackDetail />} />
+            <Route path="/track/:id" element={<TrackDetail />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/artist/:name" element={<ArtistDetail />} />
-            <Route path="/album/:name" element={<AlbumDetail />} />
+            <Route path="/artist/:id" element={<ArtistDetail />} />
+            <Route path="/album/:id" element={<AlbumDetail />} />
             <Route path="/advanced-search" element={<AdvancedSearch />} />
           </Routes>
         </main>

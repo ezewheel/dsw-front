@@ -6,6 +6,7 @@ import {
   type SearchApiType,
   type SearchResult,
 } from "../../../services/search.service";
+import { entityPath } from "../../../utils/routes";
 import "./SearchBar.css";
 
 type LocalSearchType = "song" | "album" | "artist";
@@ -40,17 +41,6 @@ const resultImage = (result: SearchResult): string => {
       return result.cover_medium ?? "";
     case "track":
       return result.album?.cover_medium ?? "";
-  }
-};
-
-const resultRoute = (result: SearchResult): string => {
-  switch (result.type) {
-    case "track":
-      return `/song/${result.externalId}`;
-    case "album":
-      return `/album/${encodeURIComponent(result.title)}`;
-    case "artist":
-      return `/artist/${result.externalId}`;
   }
 };
 
@@ -179,7 +169,7 @@ const timer = window.setTimeout(() => {
                 {results.map((result) => (
                   <Link
                     key={resultKey(result)}
-                    to={resultRoute(result)}
+                    to={entityPath(result.type, result.externalId)}
                     className="searchbar-result"
                     onClick={() => setOpen(false)}
                   >

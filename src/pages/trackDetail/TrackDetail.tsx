@@ -4,13 +4,10 @@ import {
   getTrackDetail,
   type TrackDetail as TrackDetailData,
 } from "../../services/track.service";
-import {
-  getAlbumDetail,
-  getAlbumIdByTitle,
-  type AlbumSong,
-} from "../../services/album.service";
+import { getAlbumDetail, type AlbumSong } from "../../services/album.service";
 import SameAlbumTracksSection from "../../components/sameAlbumTracks/SameAlbumTracksSection";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
+import { entityPath } from "../../utils/routes";
 import {
   FaStar,
   FaMusic,
@@ -28,7 +25,7 @@ const formatDuration = (seconds: number) => {
 };
 
 const TrackDetail = () => {
-  const { id: trackId = "" } = useParams();
+  const { id = "" } = useParams();
 
   const [track, setTrack] = useState<TrackDetailData | null>(null);
   const [albumSongs, setAlbumSongs] = useState<AlbumSong[]>([]);
@@ -45,16 +42,12 @@ const TrackDetail = () => {
       setAlbumSongs([]);
 
       try {
-        if (!trackId.trim()) throw new Error("Referencia vacía");
-
-        const detail = await getTrackDetail(trackId);
+        const detail = await getTrackDetail(id);
         if (cancelled) return;
         setTrack(detail);
 
         try {
-          const albumId = await getAlbumIdByTitle(detail.album.title);
-          if (!albumId) return;
-          const album = await getAlbumDetail(albumId);
+          const album = await getAlbumDetail(String(detail.album.id));
           if (cancelled) return;
           setAlbumSongs(album.songs);
         } catch {
@@ -71,7 +64,7 @@ const TrackDetail = () => {
     return () => {
       cancelled = true;
     };
-  }, [trackId]);
+  }, [id]);
 
   if (loading) {
     return (
@@ -137,7 +130,7 @@ const TrackDetail = () => {
                 aria-hidden="true"
               />
               <Link
-                to={`/artist/${encodeURIComponent(track.artist.name)}`}
+                to={entityPath("artist", track.artist.id)}
                 className="track-hero-link track-hero-artist"
                 title={track.artist.name}
               >
@@ -156,7 +149,7 @@ const TrackDetail = () => {
                 aria-hidden="true"
               />
               <Link
-                to={`/album/${encodeURIComponent(track.album.title)}`}
+                to={entityPath("album", track.album.id)}
                 className="track-hero-link track-hero-album"
                 title={track.album.title}
               >

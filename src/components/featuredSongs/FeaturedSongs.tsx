@@ -67,7 +67,9 @@ const FeaturedSongs = () => {
               id={song.externalId}
               title={song.title ?? "Título no disponible"}
               artist={song.artist ?? ""}
+              artistId={song.artistId}
               album={song.album ?? ""}
+              albumId={song.albumId}
               score={song.averageRating}
               duration={song.duration ?? 0}
               imageUrl={song.cover ?? ""}

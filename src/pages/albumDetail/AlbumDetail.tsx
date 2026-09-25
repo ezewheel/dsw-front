@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   getAlbumDetail,
-  getAlbumIdByTitle,
   type AlbumDetail as AlbumDetailData,
 } from "../../services/album.service";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import SongList from "../../components/songList/SongList";
+import { entityPath } from "../../utils/routes";
 import { FaCompactDisc, FaStar } from "react-icons/fa";
 import "./AlbumDetail.css";
 
@@ -17,7 +17,7 @@ const formatDuration = (seconds: number) => {
 };
 
 const AlbumDetail = () => {
-  const { name: reference = "" } = useParams();
+  const { id = "" } = useParams();
 
   const [album, setAlbum] = useState<AlbumDetailData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -32,16 +32,6 @@ const AlbumDetail = () => {
       setAlbum(null);
 
       try {
-        const trimmed = reference.trim();
-        if (trimmed === "") {
-          throw new Error("Referencia vacía");
-        }
-        const id = /^\d+$/.test(trimmed)
-          ? trimmed
-          : await getAlbumIdByTitle(trimmed);
-        if (id === null) {
-          throw new Error("Álbum no encontrado");
-        }
         const detail = await getAlbumDetail(id);
         if (active) setAlbum(detail);
       } catch {
@@ -56,7 +46,7 @@ const AlbumDetail = () => {
     return () => {
       active = false;
     };
-  }, [reference]);
+  }, [id]);
 
   if (loading) {
     return (
@@ -75,7 +65,7 @@ const AlbumDetail = () => {
           </span>
           <h1 className="album-not-found-title">Álbum no encontrado</h1>
           <p className="album-not-found-text">
-            No encontramos un álbum con ese nombre, o el servicio no está
+            No encontramos un álbum con ese id, o el servicio no está
             disponible en este momento.
           </p>
           <Link to="/" className="app-btn app-btn-primary album-not-found-cta">
@@ -85,10 +75,6 @@ const AlbumDetail = () => {
       </div>
     );
   }
-
-  const artistRoute = album.artist.id
-    ? `/artist/${album.artist.id}`
-    : `/artist/${encodeURIComponent(album.artist.name)}`;
 
   return (
     <div className="app-container album-detail">
@@ -123,7 +109,10 @@ const AlbumDetail = () => {
             </div>
           </div>
           <div className="album-hero-info">
-            <Link to={artistRoute} className="artist-link album-hero-artist">
+            <Link
+              to={entityPath("artist", album.artist.id)}
+              className="artist-link album-hero-artist"
+            >
               {album.artist.name}
             </Link>
             <div className="album-hero-meta">

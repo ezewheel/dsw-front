@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
 import TopListColumn, { type TopListEntry } from "./TopListColumn";
 import { getTopRated, type TopRatedItem } from "../../services/top.service";
+import { entityPath } from "../../utils/routes";
 import "./TopLists.css";
-
-const entityRoute = (item: TopRatedItem): string => {
-  if (item.type === "track") return `/song/${item.externalId}`;
-  const name = encodeURIComponent(item.title ?? "");
-  return item.type === "artist" ? `/artist/${name}` : `/album/${name}`;
-};
 
 const toEntry = (item: TopRatedItem): TopListEntry => ({
   name: item.title ?? "Contenido no disponible",
   imageUrl: item.cover ?? "",
   score: item.averageRating,
-  to: entityRoute(item),
+  to: entityPath(item.type, item.externalId),
 });
 
 const TopLists = () => {
