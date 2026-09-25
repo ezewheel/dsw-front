@@ -146,18 +146,6 @@
   color: var(--text);
 }
 
-.entity-reviews-stars {
-  color: #ffc107;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  flex-shrink: 0;
-}
-
-.entity-reviews-stars-empty {
-  color: var(--text-muted);
-  opacity: 0.4;
-}
-
 .entity-review-text {
   margin: 0;
   color: var(--text);

@@ -6,19 +6,13 @@ import {
 } from "../../services/reviews.service";
 import Pagination from "../pagination/Pagination";
 import ReviewForm from "../reviewForm/ReviewForm";
+import StarRating from "../starRating/StarRating";
 import "./EntityReviews.css";
 
 const PAGE_SIZE = 10;
 
 const formatDate = (iso: string): string =>
   new Intl.DateTimeFormat("es-AR", { dateStyle: "long" }).format(new Date(iso));
-
-const Stars = ({ value }: { value: number }) => (
-  <span className="entity-reviews-stars" aria-label={`${value} de 5 estrellas`}>
-    {"★".repeat(value)}
-    <span className="entity-reviews-stars-empty">{"★".repeat(5 - value)}</span>
-  </span>
-);
 
 type EntityReviewsProps = {
   entityType: SearchApiType;
@@ -107,7 +101,7 @@ const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
                           <span className="entity-review-author">
                             {review.user.nickname}
                           </span>
-                          <Stars value={review.value} />
+                          <StarRating value={review.value} readOnly size="sm" />
                         </div>
                         <p className="entity-review-text">{review.content}</p>
                         <span className="entity-review-date">

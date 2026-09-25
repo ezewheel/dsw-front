@@ -6,6 +6,7 @@ import {
 } from "../../services/reviews.service";
 import type { SearchApiType } from "../../services/search.service";
 import Reveal from "../reveal/Reveal";
+import StarRating from "../starRating/StarRating";
 import "./ReviewsSection.css";
 
 const TYPE_LABELS: Record<SearchApiType, string> = {
@@ -18,13 +19,6 @@ const LATEST_REVIEWS_LIMIT = 5;
 
 const formatDate = (iso: string): string =>
   new Intl.DateTimeFormat("es-AR", { dateStyle: "long" }).format(new Date(iso));
-
-const Stars = ({ value }: { value: number }) => (
-  <span className="stars" aria-label={`${value} de 5 estrellas`}>
-    {"★".repeat(value)}
-    <span className="stars-empty">{"★".repeat(5 - value)}</span>
-  </span>
-);
 
 const entityHref = (entity: LatestReview["entity"]): string | null => {
   if (entity.type === "track") return `/song/${entity.externalId}`;
@@ -113,7 +107,7 @@ const ReviewsSection = () => {
                   <div className="review-content">
                     <div className="review-header">
                       {content}
-                      <Stars value={Math.round(review.value)} />
+                      <StarRating value={review.value} readOnly size="sm" />
                     </div>
                     <div className="review-author">
                       {review.user.nickname} · {TYPE_LABELS[review.entity.type]}{" "}
