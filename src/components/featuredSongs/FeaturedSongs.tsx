@@ -1,43 +1,14 @@
-import { useEffect, useState } from "react";
 import SongItem from "./songItem/SongItem";
-import {
-  getLatestReviewedSongs,
-  type ReviewedSong,
-} from "../../api/reviews";
+import { getLatestReviewedSongs } from "../../api/reviews";
+import { useFetch } from "../../hooks/useFetch";
 import "./FeaturedSongs.css";
 
 const FEATURED_LIMIT = 5;
 
+const loadFeaturedSongs = () => getLatestReviewedSongs(FEATURED_LIMIT);
+
 const FeaturedSongs = () => {
-  const [songs, setSongs] = useState<ReviewedSong[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    let active = true;
-
-    const load = async () => {
-      setLoading(true);
-      setError(false);
-      setSongs(null);
-
-      try {
-        const data = await getLatestReviewedSongs(FEATURED_LIMIT);
-        if (!active) return;
-        setSongs(data);
-      } catch {
-        if (active) setError(true);
-      } finally {
-        if (active) setLoading(false);
-      }
-    };
-
-    load();
-
-    return () => {
-      active = false;
-    };
-  }, []);
+  const { data: songs, loading, error } = useFetch(loadFeaturedSongs);
 
   return (
     <section className="featured-songs-section">

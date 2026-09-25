@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import TopListColumn, { type TopListEntry } from "./TopListColumn";
 import { getTopRated, type TopRatedItem } from "../../api/musical-entity";
 import { entityPath } from "../../utils/routes";
+import { useFetch } from "../../hooks/useFetch";
 import "./TopLists.css";
 
 const toEntry = (item: TopRatedItem): TopListEntry => ({
@@ -12,38 +12,7 @@ const toEntry = (item: TopRatedItem): TopListEntry => ({
 });
 
 const TopLists = () => {
-  const [topRated, setTopRated] = useState<{
-    artists: TopRatedItem[];
-    albums: TopRatedItem[];
-    tracks: TopRatedItem[];
-  } | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    let active = true;
-
-    const load = async () => {
-      setLoading(true);
-      setError(false);
-
-      try {
-        const data = await getTopRated();
-        if (!active) return;
-        setTopRated(data);
-      } catch {
-        if (active) setError(true);
-      } finally {
-        if (active) setLoading(false);
-      }
-    };
-
-    load();
-
-    return () => {
-      active = false;
-    };
-  }, []);
+  const { data: topRated, loading, error } = useFetch(getTopRated);
 
   return (
     <>

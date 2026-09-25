@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   getAlbumDetail,
   getTrackDetail,
   type AlbumSong,
-  type TrackDetail as TrackDetailData,
 } from "../../api/musical-entity";
 import SameAlbumTracksSection from "../../components/sameAlbumTracks/SameAlbumTracksSection";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import { entityPath } from "../../utils/routes";
+import { useFetch } from "../../hooks/useFetch";
 import {
   FaStar,
   FaMusic,
@@ -25,47 +25,20 @@ const formatDuration = (seconds: number) => {
   return `${m}:${s.toString().padStart(2, "0")} min`;
 };
 
+const loadTrackPage = async (id: string) => {
+  const track = await getTrackDetail(id);
+  const albumSongs = await getAlbumDetail(String(track.album.id))
+    .then((album) => album.songs)
+    .catch((): AlbumSong[] => []);
+  return { track, albumSongs };
+};
+
 const TrackDetail = () => {
   const { id = "" } = useParams();
 
-  const [track, setTrack] = useState<TrackDetailData | null>(null);
-  const [albumSongs, setAlbumSongs] = useState<AlbumSong[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function load() {
-      setLoading(true);
-      setError(false);
-      setTrack(null);
-      setAlbumSongs([]);
-
-      try {
-        const detail = await getTrackDetail(id);
-        if (cancelled) return;
-        setTrack(detail);
-
-        try {
-          const album = await getAlbumDetail(String(detail.album.id));
-          if (cancelled) return;
-          setAlbumSongs(album.songs);
-        } catch {
-          if (!cancelled) setAlbumSongs([]);
-        }
-      } catch {
-        if (!cancelled) setError(true);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, [id]);
+  const { data, loading, error } = useFetch(
+    useCallback(() => loadTrackPage(id), [id]),
+  );
 
   if (loading) {
     return (
@@ -75,7 +48,7 @@ const TrackDetail = () => {
     );
   }
 
-  if (error || !track) {
+  if (error || !data) {
     return (
       <div className="app-container track-detail">
         <div className="track-not-found">
@@ -94,6 +67,8 @@ const TrackDetail = () => {
       </div>
     );
   }
+
+  const { track, albumSongs } = data;
 
   return (
     <div className="app-container track-detail">

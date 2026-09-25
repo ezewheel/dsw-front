@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import type { MusicalEntityType } from "../../api/musical-entity";
-import {
-  getEntityReviews,
-  type EntityReview,
-} from "../../api/reviews";
+import { getEntityReviews } from "../../api/reviews";
+import { useFetch } from "../../hooks/useFetch";
 import Pagination from "../pagination/Pagination";
 import ReviewForm from "../reviewForm/ReviewForm";
 import StarRating from "../starRating/StarRating";
@@ -20,44 +18,14 @@ type EntityReviewsProps = {
 };
 
 const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
-  const [reviews, setReviews] = useState<EntityReview[] | null>(null);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
-
-  const safePage = Math.min(page, Math.max(1, totalPages));
-
-  useEffect(() => {
-    let active = true;
-
-    const load = async () => {
-      setLoading(true);
-      setError(false);
-      setReviews(null);
-
-      try {
-        const result = await getEntityReviews(entityType, externalId, {
-          page: safePage,
-          pageSize: PAGE_SIZE,
-        });
-        if (!active) return;
-        setReviews(result.items);
-        setTotalPages(result.totalPages);
-      } catch {
-        if (active) setError(true);
-      } finally {
-        if (active) setLoading(false);
-      }
-    };
-
-    load();
-
-    return () => {
-      active = false;
-    };
-  }, [entityType, externalId, safePage, refreshKey]);
+  const { data, loading, error, reload } = useFetch(
+    useCallback(
+      () =>
+        getEntityReviews(entityType, externalId, { page, pageSize: PAGE_SIZE }),
+      [entityType, externalId, page],
+    ),
+  );
 
   return (
     <section className="entity-reviews">
@@ -70,7 +38,7 @@ const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
             externalId={externalId}
             onSubmitted={() => {
               setPage(1);
-              setRefreshKey((key) => key + 1);
+              reload();
             }}
           />
         </div>
@@ -81,14 +49,14 @@ const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
             <p className="entity-reviews-empty">
               No se pudieron cargar las reseñas.
             </p>
-          ) : reviews === null || reviews.length === 0 ? (
+          ) : !data || data.items.length === 0 ? (
             <p className="entity-reviews-empty">
               Todavía no hay reseñas para esta entidad. ¡Sé el primero!
             </p>
           ) : (
             <>
               <div className="entity-reviews-list">
-                {reviews.map((review) => {
+                {data.items.map((review) => {
                   const initial = review.user.nickname.charAt(0).toUpperCase();
 
                   return (
@@ -113,8 +81,8 @@ const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
                 })}
               </div>
               <Pagination
-                currentPage={safePage}
-                totalPages={totalPages}
+                currentPage={page}
+                totalPages={data.totalPages}
                 onPageChange={setPage}
               />
             </>

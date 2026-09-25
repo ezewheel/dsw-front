@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaCompactDisc, FaMusic, FaSpinner, FaUser } from "react-icons/fa";
 import {
   ENTITY_TYPE_LABELS,
   searchMusicalEntity,
   type MusicalEntityType,
-  type SearchResult,
 } from "../../api/musical-entity";
 import SearchResultsList from "../../components/searchResultsList/SearchResultsList";
 import Pagination from "../../components/pagination/Pagination";
+import { useFetch } from "../../hooks/useFetch";
 import "./AdvancedSearch.css";
 
 const TYPE_OPTIONS: Record<MusicalEntityType, string> = {
@@ -37,11 +37,7 @@ const AdvancedSearch = () => {
   const rawType = params.get("type");
   const apiType = toApiType(rawType);
 
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const searchKey = `${apiType}:${query.trim()}`;
   const [appliedSearchKey, setAppliedSearchKey] = useState(searchKey);
@@ -50,40 +46,20 @@ const AdvancedSearch = () => {
     setPage(1);
   }
 
-  useEffect(() => {
-    const trimmed = query.trim();
-    if (!trimmed || !apiType) return;
+  const { data, loading, error } = useFetch(
+    useCallback(async () => {
+      const trimmed = query.trim();
+      if (!trimmed || !apiType) return null;
 
-    let active = true;
+      return searchMusicalEntity(trimmed, apiType, {
+        limit: PAGE_SIZE,
+        index: (page - 1) * PAGE_SIZE,
+      });
+    }, [query, apiType, page]),
+  );
 
-    const fetchResults = async () => {
-      setLoading(true);
-      setError("");
-
-      try {
-        const response = await searchMusicalEntity(trimmed, apiType, {
-          limit: PAGE_SIZE,
-          index: (page - 1) * PAGE_SIZE,
-        });
-        if (!active) return;
-        setResults(response.results);
-        setTotal(response.total);
-      } catch {
-        if (!active) return;
-        setError("No se pudieron cargar los resultados");
-        setResults([]);
-      } finally {
-        if (active) setLoading(false);
-      }
-    };
-
-    fetchResults();
-
-    return () => {
-      active = false;
-    };
-  }, [query, apiType, page]);
-
+  const results = data?.results ?? [];
+  const total = data?.total ?? 0;
   const hasQuery = query.trim() !== "" && apiType !== null;
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
@@ -121,7 +97,9 @@ const AdvancedSearch = () => {
           )}
 
           {!loading && error && (
-            <div className="advanced-search-status">{error}</div>
+            <div className="advanced-search-status">
+              No se pudieron cargar los resultados
+            </div>
           )}
 
           {!loading && !error && hasQuery && results.length === 0 && (

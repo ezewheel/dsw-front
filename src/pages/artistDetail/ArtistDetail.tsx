@@ -1,46 +1,19 @@
-import { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  getArtistDetail,
-  type ArtistDetail as ArtistDetailData,
-} from "../../api/musical-entity";
+import { getArtistDetail } from "../../api/musical-entity";
 import SongList from "../../components/songList/SongList";
 import AlbumCarousel from "../../components/albumCarousel/AlbumCarousel";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
+import { useFetch } from "../../hooks/useFetch";
 import { FaStar, FaUser } from "react-icons/fa";
 import "./ArtistDetail.css";
 
 const ArtistDetail = () => {
   const { id = "" } = useParams();
 
-  const [artist, setArtist] = useState<ArtistDetailData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function load() {
-      setLoading(true);
-      setError(false);
-      setArtist(null);
-
-      try {
-        const detail = await getArtistDetail(id);
-        if (cancelled) return;
-        setArtist(detail);
-      } catch {
-        if (!cancelled) setError(true);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, [id]);
+  const { data: artist, loading, error } = useFetch(
+    useCallback(() => getArtistDetail(id), [id]),
+  );
 
   if (loading) {
     return (

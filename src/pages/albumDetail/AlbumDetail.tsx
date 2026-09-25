@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  getAlbumDetail,
-  type AlbumDetail as AlbumDetailData,
-} from "../../api/musical-entity";
+import { getAlbumDetail } from "../../api/musical-entity";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import SongList from "../../components/songList/SongList";
 import { entityPath } from "../../utils/routes";
+import { useFetch } from "../../hooks/useFetch";
 import { FaCompactDisc, FaStar } from "react-icons/fa";
 import "./AlbumDetail.css";
 
@@ -19,34 +17,9 @@ const formatDuration = (seconds: number) => {
 const AlbumDetail = () => {
   const { id = "" } = useParams();
 
-  const [album, setAlbum] = useState<AlbumDetailData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    let active = true;
-
-    const load = async () => {
-      setLoading(true);
-      setError(false);
-      setAlbum(null);
-
-      try {
-        const detail = await getAlbumDetail(id);
-        if (active) setAlbum(detail);
-      } catch {
-        if (active) setError(true);
-      } finally {
-        if (active) setLoading(false);
-      }
-    };
-
-    load();
-
-    return () => {
-      active = false;
-    };
-  }, [id]);
+  const { data: album, loading, error } = useFetch(
+    useCallback(() => getAlbumDetail(id), [id]),
+  );
 
   if (loading) {
     return (

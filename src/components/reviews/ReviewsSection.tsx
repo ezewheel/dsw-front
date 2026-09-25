@@ -1,50 +1,21 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  getLatestReviews,
-  type LatestReview,
-} from "../../api/reviews";
+import { getLatestReviews } from "../../api/reviews";
 import { ENTITY_TYPE_LABELS } from "../../api/musical-entity";
 import Reveal from "../reveal/Reveal";
 import StarRating from "../starRating/StarRating";
 import { entityPath } from "../../utils/routes";
+import { useFetch } from "../../hooks/useFetch";
 import "./ReviewsSection.css";
 
 const LATEST_REVIEWS_LIMIT = 5;
+
+const loadLatestReviews = () => getLatestReviews(LATEST_REVIEWS_LIMIT);
 
 const formatDate = (iso: string): string =>
   new Intl.DateTimeFormat("es-AR", { dateStyle: "long" }).format(new Date(iso));
 
 const ReviewsSection = () => {
-  const [reviews, setReviews] = useState<LatestReview[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    let active = true;
-
-    const load = async () => {
-      setLoading(true);
-      setError(false);
-      setReviews(null);
-
-      try {
-        const data = await getLatestReviews(LATEST_REVIEWS_LIMIT);
-        if (!active) return;
-        setReviews(data);
-      } catch {
-        if (active) setError(true);
-      } finally {
-        if (active) setLoading(false);
-      }
-    };
-
-    load();
-
-    return () => {
-      active = false;
-    };
-  }, []);
+  const { data: reviews, loading, error } = useFetch(loadLatestReviews);
 
   return (
     <section className="reviews-section">
