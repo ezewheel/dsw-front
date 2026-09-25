@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import type { TopRatedItem } from "../../api/musical-entity";
+import type { EntitySummary } from "../../api/musical-entity";
 import { entityPath } from "../../utils/routes";
 import AverageRating from "../averageRating/AverageRating";
 import "./TopListColumn.css";
 
 type TopListColumnProps = {
   title: string;
-  items: TopRatedItem[];
+  items: EntitySummary[];
 };
 
 const TopListColumn = ({ title, items }: TopListColumnProps) => {

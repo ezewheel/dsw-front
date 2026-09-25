@@ -3,55 +3,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import {
   searchMusicalEntity,
+  type EntitySummary,
   type MusicalEntityType,
-  type SearchResult,
 } from "../../../api/musical-entity";
 import { entityPath } from "../../../utils/routes";
 import "./SearchBar.css";
 
-type LocalSearchType = "song" | "album" | "artist";
-
-const SEARCH_TYPES: { value: LocalSearchType; label: string }[] = [
-  { value: "song", label: "Canción" },
+const SEARCH_TYPES: { value: MusicalEntityType; label: string }[] = [
+  { value: "track", label: "Canción" },
   { value: "album", label: "Álbum" },
   { value: "artist", label: "Artista" },
 ];
 
-const API_TYPE: Record<LocalSearchType, MusicalEntityType> = {
-  song: "track",
-  album: "album",
-  artist: "artist",
-};
-
 const SEARCH_LIMIT = 10;
-
-const resultTitle = (result: SearchResult): string => {
-  return "title" in result ? result.title : result.name;
-};
-
-const resultSubtitle = (result: SearchResult): string => {
-  return "artist" in result ? (result.artist?.name ?? "") : "Artista";
-};
-
-const resultImage = (result: SearchResult): string => {
-  switch (result.type) {
-    case "artist":
-      return result.picture_medium ?? "";
-    case "album":
-      return result.cover_medium ?? "";
-    case "track":
-      return result.album?.cover_medium ?? "";
-  }
-};
-
-const resultKey = (result: SearchResult): string =>
-  `${result.type}-${result.externalId}`;
 
 function SearchBar() {
   const navigate = useNavigate();
-  const [searchType, setSearchType] = useState<LocalSearchType>("song");
+  const [searchType, setSearchType] = useState<MusicalEntityType>("track");
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
+  const [results, setResults] = useState<EntitySummary[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const blurTimer = useRef<number | null>(null);
@@ -63,9 +33,9 @@ function SearchBar() {
 
     let active = true;
 
-const timer = window.setTimeout(() => {
+    const timer = window.setTimeout(() => {
       setLoading(true);
-      searchMusicalEntity(trimmed, API_TYPE[searchType], { limit: SEARCH_LIMIT })
+      searchMusicalEntity(trimmed, searchType, { limit: SEARCH_LIMIT })
         .then((response) => {
           if (!active) return;
           setResults(response.results.slice(0, SEARCH_LIMIT));
@@ -101,7 +71,7 @@ const timer = window.setTimeout(() => {
     if (!trimmed) return;
     setOpen(false);
     navigate(
-      `/advanced-search?query=${encodeURIComponent(trimmed)}&type=${API_TYPE[searchType]}`,
+      `/advanced-search?query=${encodeURIComponent(trimmed)}&type=${searchType}`,
     );
   }
 
@@ -125,7 +95,7 @@ const timer = window.setTimeout(() => {
         <select
           className="searchbar-type"
           value={searchType}
-          onChange={(e) => setSearchType(e.target.value as LocalSearchType)}
+          onChange={(e) => setSearchType(e.target.value as MusicalEntityType)}
           aria-label="Tipo de búsqueda"
         >
           {SEARCH_TYPES.map((type) => (
@@ -168,23 +138,23 @@ const timer = window.setTimeout(() => {
               <div className="searchbar-results-list">
                 {results.map((result) => (
                   <Link
-                    key={resultKey(result)}
+                    key={result.externalId}
                     to={entityPath(result.type, result.externalId)}
                     className="searchbar-result"
                     onClick={() => setOpen(false)}
                   >
-                    {resultImage(result) && (
+                    {result.cover && (
                       <img
-                        src={resultImage(result)}
-                        alt={`Portada de ${resultTitle(result)}`}
+                        src={result.cover}
+                        alt={`Portada de ${result.title}`}
                       />
                     )}
                     <div className="searchbar-result-info">
                       <div className="searchbar-result-title">
-                        {resultTitle(result)}
+                        {result.title}
                       </div>
                       <div className="searchbar-result-meta">
-                        {resultSubtitle(result)}
+                        {result.artist ?? "Artista"}
                       </div>
                     </div>
                   </Link>
@@ -194,7 +164,7 @@ const timer = window.setTimeout(() => {
               <Link
                 to={`/advanced-search?query=${encodeURIComponent(
                   query.trim(),
-                )}&type=${API_TYPE[searchType]}`}
+                )}&type=${searchType}`}
                 className="searchbar-more app-btn app-btn-primary app-btn-block"
                 onClick={() => setOpen(false)}
               >

@@ -8,39 +8,18 @@ export const ENTITY_TYPE_LABELS: Record<MusicalEntityType, string> = {
   artist: "artista",
 };
 
-export interface SearchTrack {
+export type EntitySummary = {
   externalId: string;
-  type: "track";
-  title: string;
-  artist: { id: number; name: string };
-  album: { id: number; title: string; cover_medium?: string };
+  type: MusicalEntityType;
+  title: string | null;
+  cover: string | null;
+  artist: string | null;
   averageRating: number | null;
-  reviewsCount: number;
-}
-
-export interface SearchAlbum {
-  externalId: string;
-  type: "album";
-  title: string;
-  cover_medium?: string;
-  artist: { id: number; name: string };
-  averageRating: number | null;
-  reviewsCount: number;
-}
-
-export interface SearchArtist {
-  externalId: string;
-  type: "artist";
-  name: string;
-  picture_medium?: string;
-  averageRating: number | null;
-  reviewsCount: number;
-}
-
-export type SearchResult = SearchTrack | SearchAlbum | SearchArtist;
+  ratingsCount: number;
+};
 
 export interface SearchResponse {
-  results: SearchResult[];
+  results: EntitySummary[];
   total: number;
 }
 
@@ -55,20 +34,10 @@ export const searchMusicalEntity = async (
   return data;
 };
 
-export interface TopRatedItem {
-  externalId: string;
-  type: MusicalEntityType;
-  title: string | null;
-  cover: string | null;
-  artist: string | null;
-  averageRating: number;
-  reviewsCount: number;
-}
-
 export interface TopRated {
-  artists: TopRatedItem[];
-  albums: TopRatedItem[];
-  tracks: TopRatedItem[];
+  artists: EntitySummary[];
+  albums: EntitySummary[];
+  tracks: EntitySummary[];
 }
 
 export const getTopRated = async (): Promise<TopRated> => {

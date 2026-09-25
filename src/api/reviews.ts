@@ -1,5 +1,5 @@
 import api from "./client";
-import type { MusicalEntityType } from "./musical-entity";
+import type { EntitySummary, MusicalEntityType } from "./musical-entity";
 
 export interface EntityReviewUser {
   id: number;
@@ -20,21 +20,13 @@ export interface EntityReviewsResult {
   items: EntityReview[];
 }
 
-export type LatestReviewEntity = {
-  externalId: string;
-  type: MusicalEntityType;
-  title: string | null;
-  cover: string | null;
-  artist: string | null;
-};
-
 export interface LatestReview {
   id: number;
   user: EntityReviewUser;
   value: number;
   content: string;
   createdAt: string;
-  entity: LatestReviewEntity;
+  entity: EntitySummary;
 }
 
 export interface ReviewedSong {
@@ -47,7 +39,7 @@ export interface ReviewedSong {
   duration: number | null;
   cover: string | null;
   averageRating: number | null;
-  reviewsCount: number;
+  ratingsCount: number;
 }
 
 export interface CreateReviewInput {
