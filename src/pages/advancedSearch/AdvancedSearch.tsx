@@ -6,7 +6,7 @@ import {
   searchMusicalEntity,
   type MusicalEntityType,
 } from "../../api/musical-entity";
-import SearchResultsList from "../../components/searchResultsList/SearchResultsList";
+import SearchResultItem from "../../components/searchResultItem/SearchResultItem";
 import Pagination from "../../components/pagination/Pagination";
 import { useFetch } from "../../hooks/useFetch";
 import { formatCount } from "../../utils/format";
@@ -111,7 +111,14 @@ const AdvancedSearch = () => {
 
           {!loading && !error && results.length > 0 && (
             <>
-              <SearchResultsList results={results} />
+              <div className="advanced-search-results" role="list">
+                {results.map((result) => (
+                  <SearchResultItem
+                    key={`${result.type}-${result.externalId}`}
+                    result={result}
+                  />
+                ))}
+              </div>
 
               <Pagination
                 currentPage={page}

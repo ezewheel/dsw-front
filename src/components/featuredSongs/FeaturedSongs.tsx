@@ -33,18 +33,7 @@ const FeaturedSongs = () => {
       {!loading && !error && songs !== null && songs.length > 0 && (
         <div className="featured-songs-list">
           {songs.map((song) => (
-            <SongItem
-              key={song.externalId}
-              id={song.externalId}
-              title={song.title ?? "Título no disponible"}
-              artist={song.artist ?? ""}
-              artistId={song.artistId}
-              album={song.album ?? ""}
-              albumId={song.albumId}
-              score={song.averageRating}
-              duration={song.duration ?? 0}
-              imageUrl={song.cover ?? ""}
-            />
+            <SongItem key={song.externalId} song={song} />
           ))}
         </div>
       )}

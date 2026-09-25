@@ -136,3 +136,9 @@
   color: var(--text);
   font-weight: 600;
 }
+
+.advanced-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

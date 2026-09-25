@@ -1,15 +1,7 @@
-import TopListColumn, { type TopListEntry } from "./TopListColumn";
-import { getTopRated, type TopRatedItem } from "../../api/musical-entity";
-import { entityPath } from "../../utils/routes";
+import TopListColumn from "./TopListColumn";
+import { getTopRated } from "../../api/musical-entity";
 import { useFetch } from "../../hooks/useFetch";
 import "./TopLists.css";
-
-const toEntry = (item: TopRatedItem): TopListEntry => ({
-  name: item.title ?? "Contenido no disponible",
-  imageUrl: item.cover ?? "",
-  score: item.averageRating,
-  to: entityPath(item.type, item.externalId),
-});
 
 const TopLists = () => {
   const { data: topRated, loading, error } = useFetch(getTopRated);
@@ -28,18 +20,15 @@ const TopLists = () => {
         <div className="top-lists">
           <TopListColumn
             title="Artistas mejor puntuados"
-            entries={(topRated?.artists ?? []).map(toEntry)}
-            imageAlt={(e) => `Imagen de ${e.name}`}
+            items={topRated?.artists ?? []}
           />
           <TopListColumn
             title="Álbumes mejor puntuados"
-            entries={(topRated?.albums ?? []).map(toEntry)}
-            imageAlt={(e) => `Portada de ${e.name}`}
+            items={topRated?.albums ?? []}
           />
           <TopListColumn
             title="Canciones mejor puntuadas"
-            entries={(topRated?.tracks ?? []).map(toEntry)}
-            imageAlt={(e) => `Portada de ${e.name}`}
+            items={topRated?.tracks ?? []}
           />
         </div>
       )}

@@ -1,4 +1,3 @@
-import FeatureRow from "./FeatureRow/FeatureRow";
 import "./FeatureSection.css";
 
 type Feature = {
@@ -27,12 +26,17 @@ const FeatureSection = () => {
       <h2 className="features-title">BeatGround te permite...</h2>
       <div>
         {FEATURES.map((feature, i) => (
-          <FeatureRow
-            key={i}
-            index={i}
-            title={feature.title}
-            text={feature.text}
-          />
+          <div className="feature-row" key={feature.title}>
+            <div className="feature-marker">
+              <span className="feature-index">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </div>
+            <div>
+              <h3 className="feature-title">{feature.title}</h3>
+              <p className="feature-text">{feature.text}</p>
+            </div>
+          </div>
         ))}
       </div>
     </section>

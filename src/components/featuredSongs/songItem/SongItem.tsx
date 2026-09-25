@@ -1,40 +1,20 @@
 import { Link } from "react-router-dom";
+import type { ReviewedSong } from "../../../api/reviews";
 import { entityPath } from "../../../utils/routes";
 import { formatDuration } from "../../../utils/format";
 import AverageRating from "../../averageRating/AverageRating";
 import "./SongItem.css";
 
-type SongItemProps = {
-  id: string;
-  title: string;
-  artist: string;
-  artistId: number | null;
-  album: string;
-  albumId: number | null;
-  score: number | null;
-  duration: number;
-  imageUrl: string;
-};
-
-const SongItem = ({
-  id,
-  title,
-  artist,
-  artistId,
-  album,
-  albumId,
-  score,
-  duration,
-  imageUrl,
-}: SongItemProps) => {
-  const hasSubtitle = artistId !== null || albumId !== null;
+const SongItem = ({ song }: { song: ReviewedSong }) => {
+  const title = song.title ?? "Título no disponible";
+  const hasSubtitle = song.artistId !== null || song.albumId !== null;
 
   return (
     <div className="song-card">
       <div className="song-card-img-wrapper">
-        {imageUrl ? (
+        {song.cover ? (
           <img
-            src={imageUrl}
+            src={song.cover}
             alt={`Portada de ${title}`}
             className="song-card-img"
           />
@@ -50,32 +30,34 @@ const SongItem = ({
 
       <div className="song-card-body">
         <h5 className="song-card-title">
-          <Link to={entityPath("track", id)} className="link">
+          <Link to={entityPath("track", song.externalId)} className="link">
             {title}
           </Link>
         </h5>
 
         {hasSubtitle && (
           <div className="song-card-subtitle">
-            {artistId !== null && (
-              <Link to={entityPath("artist", artistId)} className="link">
-                {artist}
+            {song.artistId !== null && (
+              <Link to={entityPath("artist", song.artistId)} className="link">
+                {song.artist}
               </Link>
             )}
-            {artistId !== null && albumId !== null && (
+            {song.artistId !== null && song.albumId !== null && (
               <span className="song-card-dot"> · </span>
             )}
-            {albumId !== null && (
-              <Link to={entityPath("album", albumId)} className="link">
-                {album}
+            {song.albumId !== null && (
+              <Link to={entityPath("album", song.albumId)} className="link">
+                {song.album}
               </Link>
             )}
           </div>
         )}
 
-        <AverageRating value={score} />
+        <AverageRating value={song.averageRating} />
 
-        <p className="song-card-duration">{formatDuration(duration)}</p>
+        <p className="song-card-duration">
+          {formatDuration(song.duration ?? 0)}
+        </p>
       </div>
     </div>
   );

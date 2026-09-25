@@ -31,11 +31,11 @@ const ReviewsSection = () => {
 
       {!loading && !error && reviews !== null && reviews.length > 0 && (
         <div className="reviews-list">
-          {reviews.map((review) => {
+          {reviews.map((review, i) => {
             const title = review.entity.title ?? "Contenido no disponible";
 
             return (
-              <Reveal key={review.id}>
+              <Reveal key={review.id} delay={i * 100}>
                 <article className="review-item">
                   {review.entity.cover ? (
                     <img
