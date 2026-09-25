@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SongItem from "../songItem/SongItem";
+import SongItem from "./songItem/SongItem";
 import {
   getLatestReviewedSongs,
   type ReviewedSong,

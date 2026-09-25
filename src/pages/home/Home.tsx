@@ -1,6 +1,6 @@
 import HeroImage from "../../components/heroImage/HeroImage";
 import FeaturedSongs from "../../components/featuredSongs/FeaturedSongs";
-import FeaturesSection from "../../components/features/FeaturesSection";
+import FeatureSection from "../../components/FeatureSection/FeatureSection";
 import TopLists from "../../components/topLists/TopLists";
 import ReviewsSection from "../../components/reviews/ReviewsSection";
 import Reveal from "../../components/reveal/Reveal";
@@ -10,12 +10,12 @@ const Home = () => {
   return (
     <>
       <HeroImage />
-      <div className="app-container catalog">
+      <div className="app-container">
         <Reveal>
           <FeaturedSongs />
         </Reveal>
         <Reveal>
-          <FeaturesSection />
+          <FeatureSection />
         </Reveal>
         <Reveal>
           <TopLists />

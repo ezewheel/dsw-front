@@ -1,4 +1,5 @@
-import "./FeaturesSection.css";
+import FeatureRow from "./FeatureRow/FeatureRow";
+import "./FeatureSection.css";
 
 type Feature = {
   title: string;
@@ -20,27 +21,22 @@ const FEATURES: Feature[] = [
   },
 ];
 
-const FeaturesSection = () => {
+const FeatureSection = () => {
   return (
     <section className="features-section">
       <h2 className="features-title">BeatGround te permite...</h2>
-      <div className="features-list">
+      <div>
         {FEATURES.map((feature, i) => (
-          <div className="feature-row" key={feature.title}>
-            <div className="feature-marker">
-              <span className="feature-index">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-            </div>
-            <div className="feature-copy">
-              <h3 className="feature-title">{feature.title}</h3>
-              <p className="feature-text">{feature.text}</p>
-            </div>
-          </div>
+          <FeatureRow
+            key={i}
+            index={i}
+            title={feature.title}
+            text={feature.text}
+          />
         ))}
       </div>
     </section>
   );
 };
 
-export default FeaturesSection;
+export default FeatureSection;

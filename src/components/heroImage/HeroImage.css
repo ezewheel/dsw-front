@@ -1,15 +1,13 @@
 .hero-image {
   position: relative;
   width: 100%;
-  margin: -108px 0 3rem;
+  margin: -3rem 0;
 }
 
 .hero-image-img {
-  display: block;
   width: 100%;
   max-height: 900px;
   object-fit: cover;
-  -webkit-mask-image: linear-gradient(to top, transparent 5%, #000 35%);
   mask-image: linear-gradient(to top, transparent 5%, #000 35%);
 }
 
@@ -20,7 +18,7 @@
   transform: translateX(-50%);
   max-width: 72rem;
   text-align: center;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: 3.5rem;
   font-weight: 700;
   color: var(--text);
   text-shadow: 0 4px 24px rgb(0 0 0 / 0.85);
