@@ -45,7 +45,7 @@ export const getTopRated = async (): Promise<TopRated> => {
   return data;
 };
 
-export type AlbumSong = {
+export type AlbumTrack = {
   externalId: string;
   title: string;
   duration: number;
@@ -55,16 +55,15 @@ export type AlbumSong = {
 export type AlbumDetail = {
   externalId: string;
   title: string;
-  cover_big: string;
-  cover_medium: string;
-  release_date: string;
+  cover: string;
+  releaseDate: string;
   artist: {
     id: number;
     name: string;
   };
   averageRating: number | null;
   duration: number;
-  songs: AlbumSong[];
+  tracks: AlbumTrack[];
 };
 
 export const getAlbumDetail = async (id: string): Promise<AlbumDetail> => {
@@ -77,7 +76,7 @@ export type ArtistTopTrack = {
   title: string;
   album: {
     title: string;
-    cover_medium: string;
+    cover: string;
   };
   averageRating: number | null;
 };
@@ -85,15 +84,15 @@ export type ArtistTopTrack = {
 export type ArtistAlbum = {
   externalId: string;
   title: string;
-  cover_big: string;
-  release_date: string;
+  cover: string;
+  releaseDate: string;
   averageRating: number | null;
 };
 
 export type ArtistDetail = {
   externalId: string;
   name: string;
-  picture_big: string;
+  cover: string;
   averageRating: number | null;
   topTracks: ArtistTopTrack[];
   albums: ArtistAlbum[];
@@ -115,7 +114,7 @@ export type TrackDetail = {
   album: {
     id: number;
     title: string;
-    cover_big: string;
+    cover: string;
   };
   averageRating: number | null;
   ratingsCount: number;

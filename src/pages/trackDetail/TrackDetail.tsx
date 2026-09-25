@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import {
   getAlbumDetail,
   getTrackDetail,
-  type AlbumSong,
+  type AlbumTrack,
 } from "../../api/musical-entity";
 import SongList from "../../components/songList/SongList";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
@@ -24,10 +24,10 @@ import "./TrackDetail.css";
 
 const loadTrackPage = async (id: string) => {
   const track = await getTrackDetail(id);
-  const albumSongs = await getAlbumDetail(String(track.album.id))
-    .then((album) => album.songs)
-    .catch((): AlbumSong[] => []);
-  return { track, albumSongs };
+  const albumTracks = await getAlbumDetail(String(track.album.id))
+    .then((album) => album.tracks)
+    .catch((): AlbumTrack[] => []);
+  return { track, albumTracks };
 };
 
 const TrackDetail = () => {
@@ -57,13 +57,13 @@ const TrackDetail = () => {
     );
   }
 
-  const { track, albumSongs } = data;
+  const { track, albumTracks } = data;
 
   return (
     <div className="app-container detail-page">
       <div className="detail-top">
         <DetailHero
-          image={track.album.cover_big}
+          image={track.album.cover}
           title={track.title}
           rating={track.averageRating}
         >
@@ -118,12 +118,12 @@ const TrackDetail = () => {
 
         <SongList
           title="Canciones del mismo álbum"
-          songs={albumSongs.map((song) => ({
-            externalId: song.externalId,
-            title: song.title,
-            subtitle: formatDuration(song.duration),
-            cover: track.album.cover_big,
-            averageRating: song.averageRating,
+          songs={albumTracks.map((albumTrack) => ({
+            externalId: albumTrack.externalId,
+            title: albumTrack.title,
+            subtitle: formatDuration(albumTrack.duration),
+            cover: track.album.cover,
+            averageRating: albumTrack.averageRating,
           }))}
         />
       </div>

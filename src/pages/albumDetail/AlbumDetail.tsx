@@ -43,7 +43,7 @@ const AlbumDetail = () => {
     <div className="app-container detail-page album-detail">
       <div className="detail-top">
         <DetailHero
-          image={album.cover_big}
+          image={album.cover}
           title={album.title}
           rating={album.averageRating}
         >
@@ -56,11 +56,11 @@ const AlbumDetail = () => {
             </Link>
             <div className="album-hero-meta">
               <span>
-                {formatCount(album.songs.length, "canción", "canciones")}
+                {formatCount(album.tracks.length, "canción", "canciones")}
               </span>
               <span>{formatDuration(album.duration)}</span>
-              {album.release_date && (
-                <span>{album.release_date.slice(0, 4)}</span>
+              {album.releaseDate && (
+                <span>{album.releaseDate.slice(0, 4)}</span>
               )}
             </div>
           </div>
@@ -69,12 +69,12 @@ const AlbumDetail = () => {
         <SongList
           title="Canciones del álbum"
           showRank={false}
-          songs={album.songs.map((song) => ({
-            externalId: song.externalId,
-            title: song.title,
-            subtitle: formatDuration(song.duration),
-            cover: album.cover_medium,
-            averageRating: song.averageRating,
+          songs={album.tracks.map((track) => ({
+            externalId: track.externalId,
+            title: track.title,
+            subtitle: formatDuration(track.duration),
+            cover: album.cover,
+            averageRating: track.averageRating,
           }))}
         />
       </div>

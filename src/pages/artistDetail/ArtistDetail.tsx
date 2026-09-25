@@ -37,14 +37,11 @@ const ArtistDetail = () => {
     );
   }
 
-  const albumCovers = new Map(
-    artist.albums.map((album) => [album.title, album.cover_big]),
-  );
   const trackItems = artist.topTracks.map((track) => ({
     externalId: track.externalId,
     title: track.title,
     subtitle: track.album.title,
-    cover: albumCovers.get(track.album.title) ?? track.album.cover_medium,
+    cover: track.album.cover,
     averageRating: track.averageRating,
   }));
 
@@ -52,7 +49,7 @@ const ArtistDetail = () => {
     <div className="app-container detail-page">
       <div className="detail-top">
         <DetailHero
-          image={artist.picture_big}
+          image={artist.cover}
           title={artist.name}
           rating={artist.averageRating}
         />

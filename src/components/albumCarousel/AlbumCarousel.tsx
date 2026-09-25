@@ -99,7 +99,7 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
             >
               <div className="album-carousel-cover-wrap">
                 <img
-                  src={album.cover_big}
+                  src={album.cover}
                   alt={`Portada del álbum ${album.title}`}
                   className="album-carousel-cover"
                   draggable={false}
@@ -108,9 +108,9 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
               </div>
               <span className="album-carousel-title">{album.title}</span>
               <div className="album-carousel-meta">
-                {album.release_date && (
+                {album.releaseDate && (
                   <span className="album-carousel-year">
-                    {album.release_date.slice(0, 4)}
+                    {album.releaseDate.slice(0, 4)}
                   </span>
                 )}
                 {album.averageRating !== null && (
