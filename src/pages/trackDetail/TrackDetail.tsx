@@ -5,9 +5,10 @@ import {
   getTrackDetail,
   type AlbumSong,
 } from "../../api/musical-entity";
-import SameAlbumTracksSection from "../../components/sameAlbumTracks/SameAlbumTracksSection";
+import SongList from "../../components/songList/SongList";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
-import AverageRating from "../../components/averageRating/AverageRating";
+import DetailHero from "../../components/detailHero/DetailHero";
+import NotFound from "../../components/notFound/NotFound";
 import { entityPath } from "../../utils/routes";
 import { formatCount, formatDuration } from "../../utils/format";
 import { useFetch } from "../../hooks/useFetch";
@@ -18,6 +19,7 @@ import {
   FaClock,
   FaCompactDisc,
 } from "react-icons/fa";
+import "../detail.css";
 import "./TrackDetail.css";
 
 const loadTrackPage = async (id: string) => {
@@ -37,7 +39,7 @@ const TrackDetail = () => {
 
   if (loading) {
     return (
-      <div className="app-container track-detail loading-message">
+      <div className="app-container detail-page loading-message">
         <p>Cargando canción...</p>
       </div>
     );
@@ -45,20 +47,12 @@ const TrackDetail = () => {
 
   if (error || !data) {
     return (
-      <div className="app-container track-detail">
-        <div className="track-not-found">
-          <span className="track-not-found-icon" aria-hidden="true">
-            <FaMusic />
-          </span>
-          <h1 className="track-not-found-title">Canción no encontrada</h1>
-          <p className="track-not-found-text">
-            No encontramos una canción con ese id, o el servicio no está
-            disponible en este momento.
-          </p>
-          <Link to="/" className="app-btn app-btn-primary track-not-found-cta">
-            Volver al inicio
-          </Link>
-        </div>
+      <div className="app-container detail-page">
+        <NotFound
+          icon={<FaMusic />}
+          title="Canción no encontrada"
+          text="No encontramos una canción con ese id, o el servicio no está disponible en este momento."
+        />
       </div>
     );
   }
@@ -66,21 +60,13 @@ const TrackDetail = () => {
   const { track, albumSongs } = data;
 
   return (
-    <div className="app-container track-detail">
-      <div className="track-detail-top">
-        <div className="track-hero-column">
-          <header className="track-hero">
-            <img
-              src={track.album.cover_big}
-              alt={`Imagen de ${track.title}`}
-              className="track-hero-img"
-            />
-            <div className="track-hero-overlay">
-              <h1>{track.title}</h1>
-              <AverageRating value={track.averageRating} size="lg" />
-            </div>
-          </header>
-
+    <div className="app-container detail-page">
+      <div className="detail-top">
+        <DetailHero
+          image={track.album.cover_big}
+          title={track.title}
+          rating={track.averageRating}
+        >
           <div className="track-hero-meta">
             <div className="track-meta-item">
               <FaMicrophone
@@ -128,11 +114,17 @@ const TrackDetail = () => {
               </span>
             </div>
           </div>
-        </div>
+        </DetailHero>
 
-        <SameAlbumTracksSection
-          tracks={albumSongs}
-          cover={track.album.cover_big}
+        <SongList
+          title="Canciones del mismo álbum"
+          songs={albumSongs.map((song) => ({
+            externalId: song.externalId,
+            title: song.title,
+            subtitle: formatDuration(song.duration),
+            cover: track.album.cover_big,
+            averageRating: song.averageRating,
+          }))}
         />
       </div>
 

@@ -3,7 +3,7 @@ import { entityPath } from "../../utils/routes";
 import AverageRating from "../averageRating/AverageRating";
 import "./SongList.css";
 
-export type TrackItem = {
+type TrackItem = {
   externalId: string;
   title: string;
   subtitle?: string;
@@ -17,7 +17,7 @@ type SongListItemProps = {
   showRank?: boolean;
 };
 
-export const SongListItem = ({
+const SongListItem = ({
   song,
   rank,
   showRank = true,
@@ -58,9 +58,7 @@ const SongList = ({ title, songs, showRank = true }: SongListProps) => {
     return (
       <section className="song-list">
         <h2 className="song-list-header">{title}</h2>
-        <p className="song-list-empty">
-          Todavía no hay canciones puntuadas para esta entidad.
-        </p>
+        <p className="song-list-empty">No hay canciones para mostrar.</p>
       </section>
     );
   }

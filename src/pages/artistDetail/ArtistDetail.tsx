@@ -1,13 +1,14 @@
 import { useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getArtistDetail } from "../../api/musical-entity";
 import SongList from "../../components/songList/SongList";
 import AlbumCarousel from "../../components/albumCarousel/AlbumCarousel";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
-import AverageRating from "../../components/averageRating/AverageRating";
+import DetailHero from "../../components/detailHero/DetailHero";
+import NotFound from "../../components/notFound/NotFound";
 import { useFetch } from "../../hooks/useFetch";
 import { FaUser } from "react-icons/fa";
-import "./ArtistDetail.css";
+import "../detail.css";
 
 const ArtistDetail = () => {
   const { id = "" } = useParams();
@@ -18,7 +19,7 @@ const ArtistDetail = () => {
 
   if (loading) {
     return (
-      <div className="app-container artist-detail loading-message">
+      <div className="app-container detail-page loading-message">
         <p>Cargando artista...</p>
       </div>
     );
@@ -26,20 +27,12 @@ const ArtistDetail = () => {
 
   if (error || !artist) {
     return (
-      <div className="app-container artist-detail">
-        <div className="artist-not-found">
-          <span className="artist-not-found-icon" aria-hidden="true">
-            <FaUser />
-          </span>
-          <h1 className="artist-not-found-title">Artista no encontrado</h1>
-          <p className="artist-not-found-text">
-            No encontramos un artista con ese id, o el servicio no está
-            disponible en este momento.
-          </p>
-          <Link to="/" className="app-btn app-btn-primary artist-not-found-cta">
-            Volver al inicio
-          </Link>
-        </div>
+      <div className="app-container detail-page">
+        <NotFound
+          icon={<FaUser />}
+          title="Artista no encontrado"
+          text="No encontramos un artista con ese id, o el servicio no está disponible en este momento."
+        />
       </div>
     );
   }
@@ -56,19 +49,13 @@ const ArtistDetail = () => {
   }));
 
   return (
-    <div className="app-container artist-detail">
-      <div className="artist-detail-top">
-        <header className="artist-hero">
-          <img
-            src={artist.picture_big}
-            alt={`Imagen de ${artist.name}`}
-            className="artist-hero-img"
-          />
-          <div className="artist-hero-overlay">
-            <h1>{artist.name}</h1>
-            <AverageRating value={artist.averageRating} size="lg" />
-          </div>
-        </header>
+    <div className="app-container detail-page">
+      <div className="detail-top">
+        <DetailHero
+          image={artist.picture_big}
+          title={artist.name}
+          rating={artist.averageRating}
+        />
 
         <SongList title="Canciones mejor valoradas" songs={trackItems} />
       </div>

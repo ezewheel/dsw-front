@@ -3,11 +3,13 @@ import { Link, useParams } from "react-router-dom";
 import { getAlbumDetail } from "../../api/musical-entity";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import SongList from "../../components/songList/SongList";
-import AverageRating from "../../components/averageRating/AverageRating";
+import DetailHero from "../../components/detailHero/DetailHero";
+import NotFound from "../../components/notFound/NotFound";
 import { entityPath } from "../../utils/routes";
 import { formatCount, formatDuration } from "../../utils/format";
 import { useFetch } from "../../hooks/useFetch";
 import { FaCompactDisc } from "react-icons/fa";
+import "../detail.css";
 import "./AlbumDetail.css";
 
 const AlbumDetail = () => {
@@ -19,7 +21,7 @@ const AlbumDetail = () => {
 
   if (loading) {
     return (
-      <div className="app-container album-detail">
+      <div className="app-container detail-page loading-message">
         <p>Cargando álbum...</p>
       </div>
     );
@@ -27,39 +29,24 @@ const AlbumDetail = () => {
 
   if (error || album === null) {
     return (
-      <div className="app-container album-detail">
-        <div className="album-not-found">
-          <span className="album-not-found-icon" aria-hidden="true">
-            <FaCompactDisc />
-          </span>
-          <h1 className="album-not-found-title">Álbum no encontrado</h1>
-          <p className="album-not-found-text">
-            No encontramos un álbum con ese id, o el servicio no está
-            disponible en este momento.
-          </p>
-          <Link to="/" className="app-btn app-btn-primary album-not-found-cta">
-            Volver al inicio
-          </Link>
-        </div>
+      <div className="app-container detail-page">
+        <NotFound
+          icon={<FaCompactDisc />}
+          title="Álbum no encontrado"
+          text="No encontramos un álbum con ese id, o el servicio no está disponible en este momento."
+        />
       </div>
     );
   }
 
   return (
-    <div className="app-container album-detail">
-      <div className="album-detail-top">
-        <header className="album-hero">
-          <div className="album-hero-media">
-            <img
-              src={album.cover_big}
-              alt={`Portada de ${album.title}`}
-              className="album-hero-img"
-            />
-            <div className="album-hero-overlay">
-              <h1>{album.title}</h1>
-              <AverageRating value={album.averageRating} size="lg" />
-            </div>
-          </div>
+    <div className="app-container detail-page album-detail">
+      <div className="detail-top">
+        <DetailHero
+          image={album.cover_big}
+          title={album.title}
+          rating={album.averageRating}
+        >
           <div className="album-hero-info">
             <Link
               to={entityPath("artist", album.artist.id)}
@@ -71,31 +58,25 @@ const AlbumDetail = () => {
               <span>
                 {formatCount(album.songs.length, "canción", "canciones")}
               </span>
-              <span className="album-facts-dot">•</span>
               <span>{formatDuration(album.duration)}</span>
               {album.release_date && (
-                <>
-                  <span className="album-facts-dot">•</span>
-                  <span>{album.release_date.slice(0, 4)}</span>
-                </>
+                <span>{album.release_date.slice(0, 4)}</span>
               )}
             </div>
           </div>
-        </header>
+        </DetailHero>
 
-        <section className="album-songs-section">
-          <SongList
-            title="Canciones del álbum"
-            showRank={false}
-            songs={album.songs.map((song) => ({
-              externalId: song.externalId,
-              title: song.title,
-              subtitle: formatDuration(song.duration),
-              cover: album.cover_medium,
-              averageRating: song.averageRating,
-            }))}
-          />
-        </section>
+        <SongList
+          title="Canciones del álbum"
+          showRank={false}
+          songs={album.songs.map((song) => ({
+            externalId: song.externalId,
+            title: song.title,
+            subtitle: formatDuration(song.duration),
+            cover: album.cover_medium,
+            averageRating: song.averageRating,
+          }))}
+        />
       </div>
 
       <EntityReviews entityType="album" externalId={album.externalId} />

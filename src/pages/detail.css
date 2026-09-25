@@ -1,0 +1,17 @@
+.detail-page {
+  padding: 5rem 0 3rem;
+}
+
+.detail-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 991.98px) {
+  .detail-top {
+    flex-direction: column;
+    align-items: center;
+  }
+}
