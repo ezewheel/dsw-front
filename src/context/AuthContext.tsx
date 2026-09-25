@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { AuthContext } from "./auth-context";
 import {
   getToken,
@@ -11,28 +11,22 @@ import type { LoginRequest, RegisterRequest, User } from "../types/auth.types";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(getToken());
-  const tokenRef = useRef<string | null>(getToken());
   const [loading, setLoading] = useState(() => getToken() !== null);
 
   useEffect(() => {
-    const storedToken = tokenRef.current;
+    const storedToken = getToken();
 
     if (!storedToken) return;
 
     let active = true;
+    const isSameSession = () => active && getToken() === storedToken;
 
     me()
       .then((currentUser) => {
-        if (!active || tokenRef.current !== storedToken) return;
-        setUser(currentUser);
-        setToken(storedToken);
+        if (isSameSession()) setUser(currentUser);
       })
       .catch(() => {
-        if (!active || tokenRef.current !== storedToken) return;
-        logoutRequest();
-        setUser(null);
-        setToken(null);
+        if (isSameSession()) logoutRequest();
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -45,29 +39,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (credentials: LoginRequest) => {
     const result = await loginRequest(credentials);
-    tokenRef.current = result.token;
-    setToken(result.token);
     setUser(result.user);
   };
 
   const register = async (credentials: RegisterRequest) => {
     const result = await registerRequest(credentials);
-    tokenRef.current = result.token;
-    setToken(result.token);
     setUser(result.user);
   };
 
   const logout = () => {
     logoutRequest();
-    tokenRef.current = null;
-    setToken(null);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, token, loading, login, register, logout }}
-    >
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

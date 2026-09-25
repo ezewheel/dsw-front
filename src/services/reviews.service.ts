@@ -13,13 +13,9 @@ export interface EntityReview {
   value: number;
   content: string | null;
   createdAt: string;
-  updatedAt: string;
 }
 
 export interface EntityReviewsResult {
-  externalId: string;
-  page: number;
-  pageSize: number;
   total: number;
   totalPages: number;
   items: EntityReview[];
@@ -39,7 +35,6 @@ export interface LatestReview {
   value: number;
   content: string;
   createdAt: string;
-  updatedAt: string;
   entity: LatestReviewEntity;
 }
 
@@ -52,7 +47,6 @@ export interface ReviewedSong {
   cover: string | null;
   averageRating: number | null;
   reviewsCount: number;
-  reviewedAt: string;
 }
 
 export interface CreateReviewInput {

@@ -17,8 +17,7 @@ const formatDuration = (seconds: number) => {
 };
 
 const AlbumDetail = () => {
-  const { name } = useParams();
-  const reference = decodeURIComponent(name ?? "");
+  const { name: reference = "" } = useParams();
 
   const [album, setAlbum] = useState<AlbumDetailData | null>(null);
   const [loading, setLoading] = useState(true);

@@ -36,7 +36,6 @@ export type SearchResult = SearchTrack | SearchAlbum | SearchArtist;
 export interface SearchResponse {
   results: SearchResult[];
   total: number;
-  hasMore: boolean;
 }
 
 export const searchMusicalEntity = async (

@@ -13,8 +13,7 @@ import { FaStar, FaUser } from "react-icons/fa";
 import "./ArtistDetail.css";
 
 const ArtistDetail = () => {
-  const { name } = useParams();
-  const reference = decodeURIComponent(name ?? "");
+  const { name: reference = "" } = useParams();
 
   const [artist, setArtist] = useState<ArtistDetailData | null>(null);
   const [loading, setLoading] = useState(true);

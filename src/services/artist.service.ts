@@ -17,7 +17,6 @@ export type ArtistAlbum = {
   cover_big: string;
   release_date: string;
   averageRating: number | null;
-  reviewsCount?: number;
 };
 
 export type ArtistDetail = {

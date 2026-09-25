@@ -29,8 +29,7 @@ const formatDuration = (seconds: number) => {
 };
 
 const TrackDetail = () => {
-  const { id } = useParams();
-  const trackId = decodeURIComponent(id ?? "");
+  const { id: trackId = "" } = useParams();
 
   const [track, setTrack] = useState<TrackDetailData | null>(null);
   const [albumSongs, setAlbumSongs] = useState<AlbumSong[]>([]);

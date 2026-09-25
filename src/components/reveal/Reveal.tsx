@@ -1,12 +1,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import "./Reveal.css";
 
-type RevealProps = {
-  children: ReactNode;
-  className?: string;
-};
-
-const Reveal = ({ children, className }: RevealProps) => {
+const Reveal = ({ children }: { children: ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,7 +25,7 @@ const Reveal = ({ children, className }: RevealProps) => {
   }, []);
 
   return (
-    <div ref={ref} className={`reveal ${className ?? ""}`}>
+    <div ref={ref} className="reveal">
       {children}
     </div>
   );

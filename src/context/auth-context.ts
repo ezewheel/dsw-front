@@ -3,7 +3,6 @@ import type { LoginRequest, RegisterRequest, User } from "../types/auth.types";
 
 export interface AuthContextValue {
   user: User | null;
-  token: string | null;
   loading: boolean;
   login: (credentials: LoginRequest) => Promise<void>;
   register: (credentials: RegisterRequest) => Promise<void>;

@@ -13,22 +13,18 @@ type ReviewFormProps = {
   entityType: SearchApiType;
   externalId: string;
   onSubmitted?: () => void;
-  initialValue?: number;
-  initialContent?: string;
 };
 
 const ReviewForm = ({
   entityType,
   externalId,
   onSubmitted,
-  initialValue = 0,
-  initialContent = "",
 }: ReviewFormProps) => {
   const { user } = useAuth();
   const { openLogin } = useAuthModals();
 
-  const [value, setValue] = useState(initialValue);
-  const [content, setContent] = useState(initialContent);
+  const [value, setValue] = useState(0);
+  const [content, setContent] = useState("");
   const [validated, setValidated] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
