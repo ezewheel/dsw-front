@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaCompactDisc, FaMusic, FaSpinner, FaUser } from "react-icons/fa";
 import {
@@ -26,47 +26,45 @@ const TYPE_ICONS: Record<MusicalEntityType, typeof FaMusic> = {
 
 const PAGE_SIZE = 20;
 
-const toApiType = (type: string | null): MusicalEntityType | null => {
-  if (type === "track" || type === "album" || type === "artist") return type;
-  if (type === "song") return "track";
-  return null;
-};
+const toEntityType = (value: string | null): MusicalEntityType | null =>
+  value === "track" || value === "album" || value === "artist" ? value : null;
+
+const toPage = (value: string | null): number =>
+  Math.max(1, Number.parseInt(value ?? "", 10) || 1);
 
 const AdvancedSearch = () => {
   const [params, setSearchParams] = useSearchParams();
   const query = params.get("query") ?? "";
-  const rawType = params.get("type");
-  const apiType = toApiType(rawType);
-
-  const [page, setPage] = useState(1);
-
-  const searchKey = `${apiType}:${query.trim()}`;
-  const [appliedSearchKey, setAppliedSearchKey] = useState(searchKey);
-  if (appliedSearchKey !== searchKey) {
-    setAppliedSearchKey(searchKey);
-    setPage(1);
-  }
+  const entityType = toEntityType(params.get("type"));
+  const page = toPage(params.get("page"));
 
   const { data, loading, error } = useFetch(
     useCallback(async () => {
       const trimmed = query.trim();
-      if (!trimmed || !apiType) return null;
+      if (!trimmed || !entityType) return null;
 
-      return searchMusicalEntity(trimmed, apiType, {
+      return searchMusicalEntity(trimmed, entityType, {
         limit: PAGE_SIZE,
         index: (page - 1) * PAGE_SIZE,
       });
-    }, [query, apiType, page]),
+    }, [query, entityType, page]),
   );
 
   const results = data?.results ?? [];
   const total = data?.total ?? 0;
-  const hasQuery = query.trim() !== "" && apiType !== null;
+  const hasQuery = query.trim() !== "" && entityType !== null;
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
   const selectType = (type: MusicalEntityType) => {
-    if (type === apiType) return;
+    if (type === entityType) return;
     setSearchParams({ query, type });
+  };
+
+  const setPage = (nextPage: number) => {
+    setSearchParams((current) => {
+      current.set("page", String(nextPage));
+      return current;
+    });
   };
 
   return (
@@ -76,7 +74,7 @@ const AdvancedSearch = () => {
           <>
             Resultados para{" "}
             <span className="advanced-search-keyword">"{query.trim()}"</span> en{" "}
-            {ENTITY_TYPE_LABELS[apiType]}
+            {ENTITY_TYPE_LABELS[entityType]}
           </>
         ) : (
           "Buscá canciones, álbumes y artistas."
@@ -129,41 +127,39 @@ const AdvancedSearch = () => {
           )}
         </div>
 
-        {!loading && !error && (
-          <aside className="advanced-search-filters">
-            <h2 className="advanced-search-filters-title">Filtrar por tipo</h2>
-            <div
-              className="advanced-search-type-selector"
-              role="radiogroup"
-              aria-label="Tipo de resultado"
-            >
-              {(Object.keys(TYPE_OPTIONS) as MusicalEntityType[]).map((type) => {
-                const Icon = TYPE_ICONS[type];
-                return (
-                  <label
-                    key={type}
-                    className={`advanced-search-type-option${
-                      apiType === type ? " is-active" : ""
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="advanced-search-type"
-                      value={type}
-                      checked={apiType === type}
-                      onChange={() => selectType(type)}
-                    />
-                    <Icon
-                      className="advanced-search-type-icon"
-                      aria-hidden="true"
-                    />
-                    {TYPE_OPTIONS[type]}
-                  </label>
-                );
-              })}
-            </div>
-          </aside>
-        )}
+        <aside className="advanced-search-filters">
+          <h2 className="advanced-search-filters-title">Filtrar por tipo</h2>
+          <div
+            className="advanced-search-type-selector"
+            role="radiogroup"
+            aria-label="Tipo de resultado"
+          >
+            {(Object.keys(TYPE_OPTIONS) as MusicalEntityType[]).map((type) => {
+              const Icon = TYPE_ICONS[type];
+              return (
+                <label
+                  key={type}
+                  className={`advanced-search-type-option${
+                    entityType === type ? " is-active" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="advanced-search-type"
+                    value={type}
+                    checked={entityType === type}
+                    onChange={() => selectType(type)}
+                  />
+                  <Icon
+                    className="advanced-search-type-icon"
+                    aria-hidden="true"
+                  />
+                  {TYPE_OPTIONS[type]}
+                </label>
+              );
+            })}
+          </div>
+        </aside>
       </div>
     </div>
   );
