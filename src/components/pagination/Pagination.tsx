@@ -6,27 +6,30 @@ import {
 } from "react-icons/fa";
 import "./Pagination.css";
 
+const WINDOW_SIZE = 5;
+
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-  windowSize?: number;
 };
 
-function getPageWindow(current: number, windowSize: number): number[] {
-  const start = Math.max(1, current - Math.floor(windowSize / 2));
-  return Array.from({ length: windowSize }, (_, i) => start + i);
+function getPageWindow(current: number, totalPages: number): number[] {
+  const lastStart = Math.max(1, totalPages - WINDOW_SIZE + 1);
+  const centeredStart = current - Math.floor(WINDOW_SIZE / 2);
+  const start = Math.min(Math.max(1, centeredStart), lastStart);
+  const length = Math.min(WINDOW_SIZE, totalPages - start + 1);
+  return Array.from({ length }, (_, i) => start + i);
 }
 
 const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
-  windowSize = 5,
 }: PaginationProps) => {
   if (totalPages <= 1) return null;
 
-  const pages = getPageWindow(currentPage, windowSize);
+  const pages = getPageWindow(currentPage, totalPages);
 
   return (
     <nav className="pagination" aria-label="Paginación de resultados">
@@ -51,7 +54,6 @@ const Pagination = ({
       </button>
 
       {pages.map((page) => {
-        const isOutOfRange = page > totalPages;
         const isActive = page === currentPage;
 
         return (
@@ -60,7 +62,6 @@ const Pagination = ({
             type="button"
             className={`pagination-page${isActive ? " is-active" : ""}`}
             onClick={() => onPageChange(page)}
-            disabled={isOutOfRange}
             aria-current={isActive ? "page" : undefined}
           >
             {page}

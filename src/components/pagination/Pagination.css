@@ -27,7 +27,7 @@
 }
 
 .pagination-arrow:hover:not(:disabled),
-.pagination-page:hover:not(:disabled):not(.is-active) {
+.pagination-page:hover:not(.is-active) {
   background: var(--bg-overlay-strong);
   border-color: rgb(255 255 255 / 0.18);
 }
@@ -39,8 +39,7 @@
   cursor: default;
 }
 
-.pagination-arrow:disabled,
-.pagination-page:disabled {
+.pagination-arrow:disabled {
   color: var(--text-muted);
   opacity: 0.4;
   cursor: not-allowed;
