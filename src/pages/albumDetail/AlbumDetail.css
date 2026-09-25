@@ -72,7 +72,7 @@
 .album-rating-star {
   margin-left: 0.3rem;
   font-size: 0.95em;
-  color: #f5c518;
+  color: var(--star);
   vertical-align: -0.08em;
 }
 
@@ -152,7 +152,7 @@
   padding: 4rem 1.5rem;
   margin-top: 2rem;
   border-radius: 1rem;
-  border: 1px dashed rgb(255 255 255 / 0.15);
+  border: 1px dashed var(--border);
   background: var(--bg-overlay-soft);
 }
 

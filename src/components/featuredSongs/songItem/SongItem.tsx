@@ -71,7 +71,7 @@ const SongItem = ({
 
       <div className="song-card-body">
         <h5 className="song-card-title">
-          <Link to={entityPath("track", id)} className="song-title-link">
+          <Link to={entityPath("track", id)} className="link">
             {title}
           </Link>
         </h5>
@@ -79,7 +79,7 @@ const SongItem = ({
         {hasSubtitle && (
           <div className="song-card-subtitle">
             {artistId !== null && (
-              <Link to={entityPath("artist", artistId)} className="artist-link">
+              <Link to={entityPath("artist", artistId)} className="link">
                 {artist}
               </Link>
             )}
@@ -87,7 +87,7 @@ const SongItem = ({
               <span className="song-card-dot"> · </span>
             )}
             {albumId !== null && (
-              <Link to={entityPath("album", albumId)} className="artist-link">
+              <Link to={entityPath("album", albumId)} className="link">
                 {album}
               </Link>
             )}

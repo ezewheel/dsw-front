@@ -9,8 +9,11 @@
   --bg-searchbar: rgb(255 255 255 / 0.15);
   --text: #f5f0ea;
   --text-muted: #b3a898;
-  --btn-primary-start: #a855f7;
-  --btn-primary-end: #6366f1;
+  --accent: #a855f7;
+  --accent-end: #6366f1;
+  --star: #f5c518;
+  --danger: #f87171;
+  --border: rgb(255 255 255 / 0.15);
 }
 
 * {
@@ -67,33 +70,35 @@ body {
 
 .app-btn {
   display: inline-block;
-  padding: 0.5rem 1.25rem;
+  padding: 0.7rem 1.25rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 10px;
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   line-height: 1.5;
   text-align: center;
   cursor: pointer;
-  transition: filter 0.15s ease;
+  transition:
+    filter 0.15s ease,
+    transform 0.1s ease;
 }
 
 .app-btn:hover {
   filter: brightness(1.12);
 }
 
+.app-btn:active {
+  transform: scale(0.98);
+}
+
 .app-btn:disabled {
-  opacity: 0.65;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
 .app-btn-primary {
-  background-image: linear-gradient(
-    135deg,
-    var(--btn-primary-start),
-    var(--btn-primary-end)
-  );
+  background-image: linear-gradient(135deg, var(--accent), var(--accent-end));
   color: #fff;
 }
 
@@ -115,72 +120,72 @@ body {
 
 .form-label {
   margin-bottom: 0.25rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  color: #fff;
+  color: rgb(255 255 255 / 0.85);
 }
 
 .form-input {
   display: block;
   width: 100%;
-  padding: 0.55rem 0.9rem;
+  padding: 0.65rem 0.9rem;
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #fff;
-  background-color: var(--bg-overlay-strong);
-  border: 1px solid rgb(255 255 255 / 0.25);
-  border-radius: 0.5rem;
+  background-color: var(--bg-overlay-soft);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 10px;
   outline: none;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .form-input::placeholder {
-  color: rgb(255 255 255 / 0.5);
+  color: rgb(255 255 255 / 0.35);
 }
 
 .form-input:focus {
-  border-color: #0d6efd;
+  border-color: var(--accent);
+  background-color: rgb(255 255 255 / 0.09);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .form-feedback {
   display: none;
-  font-size: 0.9rem;
-  color: #dc3545;
   margin: 0;
+  font-size: 0.75rem;
+  color: var(--danger);
 }
 
 .was-validated .form-input:invalid {
-  border-color: #dc3545;
+  border-color: var(--danger);
 }
 
-.was-validated .form-input:invalid + .form-feedback {
+.was-validated .form-input:invalid ~ .form-feedback {
   display: block;
 }
 
 .alert {
-  padding: 0.9rem 1.25rem;
-  border-radius: 0.5rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
   margin-bottom: 1rem;
+  font-size: 0.8125rem;
 }
 
 .alert-danger {
-  background-color: #f8d7da;
-  color: #842029;
+  background-color: color-mix(in srgb, var(--danger) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
+  color: #fca5a5;
 }
 
-.song-title-link {
+.link {
   color: inherit;
   text-decoration: none;
 }
 
-.song-title-link:hover {
-  text-decoration: underline;
-}
-
-.artist-link {
-  color: inherit;
-  text-decoration: none;
-}
-
-.artist-link:hover {
+.link:hover {
   text-decoration: underline;
 }
 

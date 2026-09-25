@@ -111,7 +111,7 @@ const AlbumDetail = () => {
           <div className="album-hero-info">
             <Link
               to={entityPath("artist", album.artist.id)}
-              className="artist-link album-hero-artist"
+              className="link album-hero-artist"
             >
               {album.artist.name}
             </Link>

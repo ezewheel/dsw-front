@@ -61,7 +61,7 @@
   flex: 1;
 }
 
-.top-info .song-title-link {
+.top-info .link {
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -79,5 +79,5 @@
 }
 
 .top-rating svg {
-  color: #f5c518;
+  color: var(--star);
 }

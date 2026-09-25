@@ -33,7 +33,7 @@ const TopListColumn = ({ title, entries, imageAlt }: TopListColumnProps) => {
             </div>
           )}
           <div className="top-info">
-            <Link to={entry.to} className="song-title-link">
+            <Link to={entry.to} className="link">
               {entry.name}
             </Link>
             <div className="top-rating">

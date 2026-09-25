@@ -19,7 +19,7 @@
 }
 
 .search-result-item:focus-visible {
-  outline: 2px solid #f5c518;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -84,7 +84,7 @@
 }
 
 .search-result-rating svg {
-  color: #f5c518;
+  color: var(--star);
   font-size: 0.8em;
 }
 

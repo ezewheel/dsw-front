@@ -5,7 +5,7 @@
 }
 
 .advanced-search-keyword {
-  color: var(--btn-primary-start);
+  color: var(--accent);
 }
 
 .advanced-search-heading {
@@ -119,11 +119,11 @@
 }
 
 .advanced-search-type-option.is-active .advanced-search-type-icon {
-  color: var(--btn-primary-start);
+  color: var(--accent);
 }
 
 .advanced-search-type-option:has(input:focus-visible) {
-  outline: 2px solid #f5c518;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -132,7 +132,7 @@
 }
 
 .advanced-search-type-option.is-active {
-  background: color-mix(in srgb, var(--btn-primary-start) 20%, transparent);
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
   color: var(--text);
   font-weight: 600;
 }

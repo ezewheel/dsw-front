@@ -64,7 +64,7 @@
 .track-rating-star {
   margin-left: 0.3rem;
   font-size: 0.95em;
-  color: #f5c518;
+  color: var(--star);
   vertical-align: -0.08em;
 }
 
@@ -94,7 +94,7 @@
 .track-meta-icon {
   flex-shrink: 0;
   font-size: 0.95rem;
-  color: #a855f7;
+  color: var(--accent);
 }
 
 .track-hero-link {
@@ -135,7 +135,7 @@
   padding: 4rem 1.5rem;
   margin-top: 2rem;
   border-radius: 1rem;
-  border: 1px dashed rgb(255 255 255 / 0.15);
+  border: 1px dashed var(--border);
   background: var(--bg-overlay-soft);
 }
 
