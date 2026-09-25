@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import {
   searchMusicalEntity,
-  type SearchApiType,
+  type MusicalEntityType,
   type SearchResult,
-} from "../../../services/search.service";
+} from "../../../api/musical-entity";
 import { entityPath } from "../../../utils/routes";
 import "./SearchBar.css";
 
@@ -17,7 +17,7 @@ const SEARCH_TYPES: { value: LocalSearchType; label: string }[] = [
   { value: "artist", label: "Artista" },
 ];
 
-const API_TYPE: Record<LocalSearchType, SearchApiType> = {
+const API_TYPE: Record<LocalSearchType, MusicalEntityType> = {
   song: "track",
   album: "album",
   artist: "artist",

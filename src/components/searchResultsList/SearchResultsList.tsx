@@ -1,4 +1,4 @@
-import type { SearchResult } from "../../services/search.service";
+import type { SearchResult } from "../../api/musical-entity";
 import SearchResultItem from "../searchResultItem/SearchResultItem";
 import "./SearchResultsList.css";
 

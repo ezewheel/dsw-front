@@ -3,18 +3,12 @@ import { Link } from "react-router-dom";
 import {
   getLatestReviews,
   type LatestReview,
-} from "../../services/reviews.service";
-import type { SearchApiType } from "../../services/search.service";
+} from "../../api/reviews";
+import { ENTITY_TYPE_LABELS } from "../../api/musical-entity";
 import Reveal from "../reveal/Reveal";
 import StarRating from "../starRating/StarRating";
 import { entityPath } from "../../utils/routes";
 import "./ReviewsSection.css";
-
-const TYPE_LABELS: Record<SearchApiType, string> = {
-  track: "canción",
-  album: "álbum",
-  artist: "artista",
-};
 
 const LATEST_REVIEWS_LIMIT = 5;
 
@@ -102,8 +96,9 @@ const ReviewsSection = () => {
                       <StarRating value={review.value} readOnly size="sm" />
                     </div>
                     <div className="review-author">
-                      {review.user.nickname} · {TYPE_LABELS[review.entity.type]}{" "}
-                      · {formatDate(review.createdAt)}
+                      {review.user.nickname} ·{" "}
+                      {ENTITY_TYPE_LABELS[review.entity.type]} ·{" "}
+                      {formatDate(review.createdAt)}
                     </div>
                     <p className="review-text">{review.content}</p>
                   </div>

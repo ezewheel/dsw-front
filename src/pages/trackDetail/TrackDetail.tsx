@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
+  getAlbumDetail,
   getTrackDetail,
+  type AlbumSong,
   type TrackDetail as TrackDetailData,
-} from "../../services/track.service";
-import { getAlbumDetail, type AlbumSong } from "../../services/album.service";
+} from "../../api/musical-entity";
 import SameAlbumTracksSection from "../../components/sameAlbumTracks/SameAlbumTracksSection";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import { entityPath } from "../../utils/routes";

@@ -1,4 +1,4 @@
-import type { AlbumSong } from "../../services/album.service";
+import type { AlbumSong } from "../../api/musical-entity";
 import { SongListItem } from "../songList/SongList";
 import "./SameAlbumTracksSection.css";
 

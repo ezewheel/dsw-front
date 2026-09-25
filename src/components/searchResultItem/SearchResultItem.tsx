@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaStar, FaMusic } from "react-icons/fa";
-import type { SearchResult } from "../../services/search.service";
+import type { SearchResult } from "../../api/musical-entity";
 import { entityPath } from "../../utils/routes";
 import "./SearchResultItem.css";
 

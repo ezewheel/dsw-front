@@ -5,13 +5,13 @@ import { useAuthModals } from "../authModals/auth-modals-context";
 import {
   createReview,
   type CreateReviewInput,
-} from "../../services/reviews.service";
-import type { SearchApiType } from "../../services/search.service";
+} from "../../api/reviews";
+import type { MusicalEntityType } from "../../api/musical-entity";
 import StarRating from "../starRating/StarRating";
 import "./ReviewForm.css";
 
 type ReviewFormProps = {
-  entityType: SearchApiType;
+  entityType: MusicalEntityType;
   externalId: string;
   onSubmitted?: () => void;
 };

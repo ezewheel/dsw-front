@@ -3,7 +3,7 @@ import SongItem from "./songItem/SongItem";
 import {
   getLatestReviewedSongs,
   type ReviewedSong,
-} from "../../services/reviews.service";
+} from "../../api/reviews";
 import "./FeaturedSongs.css";
 
 const FEATURED_LIMIT = 5;

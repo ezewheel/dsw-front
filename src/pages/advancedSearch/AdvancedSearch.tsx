@@ -2,27 +2,22 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaCompactDisc, FaMusic, FaSpinner, FaUser } from "react-icons/fa";
 import {
+  ENTITY_TYPE_LABELS,
   searchMusicalEntity,
-  type SearchApiType,
+  type MusicalEntityType,
   type SearchResult,
-} from "../../services/search.service";
+} from "../../api/musical-entity";
 import SearchResultsList from "../../components/searchResultsList/SearchResultsList";
 import Pagination from "../../components/pagination/Pagination";
 import "./AdvancedSearch.css";
 
-const TYPE_LABELS: Record<SearchApiType, string> = {
-  track: "canción",
-  album: "álbum",
-  artist: "artista",
-};
-
-const TYPE_OPTIONS: Record<SearchApiType, string> = {
+const TYPE_OPTIONS: Record<MusicalEntityType, string> = {
   track: "Canciones",
   album: "Álbumes",
   artist: "Artistas",
 };
 
-const TYPE_ICONS: Record<SearchApiType, typeof FaMusic> = {
+const TYPE_ICONS: Record<MusicalEntityType, typeof FaMusic> = {
   track: FaMusic,
   album: FaCompactDisc,
   artist: FaUser,
@@ -30,7 +25,7 @@ const TYPE_ICONS: Record<SearchApiType, typeof FaMusic> = {
 
 const PAGE_SIZE = 20;
 
-const toApiType = (type: string | null): SearchApiType | null => {
+const toApiType = (type: string | null): MusicalEntityType | null => {
   if (type === "track" || type === "album" || type === "artist") return type;
   if (type === "song") return "track";
   return null;
@@ -92,7 +87,7 @@ const AdvancedSearch = () => {
   const hasQuery = query.trim() !== "" && apiType !== null;
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
-  const selectType = (type: SearchApiType) => {
+  const selectType = (type: MusicalEntityType) => {
     if (type === apiType) return;
     setSearchParams({ query, type });
   };
@@ -104,7 +99,7 @@ const AdvancedSearch = () => {
           <>
             Resultados para{" "}
             <span className="advanced-search-keyword">"{query.trim()}"</span> en{" "}
-            {TYPE_LABELS[apiType]}
+            {ENTITY_TYPE_LABELS[apiType]}
           </>
         ) : (
           "Buscá canciones, álbumes y artistas."
@@ -154,7 +149,7 @@ const AdvancedSearch = () => {
               role="radiogroup"
               aria-label="Tipo de resultado"
             >
-              {(Object.keys(TYPE_OPTIONS) as SearchApiType[]).map((type) => {
+              {(Object.keys(TYPE_OPTIONS) as MusicalEntityType[]).map((type) => {
                 const Icon = TYPE_ICONS[type];
                 return (
                   <label

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import type { SearchApiType } from "../../services/search.service";
+import type { MusicalEntityType } from "../../api/musical-entity";
 import {
   getEntityReviews,
   type EntityReview,
-} from "../../services/reviews.service";
+} from "../../api/reviews";
 import Pagination from "../pagination/Pagination";
 import ReviewForm from "../reviewForm/ReviewForm";
 import StarRating from "../starRating/StarRating";
@@ -15,7 +15,7 @@ const formatDate = (iso: string): string =>
   new Intl.DateTimeFormat("es-AR", { dateStyle: "long" }).format(new Date(iso));
 
 type EntityReviewsProps = {
-  entityType: SearchApiType;
+  entityType: MusicalEntityType;
   externalId: string;
 };
 

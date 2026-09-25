@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import TopListColumn, { type TopListEntry } from "./TopListColumn";
-import { getTopRated, type TopRatedItem } from "../../services/top.service";
+import { getTopRated, type TopRatedItem } from "../../api/musical-entity";
 import { entityPath } from "../../utils/routes";
 import "./TopLists.css";
 

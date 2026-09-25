@@ -1,5 +1,5 @@
-import api from "../api/client";
-import type { SearchApiType } from "./search.service";
+import api from "./client";
+import type { MusicalEntityType } from "./musical-entity";
 
 export interface EntityReviewUser {
   id: number;
@@ -22,7 +22,7 @@ export interface EntityReviewsResult {
 
 export type LatestReviewEntity = {
   externalId: string;
-  type: SearchApiType;
+  type: MusicalEntityType;
   title: string | null;
   cover: string | null;
   artist: string | null;
@@ -56,7 +56,7 @@ export interface CreateReviewInput {
 }
 
 export const createReview = async (
-  type: SearchApiType,
+  type: MusicalEntityType,
   externalId: string,
   input: CreateReviewInput,
 ): Promise<EntityReview> => {
@@ -68,7 +68,7 @@ export const createReview = async (
 };
 
 export const getEntityReviews = async (
-  type: SearchApiType,
+  type: MusicalEntityType,
   externalId: string,
   options?: { page?: number; pageSize?: number },
 ): Promise<EntityReviewsResult> => {
@@ -82,9 +82,10 @@ export const getEntityReviews = async (
 export const getLatestReviews = async (
   limit: number = 20,
 ): Promise<LatestReview[]> => {
-const { data } = await api.get<LatestReview[]>("/interaction/reviews/latest", {
-    params: { limit },
-  });
+  const { data } = await api.get<LatestReview[]>(
+    "/interaction/reviews/latest",
+    { params: { limit } },
+  );
   return data;
 };
 

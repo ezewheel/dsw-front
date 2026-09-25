@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
-import type { ArtistAlbum } from "../../services/artist.service";
+import type { ArtistAlbum } from "../../api/musical-entity";
 import { entityPath } from "../../utils/routes";
 import "./AlbumCarousel.css";
 

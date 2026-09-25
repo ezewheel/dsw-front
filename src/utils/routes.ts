@@ -1,4 +1,4 @@
-import type { SearchApiType } from "../services/search.service";
+import type { MusicalEntityType } from "../api/musical-entity";
 
-export const entityPath = (type: SearchApiType, id: string | number): string =>
+export const entityPath = (type: MusicalEntityType, id: string | number): string =>
   `/${type}/${id}`;

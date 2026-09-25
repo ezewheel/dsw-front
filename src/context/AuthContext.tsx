@@ -6,8 +6,10 @@ import {
   logout as logoutRequest,
   me,
   register as registerRequest,
-} from "../services/auth.service";
-import type { LoginRequest, RegisterRequest, User } from "../types/auth.types";
+  type LoginRequest,
+  type RegisterRequest,
+  type User,
+} from "../api/auth";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);

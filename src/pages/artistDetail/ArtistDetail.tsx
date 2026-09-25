@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import {
   getArtistDetail,
   type ArtistDetail as ArtistDetailData,
-} from "../../services/artist.service";
+} from "../../api/musical-entity";
 import SongList from "../../components/songList/SongList";
 import AlbumCarousel from "../../components/albumCarousel/AlbumCarousel";
 import EntityReviews from "../../components/entityReviews/EntityReviews";

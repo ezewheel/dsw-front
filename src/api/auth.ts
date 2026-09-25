@@ -1,12 +1,30 @@
-import api, { removeToken, saveToken } from "../api/client";
-import type {
-  LoginRequest,
-  LoginResponse,
-  RegisterRequest,
-  User,
-} from "../types/auth.types";
+import api, { removeToken, saveToken } from "./client";
 
-export const login = async (credentials: LoginRequest): Promise<LoginResponse> => {
+export interface User {
+  id: number;
+  nickname: string;
+  email: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  email: string;
+  password: string;
+  nickname: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  user: User;
+}
+
+export const login = async (
+  credentials: LoginRequest,
+): Promise<LoginResponse> => {
   const { data } = await api.post<LoginResponse>("/auth/login", credentials);
   saveToken(data.token);
   return data;
