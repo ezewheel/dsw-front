@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { AuthContext } from "./auth-context";
+import { getToken } from "../api/client";
 import {
-  getToken,
   login as loginRequest,
   logout as logoutRequest,
   me,

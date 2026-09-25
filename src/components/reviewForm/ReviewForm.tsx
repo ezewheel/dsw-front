@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { getErrorMessage } from "../../api/client";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
 import {
@@ -68,8 +69,13 @@ const ReviewForm = ({
       setContent("");
       setValidated(false);
       onSubmitted?.();
-    } catch {
-      setError("No se pudo guardar tu reseña. Intentalo de nuevo.");
+    } catch (saveError) {
+      setError(
+        getErrorMessage(
+          saveError,
+          "No se pudo guardar tu reseña. Intentalo de nuevo.",
+        ),
+      );
     } finally {
       setSubmitting(false);
     }

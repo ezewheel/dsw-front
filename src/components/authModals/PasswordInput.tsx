@@ -2,6 +2,8 @@ import { useState, type ChangeEvent } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./PasswordInput.css";
 
+const MAX_PASSWORD_LENGTH = 72;
+
 type PasswordInputProps = {
   id: string;
   value: string;
@@ -36,6 +38,7 @@ const PasswordInput = ({
         onChange={onChange}
         required={required}
         minLength={minLength}
+        maxLength={MAX_PASSWORD_LENGTH}
         autoFocus={autoFocus}
       />
       <button

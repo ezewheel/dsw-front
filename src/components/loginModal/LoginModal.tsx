@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
+import { getErrorMessage } from "../../api/client";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
 import PasswordInput from "../authModals/PasswordInput";
@@ -49,8 +50,13 @@ const LoginModal = ({ show, onHide }: LoginModalProps) => {
     try {
       await login({ email, password });
       onHide();
-    } catch {
-      setError("Email o contraseña incorrectos");
+    } catch (loginError) {
+      setError(
+        getErrorMessage(
+          loginError,
+          "No se pudo iniciar sesión. Intentalo de nuevo.",
+        ),
+      );
     } finally {
       setLoading(false);
     }

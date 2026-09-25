@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
+import { getErrorMessage } from "../../api/client";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
 import PasswordInput from "../authModals/PasswordInput";
@@ -58,11 +59,13 @@ const RegisterModal = ({ show, onHide }: RegisterModalProps) => {
     try {
       await register({ email, password, nickname });
       onHide();
-    } catch (axiosError) {
-      const message = (
-        axiosError as { response?: { data?: { message?: string } } }
-      ).response?.data?.message;
-      setError(message ?? "No se pudo crear la cuenta. Inténtalo de nuevo.");
+    } catch (registerError) {
+      setError(
+        getErrorMessage(
+          registerError,
+          "No se pudo crear la cuenta. Inténtalo de nuevo.",
+        ),
+      );
     } finally {
       setLoading(false);
     }
