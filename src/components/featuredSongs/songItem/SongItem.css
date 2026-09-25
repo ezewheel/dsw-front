@@ -63,31 +63,8 @@
   color: #6b6b6b;
 }
 
-.song-card-score {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
+.song-card-body > .average-rating {
   margin-bottom: 0.5rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-}
-
-.song-card-score-value {
-  color: #fff;
-}
-
-.song-card-score-star {
-  color: var(--star);
-  font-size: 1rem;
-  line-height: 1;
-}
-
-.song-card-score-empty {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  font-style: italic;
-  margin-bottom: 0.5rem;
-  display: block;
 }
 
 .song-card-duration {

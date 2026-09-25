@@ -7,11 +7,11 @@ import {
 } from "../../api/musical-entity";
 import SameAlbumTracksSection from "../../components/sameAlbumTracks/SameAlbumTracksSection";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
+import AverageRating from "../../components/averageRating/AverageRating";
 import { entityPath } from "../../utils/routes";
 import { formatCount, formatDuration } from "../../utils/format";
 import { useFetch } from "../../hooks/useFetch";
 import {
-  FaStar,
   FaMusic,
   FaMicrophone,
   FaCommentDots,
@@ -77,20 +77,7 @@ const TrackDetail = () => {
             />
             <div className="track-hero-overlay">
               <h1>{track.title}</h1>
-              <span
-                className={`track-rating${
-                  track.averageRating === null ? " track-rating-missing" : ""
-                }`}
-              >
-                {track.averageRating === null ? (
-                  "Sin puntaje"
-                ) : (
-                  <>
-                    {track.averageRating.toFixed(1)}
-                    <FaStar className="track-rating-star" aria-hidden="true" />
-                  </>
-                )}
-              </span>
+              <AverageRating value={track.averageRating} size="lg" />
             </div>
           </header>
 

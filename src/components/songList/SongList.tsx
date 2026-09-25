@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
 import { entityPath } from "../../utils/routes";
+import AverageRating from "../averageRating/AverageRating";
 import "./SongList.css";
 
 export type TrackItem = {
@@ -43,16 +43,7 @@ export const SongListItem = ({
         <p className="song-list-subtitle">{song.subtitle}</p>
       )}
     </div>
-    <span className="song-list-score">
-      {song.averageRating === null || song.averageRating === undefined ? (
-        "Sin puntaje"
-      ) : (
-        <>
-          {song.averageRating.toFixed(1)}
-          <FaStar className="song-list-score-star" aria-hidden="true" />
-        </>
-      )}
-    </span>
+    <AverageRating value={song.averageRating} />
   </li>
 );
 

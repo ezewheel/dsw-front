@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
-import { FaStar, FaMusic } from "react-icons/fa";
+import { FaMusic } from "react-icons/fa";
 import type { SearchResult } from "../../api/musical-entity";
 import { entityPath } from "../../utils/routes";
 import { formatCount } from "../../utils/format";
+import AverageRating from "../averageRating/AverageRating";
 import "./SearchResultItem.css";
-
-const formatRating = (rating: number | null): string =>
-  rating === null ? "—" : rating.toFixed(1);
 
 const resultImage = (result: SearchResult): string => {
   switch (result.type) {
@@ -56,10 +54,7 @@ const SearchResultItem = ({ result }: { result: SearchResult }) => {
       </div>
 
       <div className="search-result-stats">
-        <span className="search-result-rating">
-          <FaStar aria-hidden="true" />
-          {formatRating(result.averageRating)}
-        </span>
+        <AverageRating value={result.averageRating} />
         <span className="search-result-reviews">
           {formatCount(result.reviewsCount, "reseña", "reseñas")}
         </span>

@@ -1,0 +1,31 @@
+.average-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.average-rating-star {
+  font-size: 0.85em;
+  color: var(--star);
+}
+
+.average-rating-sm {
+  font-size: 0.75rem;
+}
+
+.average-rating-md {
+  font-size: 0.9rem;
+}
+
+.average-rating-lg {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.7);
+}
+
+.average-rating-missing {
+  font-weight: 500;
+  color: var(--text-muted);
+}

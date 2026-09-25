@@ -86,19 +86,8 @@
   text-overflow: ellipsis;
 }
 
-.song-list-score {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.85rem;
+.song-list-item > .average-rating {
   margin-right: 0.6rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
-.song-list-score-star {
-  font-size: 0.85em;
-  color: var(--star);
 }
 
 @media (max-width: 575.98px) {
@@ -110,12 +99,12 @@
     grid-template-columns: 44px 1fr;
   }
 
-  .song-list-item > .song-list-score {
+  .song-list-item > .average-rating {
     grid-column: 3;
     justify-self: start;
   }
 
-  .song-list-item-no-rank > .song-list-score {
+  .song-list-item-no-rank > .average-rating {
     grid-column: 2;
     justify-self: start;
   }

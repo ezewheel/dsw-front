@@ -1,5 +1,5 @@
-import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import AverageRating from "../averageRating/AverageRating";
 import "./TopListColumn.css";
 
 export type TopListEntry = {
@@ -36,10 +36,7 @@ const TopListColumn = ({ title, entries, imageAlt }: TopListColumnProps) => {
             <Link to={entry.to} className="link">
               {entry.name}
             </Link>
-            <div className="top-rating">
-              <FaStar aria-hidden="true" />
-              <span>{entry.score.toFixed(1)} / 5</span>
-            </div>
+            <AverageRating value={entry.score} />
           </div>
         </div>
       ))}

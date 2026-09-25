@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { entityPath } from "../../../utils/routes";
 import { formatDuration } from "../../../utils/format";
+import AverageRating from "../../averageRating/AverageRating";
 import "./SongItem.css";
 
 type SongItemProps = {
@@ -13,23 +14,6 @@ type SongItemProps = {
   score: number | null;
   duration: number;
   imageUrl: string;
-};
-
-const StarRating = ({ score }: { score: number | null }) => {
-  if (score === null) {
-    return (
-      <span className="song-card-score song-card-score-empty">Sin puntaje</span>
-    );
-  }
-
-  return (
-    <div className="song-card-score">
-      <span className="song-card-score-value">{score.toFixed(2)}</span>
-      <span className="song-card-score-star" aria-hidden="true">
-        ★
-      </span>
-    </div>
-  );
 };
 
 const SongItem = ({
@@ -89,7 +73,7 @@ const SongItem = ({
           </div>
         )}
 
-        <StarRating score={score} />
+        <AverageRating value={score} />
 
         <p className="song-card-duration">{formatDuration(duration)}</p>
       </div>

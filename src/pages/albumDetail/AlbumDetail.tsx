@@ -3,10 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import { getAlbumDetail } from "../../api/musical-entity";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import SongList from "../../components/songList/SongList";
+import AverageRating from "../../components/averageRating/AverageRating";
 import { entityPath } from "../../utils/routes";
 import { formatCount, formatDuration } from "../../utils/format";
 import { useFetch } from "../../hooks/useFetch";
-import { FaCompactDisc, FaStar } from "react-icons/fa";
+import { FaCompactDisc } from "react-icons/fa";
 import "./AlbumDetail.css";
 
 const AlbumDetail = () => {
@@ -56,24 +57,7 @@ const AlbumDetail = () => {
             />
             <div className="album-hero-overlay">
               <h1>{album.title}</h1>
-              <span
-                className={`album-rating${
-                  album.averageRating === null ||
-                  album.averageRating === undefined
-                    ? " album-rating-missing"
-                    : ""
-                }`}
-              >
-                {album.averageRating === null ||
-                album.averageRating === undefined ? (
-                  "Sin puntaje"
-                ) : (
-                  <>
-                    {album.averageRating.toFixed(1)}
-                    <FaStar className="album-rating-star" aria-hidden="true" />
-                  </>
-                )}
-              </span>
+              <AverageRating value={album.averageRating} size="lg" />
             </div>
           </div>
           <div className="album-hero-info">

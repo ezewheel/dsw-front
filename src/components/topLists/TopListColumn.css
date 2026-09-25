@@ -68,16 +68,3 @@
   -webkit-mask-image: linear-gradient(90deg, #000 78%, transparent 100%);
   mask-image: linear-gradient(90deg, #000 78%, transparent 100%);
 }
-
-.top-rating {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.2rem;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-.top-rating svg {
-  color: var(--star);
-}

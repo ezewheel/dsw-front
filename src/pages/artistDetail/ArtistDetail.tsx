@@ -4,8 +4,9 @@ import { getArtistDetail } from "../../api/musical-entity";
 import SongList from "../../components/songList/SongList";
 import AlbumCarousel from "../../components/albumCarousel/AlbumCarousel";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
+import AverageRating from "../../components/averageRating/AverageRating";
 import { useFetch } from "../../hooks/useFetch";
-import { FaStar, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import "./ArtistDetail.css";
 
 const ArtistDetail = () => {
@@ -65,20 +66,7 @@ const ArtistDetail = () => {
           />
           <div className="artist-hero-overlay">
             <h1>{artist.name}</h1>
-            <span
-              className={`artist-rating${
-                artist.averageRating === null ? " artist-rating-missing" : ""
-              }`}
-            >
-              {artist.averageRating === null ? (
-                "Sin puntaje"
-              ) : (
-                <>
-                  {artist.averageRating.toFixed(1)}
-                  <FaStar className="artist-rating-star" aria-hidden="true" />
-                </>
-              )}
-            </span>
+            <AverageRating value={artist.averageRating} size="lg" />
           </div>
         </header>
 

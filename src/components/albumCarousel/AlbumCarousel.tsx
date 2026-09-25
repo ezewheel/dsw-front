@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
 import type { ArtistAlbum } from "../../api/musical-entity";
 import { entityPath } from "../../utils/routes";
+import AverageRating from "../averageRating/AverageRating";
 import "./AlbumCarousel.css";
 
 type AlbumCarouselProps = {
@@ -113,17 +113,9 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
                     {album.release_date.slice(0, 4)}
                   </span>
                 )}
-                {album.averageRating !== null &&
-                  album.averageRating !== undefined && (
-                    <span className="album-carousel-rating">
-                      ·
-                      <FaStar
-                        className="album-carousel-rating-star"
-                        aria-hidden="true"
-                      />
-                      {album.averageRating.toFixed(1)}
-                    </span>
-                  )}
+                {album.averageRating !== null && (
+                  <AverageRating value={album.averageRating} size="sm" />
+                )}
               </div>
             </Link>
           ))}

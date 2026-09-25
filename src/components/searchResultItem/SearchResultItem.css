@@ -74,20 +74,6 @@
   flex-shrink: 0;
 }
 
-.search-result-rating {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.search-result-rating svg {
-  color: var(--star);
-  font-size: 0.8em;
-}
-
 .search-result-reviews {
   font-size: 0.75rem;
   color: var(--text-muted);
