@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import type { ArtistAlbum } from "../../api/musical-entity";
 import { entityPath } from "../../utils/routes";
@@ -9,48 +10,25 @@ type AlbumCarouselProps = {
   albums: ArtistAlbum[];
 };
 
+const ALBUMS_PER_VIEW = 5;
+
 const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
   const trackRef = useRef<HTMLDivElement>(null);
-  const [page, setPage] = useState(0);
-  const [perPage, setPerPage] = useState(5);
+  const fitsInOneView = albums.length <= ALBUMS_PER_VIEW;
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(fitsInOneView);
 
-  const totalPages = Math.max(1, Math.ceil(albums.length / perPage));
-
-  const safePage = Math.min(page, totalPages - 1);
-
-  useEffect(() => {
+  const scrollOneView = (direction: -1 | 1) => {
     const track = trackRef.current;
     if (!track) return;
+    track.scrollBy({ left: direction * track.clientWidth });
+  };
 
-    const measure = () => {
-      const currentPerPage =
-        parseInt(getComputedStyle(track).getPropertyValue("--per-page"), 10) ||
-        5;
-      setPerPage(currentPerPage);
-    };
-
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(track);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
+  const updateEdges = () => {
     const track = trackRef.current;
-    const items = track?.querySelectorAll<HTMLElement>(".album-carousel-item");
-    if (!track || !items || items.length <= perPage) return;
-
-    const index = Math.min(safePage * perPage, items.length - 1);
-    const item = items[index];
-    if (!item) return;
-
-    const delta =
-      item.getBoundingClientRect().left - track.getBoundingClientRect().left;
-    track.scrollTo({ left: track.scrollLeft + delta, behavior: "smooth" });
-  }, [safePage, perPage, albums]);
-
-  const goToPage = (target: number) => {
-    setPage(Math.min(Math.max(target, 0), totalPages - 1));
+    if (!track) return;
+    setAtStart(track.scrollLeft <= 0);
+    setAtEnd(track.scrollLeft + track.clientWidth >= track.scrollWidth - 1);
   };
 
   if (albums.length === 0) {
@@ -69,27 +47,18 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
         <button
           type="button"
           className="album-carousel-arrow album-carousel-arrow-prev"
-          onClick={() => goToPage(safePage - 1)}
-          disabled={safePage === 0}
+          onClick={() => scrollOneView(-1)}
+          disabled={atStart}
           aria-label="Álbumes anteriores"
         >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
+          <FaChevronLeft aria-hidden="true" />
         </button>
         <div
           className={`album-carousel-track${
-            totalPages === 1 ? " single-page" : ""
+            fitsInOneView ? " single-page" : ""
           }`}
           ref={trackRef}
+          onScroll={updateEdges}
         >
           {albums.map((album) => (
             <Link
@@ -123,21 +92,11 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
         <button
           type="button"
           className="album-carousel-arrow album-carousel-arrow-next"
-          onClick={() => goToPage(safePage + 1)}
-          disabled={safePage >= totalPages - 1}
+          onClick={() => scrollOneView(1)}
+          disabled={atEnd}
           aria-label="Álbumes siguientes"
         >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
+          <FaChevronRight aria-hidden="true" />
         </button>
       </div>
     </section>

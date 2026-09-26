@@ -9,7 +9,6 @@
 }
 
 .album-carousel-section {
-  --per-page: 5;
   --item-gap: 1.5rem;
 }
 
@@ -22,7 +21,9 @@
 .album-carousel-track {
   display: flex;
   gap: var(--item-gap);
-  overflow: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
   margin: 0 3.25rem;
   padding: 0.25rem 0 1rem;
   scroll-behavior: smooth;
@@ -78,9 +79,8 @@
 
 .album-carousel-item {
   flex: 0 0 auto;
-  width: calc(
-    (100% - (var(--per-page) - 1) * var(--item-gap)) / var(--per-page)
-  );
+  width: calc((100% - 4 * var(--item-gap)) / 5);
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
