@@ -1,7 +1,7 @@
 .profile-page {
   display: flex;
   justify-content: center;
-  padding-block: 3rem;
+  padding-block: calc(var(--navbar-height) + 1.25rem) 3rem;
 }
 
 .profile-card {

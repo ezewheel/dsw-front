@@ -1,5 +1,5 @@
 .detail-page {
-  padding: 5rem 0 3rem;
+  padding-block: calc(var(--navbar-height) + 1.25rem) 3rem;
 }
 
 .detail-top {

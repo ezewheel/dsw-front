@@ -14,10 +14,12 @@
 }
 
 .app-navbar-inner {
-  max-width: 72rem;
+  max-width: 74rem;
   margin: 0 auto;
+  padding-inline: 1rem;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr minmax(0, 32rem) 1fr;
+  column-gap: 1rem;
   align-items: center;
   min-height: 2.75rem;
 }
@@ -126,4 +128,33 @@
 .app-navbar-dropdown-item:hover {
   background-color: var(--bg-overlay-medium);
   color: #fff;
+}
+
+@media (max-width: 767.98px) {
+  .app-navbar-inner {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand links"
+      "search search";
+    row-gap: 0.5rem;
+  }
+
+  .app-navbar-brand {
+    grid-area: brand;
+  }
+
+  .app-navbar-brand img {
+    height: 1rem;
+  }
+
+  .app-navbar-center {
+    grid-area: search;
+  }
+
+  .app-navbar-links {
+    grid-area: links;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+  }
 }
