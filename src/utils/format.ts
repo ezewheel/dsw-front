@@ -1,4 +1,9 @@
 const dateFormatter = new Intl.DateTimeFormat("es-AR", { dateStyle: "long" });
+const shortDateFormatter = new Intl.DateTimeFormat("es-AR", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
 
 export const formatDuration = (seconds: number): string => {
   const minutes = Math.floor(seconds / 60);
@@ -8,6 +13,9 @@ export const formatDuration = (seconds: number): string => {
 
 export const formatDate = (iso: string): string =>
   dateFormatter.format(new Date(iso));
+
+export const formatShortDate = (iso: string): string =>
+  shortDateFormatter.format(new Date(iso));
 
 export const formatCount = (
   count: number,

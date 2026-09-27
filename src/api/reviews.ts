@@ -11,7 +11,7 @@ export interface EntityReview {
   user: EntityReviewUser;
   value: number;
   content: string | null;
-  createdAt: string;
+  updatedAt: string;
 }
 
 export interface EntityReviewsResult {
@@ -25,7 +25,7 @@ export interface LatestReview {
   user: EntityReviewUser;
   value: number;
   content: string;
-  createdAt: string;
+  updatedAt: string;
   entity: EntitySummary;
 }
 
@@ -57,6 +57,23 @@ export const createReview = async (
     input,
   );
   return data;
+};
+
+export const getOwnReview = async (
+  type: MusicalEntityType,
+  externalId: string,
+): Promise<EntityReview | null> => {
+  const { data } = await api.get<EntityReview | null>(
+    `/interaction/${type}/${externalId}/reviews/own`,
+  );
+  return data;
+};
+
+export const deleteReview = async (
+  type: MusicalEntityType,
+  externalId: string,
+): Promise<void> => {
+  await api.delete(`/interaction/${type}/${externalId}/reviews`);
 };
 
 export const getEntityReviews = async (

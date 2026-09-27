@@ -67,7 +67,7 @@ const LatestReviews = () => {
                     <div className="latest-reviews-author">
                       {review.user.nickname} ·{" "}
                       {ENTITY_TYPE_LABELS[review.entity.type]} ·{" "}
-                      {formatDate(review.createdAt)}
+                      {formatDate(review.updatedAt)}
                     </div>
                     <p className="latest-reviews-text">{review.content}</p>
                   </div>

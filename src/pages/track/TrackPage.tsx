@@ -105,11 +105,7 @@ const TrackPage = () => {
                 aria-hidden="true"
               />
               <span>
-                {formatCount(
-                  track.ratingsCount,
-                  "calificación",
-                  "calificaciones",
-                )}
+                {formatCount(track.reviewsCount, "reseña", "reseñas")}
               </span>
             </div>
           </div>
@@ -130,7 +126,7 @@ const TrackPage = () => {
       <EntityReviews
         entityType="track"
         externalId={track.externalId}
-        onReviewSaved={reload}
+        onReviewChange={reload}
       />
     </div>
   );

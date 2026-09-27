@@ -13,12 +13,62 @@
   font-size: 1.1rem;
 }
 
+.review-form-title + .review-form-hint {
+  margin-top: 0.25rem;
+}
+
 .review-form .form-field {
   margin-bottom: 0;
 }
 
 .review-form textarea.form-input {
   resize: vertical;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.review-form-view textarea.form-input {
+  background-color: rgb(0 0 0 / 0.25);
+  border-color: rgb(255 255 255 / 0.06);
+  box-shadow: none;
+  color: var(--text-muted);
+  resize: none;
+  cursor: not-allowed;
+}
+
+.review-form-limit {
+  transition: opacity 0.2s ease;
+}
+
+.review-form-view .review-form-limit {
+  opacity: 0;
+}
+
+.review-form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.review-form-fade,
+.review-form .alert {
+  animation: review-form-fade 0.25s ease;
+}
+
+@keyframes review-form-fade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-form-fade,
+  .review-form .alert {
+    animation: none;
+  }
 }
 
 .review-form-hint {
@@ -64,4 +114,35 @@
 
 .review-form .app-btn {
   width: 100%;
+}
+
+.review-form-confirm-text {
+  margin: 0 0 1.25rem;
+  color: var(--text-muted);
+}
+
+.review-form-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.review-form-delete {
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent);
+  color: var(--danger);
+}
+
+.review-form-delete:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+.review-form-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.review-form-secondary:hover:not(:disabled) {
+  background: var(--bg-overlay);
 }

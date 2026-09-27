@@ -7,15 +7,15 @@ import "./EntityReviews.css";
 type EntityReviewsProps = {
   entityType: MusicalEntityType;
   externalId: string;
-  onReviewSaved: () => void;
+  onReviewChange: () => void;
 };
 
 const EntityReviews = ({
   entityType,
   externalId,
-  onReviewSaved,
+  onReviewChange,
 }: EntityReviewsProps) => {
-  const [savedReviews, setSavedReviews] = useState(0);
+  const [reviewChanges, setReviewChanges] = useState(0);
 
   return (
     <section className="entity-reviews">
@@ -25,15 +25,15 @@ const EntityReviews = ({
           <ReviewForm
             entityType={entityType}
             externalId={externalId}
-            onSubmitted={() => {
-              setSavedReviews((count) => count + 1);
-              onReviewSaved();
+            onChange={() => {
+              setReviewChanges((count) => count + 1);
+              onReviewChange();
             }}
           />
         </div>
         <div className="entity-reviews-list">
           <ReviewList
-            key={savedReviews}
+            key={reviewChanges}
             entityType={entityType}
             externalId={externalId}
           />

@@ -6,7 +6,10 @@ type Settled<T> = {
   error: boolean;
 };
 
-export const useFetch = <T>(load: () => Promise<T>) => {
+export const useFetch = <T>(
+  load: () => Promise<T>,
+  { keepPreviousData = false } = {},
+) => {
   const [reloadCount, setReloadCount] = useState(0);
   const [settled, setSettled] = useState<Settled<T> | null>(null);
 
@@ -29,9 +32,10 @@ export const useFetch = <T>(load: () => Promise<T>) => {
   const reload = useCallback(() => setReloadCount((count) => count + 1), []);
 
   const hasResult = settled?.load === load;
+  const showsData = hasResult || keepPreviousData;
 
   return {
-    data: hasResult ? settled.data : null,
+    data: showsData ? (settled?.data ?? null) : null,
     loading: !hasResult,
     error: hasResult && settled.error,
     reload,

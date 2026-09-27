@@ -101,7 +101,7 @@ const AlbumPage = () => {
       <EntityReviews
         entityType="album"
         externalId={album.externalId}
-        onReviewSaved={reload}
+        onReviewChange={reload}
       />
     </div>
   );

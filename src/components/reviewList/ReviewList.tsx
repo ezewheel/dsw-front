@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { MusicalEntityType } from "../../api/musical-entity";
 import { getEntityReviews } from "../../api/reviews";
 import { useFetch } from "../../hooks/useFetch";
@@ -15,6 +15,7 @@ type ReviewListProps = {
 };
 
 const ReviewList = ({ entityType, externalId }: ReviewListProps) => {
+  const listRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(1);
   const { data, loading, error } = useFetch(
     useCallback(
@@ -22,9 +23,15 @@ const ReviewList = ({ entityType, externalId }: ReviewListProps) => {
         getEntityReviews(entityType, externalId, { page, pageSize: PAGE_SIZE }),
       [entityType, externalId, page],
     ),
+    { keepPreviousData: true },
   );
 
-  if (loading) {
+  const changePage = (nextPage: number) => {
+    setPage(nextPage);
+    listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  if (!data && loading) {
     return <p className="status-message">Cargando reseñas...</p>;
   }
 
@@ -43,7 +50,11 @@ const ReviewList = ({ entityType, externalId }: ReviewListProps) => {
   }
 
   return (
-    <div className="review-list">
+    <div
+      ref={listRef}
+      className={`review-list${loading ? " review-list-loading" : ""}`}
+      aria-busy={loading}
+    >
       <div className="review-list-items">
         {data.items.map((review) => (
           <article className="review-list-item" key={review.id}>
@@ -59,7 +70,7 @@ const ReviewList = ({ entityType, externalId }: ReviewListProps) => {
               </div>
               <p className="review-list-text">{review.content}</p>
               <span className="review-list-date">
-                {formatDate(review.createdAt)}
+                {formatDate(review.updatedAt)}
               </span>
             </div>
           </article>
@@ -68,7 +79,7 @@ const ReviewList = ({ entityType, externalId }: ReviewListProps) => {
       <Pagination
         currentPage={page}
         totalPages={data.totalPages}
-        onPageChange={setPage}
+        onPageChange={changePage}
       />
     </div>
   );
