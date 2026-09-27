@@ -11,10 +11,6 @@
   text-align: center;
 }
 
-.entity-reviews-empty {
-  color: var(--text-muted);
-}
-
 .entity-reviews-layout {
   display: grid;
   grid-template-columns: 1fr 2fr;

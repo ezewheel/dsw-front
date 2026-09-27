@@ -19,14 +19,14 @@ const ReviewsSection = () => {
     <section className="reviews-section">
       <h2 className="reviews-title">Últimas reseñas</h2>
 
-      {loading && <p className="reviews-empty">Cargando reseñas...</p>}
+      {loading && <p className="status-message">Cargando reseñas...</p>}
 
       {!loading && error && (
-        <p className="reviews-empty">No se pudieron cargar las reseñas.</p>
+        <p className="status-message">No se pudieron cargar las reseñas.</p>
       )}
 
       {!loading && !error && (reviews === null || reviews.length === 0) && (
-        <p className="reviews-empty">Todavía no hay reseñas. ¡Sé el primero!</p>
+        <p className="status-message">Todavía no hay reseñas. ¡Sé el primero!</p>
       )}
 
       {!loading && !error && reviews !== null && reviews.length > 0 && (

@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 
 type Settled<T> = {
   load: () => Promise<T>;
-  reloadCount: number;
   data: T | null;
   error: boolean;
 };
@@ -14,7 +13,7 @@ export const useFetch = <T>(load: () => Promise<T>) => {
   useEffect(() => {
     let active = true;
     const settle = (data: T | null, error: boolean) => {
-      if (active) setSettled({ load, reloadCount, data, error });
+      if (active) setSettled({ load, data, error });
     };
 
     load().then(
@@ -29,13 +28,12 @@ export const useFetch = <T>(load: () => Promise<T>) => {
 
   const reload = useCallback(() => setReloadCount((count) => count + 1), []);
 
-  const isCurrent =
-    settled?.load === load && settled.reloadCount === reloadCount;
+  const hasResult = settled?.load === load;
 
   return {
-    data: isCurrent ? settled.data : null,
-    loading: !isCurrent,
-    error: isCurrent && settled.error,
+    data: hasResult ? settled.data : null,
+    loading: !hasResult,
+    error: hasResult && settled.error,
     reload,
   };
 };

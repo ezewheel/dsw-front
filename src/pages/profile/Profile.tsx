@@ -6,7 +6,7 @@ const Profile = () => {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <p className="app-container loading-message">Cargando perfil...</p>;
+    return <p className="app-container profile-page status-message">Cargando perfil...</p>;
   }
 
   if (!user) return <Navigate to="/" replace />;

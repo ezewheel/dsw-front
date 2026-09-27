@@ -15,12 +15,6 @@
   color: var(--text);
 }
 
-.advanced-search-status {
-  display: flex;
-  gap: 0.6rem;
-  color: var(--text-muted);
-}
-
 .advanced-search-spinner {
   animation: advanced-search-spin 0.9s linear infinite;
 }

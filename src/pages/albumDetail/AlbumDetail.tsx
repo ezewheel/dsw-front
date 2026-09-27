@@ -15,14 +15,14 @@ import "./AlbumDetail.css";
 const AlbumDetail = () => {
   const { id = "" } = useParams();
 
-  const { data: album, loading, error } = useFetch(
+  const { data: album, loading, error, reload } = useFetch(
     useCallback(() => getAlbumDetail(id), [id]),
   );
 
   if (loading) {
     return (
-      <div className="app-container detail-page loading-message">
-        <p>Cargando álbum...</p>
+      <div className="app-container detail-page">
+        <p className="status-message">Cargando álbum...</p>
       </div>
     );
   }
@@ -79,7 +79,11 @@ const AlbumDetail = () => {
         />
       </div>
 
-      <EntityReviews entityType="album" externalId={album.externalId} />
+      <EntityReviews
+        entityType="album"
+        externalId={album.externalId}
+        onReviewSaved={reload}
+      />
     </div>
   );
 };

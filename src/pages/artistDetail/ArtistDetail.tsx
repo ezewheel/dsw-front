@@ -13,14 +13,14 @@ import "../detail.css";
 const ArtistDetail = () => {
   const { id = "" } = useParams();
 
-  const { data: artist, loading, error } = useFetch(
+  const { data: artist, loading, error, reload } = useFetch(
     useCallback(() => getArtistDetail(id), [id]),
   );
 
   if (loading) {
     return (
-      <div className="app-container detail-page loading-message">
-        <p>Cargando artista...</p>
+      <div className="app-container detail-page">
+        <p className="status-message">Cargando artista...</p>
       </div>
     );
   }
@@ -58,7 +58,11 @@ const ArtistDetail = () => {
       </div>
 
       <AlbumCarousel key={artist.externalId} albums={artist.albums} />
-      <EntityReviews entityType="artist" externalId={artist.externalId} />
+      <EntityReviews
+        entityType="artist"
+        externalId={artist.externalId}
+        onReviewSaved={reload}
+      />
     </div>
   );
 };

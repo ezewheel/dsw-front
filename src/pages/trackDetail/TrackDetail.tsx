@@ -33,14 +33,14 @@ const loadTrackPage = async (id: string) => {
 const TrackDetail = () => {
   const { id = "" } = useParams();
 
-  const { data, loading, error } = useFetch(
+  const { data, loading, error, reload } = useFetch(
     useCallback(() => loadTrackPage(id), [id]),
   );
 
   if (loading) {
     return (
-      <div className="app-container detail-page loading-message">
-        <p>Cargando canción...</p>
+      <div className="app-container detail-page">
+        <p className="status-message">Cargando canción...</p>
       </div>
     );
   }
@@ -128,7 +128,11 @@ const TrackDetail = () => {
         />
       </div>
 
-      <EntityReviews entityType="track" externalId={track.externalId} />
+      <EntityReviews
+        entityType="track"
+        externalId={track.externalId}
+        onReviewSaved={reload}
+      />
     </div>
   );
 };

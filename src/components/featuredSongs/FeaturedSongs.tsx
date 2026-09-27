@@ -16,16 +16,16 @@ const FeaturedSongs = () => {
         Últimas canciones reseñadas
       </h2>
 
-      {loading && <p className="featured-songs-status">Cargando canciones...</p>}
+      {loading && <p className="status-message">Cargando canciones...</p>}
 
       {!loading && error && (
-        <p className="featured-songs-status">
+        <p className="status-message">
           No se pudieron cargar las canciones.
         </p>
       )}
 
       {!loading && !error && (songs === null || songs.length === 0) && (
-        <p className="featured-songs-status">
+        <p className="status-message">
           Todavía no hay canciones reseñadas.
         </p>
       )}

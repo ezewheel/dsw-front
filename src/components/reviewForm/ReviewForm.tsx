@@ -29,6 +29,7 @@ const ReviewForm = ({
   const [validated, setValidated] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [saved, setSaved] = useState(false);
 
   if (!user) {
     return (
@@ -57,6 +58,7 @@ const ReviewForm = ({
 
     setSubmitting(true);
     setError("");
+    setSaved(false);
 
     const input: CreateReviewInput = {
       value,
@@ -68,6 +70,7 @@ const ReviewForm = ({
       setValue(0);
       setContent("");
       setValidated(false);
+      setSaved(true);
       onSubmitted?.();
     } catch (saveError) {
       setError(
@@ -99,7 +102,7 @@ const ReviewForm = ({
               className="review-form-clear"
               onClick={() => setValue(0)}
             >
-              Eliminar
+              Limpiar
             </button>
           )}
         </div>
@@ -131,6 +134,12 @@ const ReviewForm = ({
       {error && (
         <div className="alert alert-danger" role="alert">
           {error}
+        </div>
+      )}
+
+      {saved && (
+        <div className="alert alert-success" role="status">
+          ¡Reseña publicada!
         </div>
       )}
 

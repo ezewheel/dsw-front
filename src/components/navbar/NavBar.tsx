@@ -7,7 +7,7 @@ import SearchBar from "./components/SearchBar";
 import "./NavBar.css";
 
 function NavBar() {
-  const { user, logout } = useAuth();
+  const { user, loading, logout } = useAuth();
   const { openLogin, openRegister } = useAuthModals();
   const location = useLocation();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -50,7 +50,7 @@ function NavBar() {
         </div>
 
         <div className="app-navbar-links">
-          {user ? (
+          {loading ? null : user ? (
             <div className="app-navbar-user" ref={dropdownRef}>
               <button
                 type="button"

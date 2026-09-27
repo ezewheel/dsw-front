@@ -13,9 +13,14 @@ const PAGE_SIZE = 10;
 type EntityReviewsProps = {
   entityType: MusicalEntityType;
   externalId: string;
+  onReviewSaved: () => void;
 };
 
-const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
+const EntityReviews = ({
+  entityType,
+  externalId,
+  onReviewSaved,
+}: EntityReviewsProps) => {
   const [page, setPage] = useState(1);
   const { data, loading, error, reload } = useFetch(
     useCallback(
@@ -37,18 +42,19 @@ const EntityReviews = ({ entityType, externalId }: EntityReviewsProps) => {
             onSubmitted={() => {
               setPage(1);
               reload();
+              onReviewSaved();
             }}
           />
         </div>
         <div className="entity-reviews-main">
           {loading ? (
-            <p className="entity-reviews-empty">Cargando reseñas...</p>
+            <p className="status-message">Cargando reseñas...</p>
           ) : error ? (
-            <p className="entity-reviews-empty">
+            <p className="status-message">
               No se pudieron cargar las reseñas.
             </p>
           ) : !data || data.items.length === 0 ? (
-            <p className="entity-reviews-empty">
+            <p className="status-message">
               Todavía no hay reseñas para esta entidad. ¡Sé el primero!
             </p>
           ) : (

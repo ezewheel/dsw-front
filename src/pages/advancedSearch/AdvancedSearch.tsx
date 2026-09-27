@@ -88,7 +88,7 @@ const AdvancedSearch = () => {
       <div className="advanced-search-layout">
         <div className="advanced-search-main">
           {loading && (
-            <div className="advanced-search-status">
+            <div className="status-message">
               <FaSpinner
                 className="advanced-search-spinner"
                 aria-hidden="true"
@@ -98,13 +98,13 @@ const AdvancedSearch = () => {
           )}
 
           {!loading && error && (
-            <div className="advanced-search-status">
+            <div className="status-message">
               No se pudieron cargar los resultados
             </div>
           )}
 
           {!loading && !error && hasQuery && results.length === 0 && (
-            <div className="advanced-search-status">Sin resultados</div>
+            <div className="status-message">Sin resultados</div>
           )}
 
           {!loading && !error && results.length > 0 && (

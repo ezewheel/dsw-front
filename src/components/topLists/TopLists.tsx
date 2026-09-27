@@ -10,10 +10,10 @@ const TopLists = () => {
     <>
       <h2 className="text-center top-lists-title">Listas de popularidad</h2>
 
-      {loading && <p className="top-lists-status">Cargando listas...</p>}
+      {loading && <p className="status-message">Cargando listas...</p>}
 
       {!loading && error && (
-        <p className="top-lists-status">No se pudieron cargar las listas.</p>
+        <p className="status-message">No se pudieron cargar las listas.</p>
       )}
 
       {!loading && !error && (
