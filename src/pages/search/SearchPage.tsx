@@ -1,0 +1,168 @@
+import { useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
+import { FaCompactDisc, FaMusic, FaSpinner, FaUser } from "react-icons/fa";
+import {
+  ENTITY_TYPE_LABELS,
+  searchMusicalEntity,
+  type MusicalEntityType,
+} from "../../api/musical-entity";
+import SearchResultItem from "./components/searchResultItem/SearchResultItem";
+import Pagination from "../../components/pagination/Pagination";
+import { useFetch } from "../../hooks/useFetch";
+import { formatCount } from "../../utils/format";
+import "./SearchPage.css";
+
+const TYPE_OPTIONS: Record<MusicalEntityType, string> = {
+  track: "Canciones",
+  album: "Álbumes",
+  artist: "Artistas",
+};
+
+const TYPE_ICONS: Record<MusicalEntityType, typeof FaMusic> = {
+  track: FaMusic,
+  album: FaCompactDisc,
+  artist: FaUser,
+};
+
+const PAGE_SIZE = 20;
+
+const toEntityType = (value: string | null): MusicalEntityType | null =>
+  value === "track" || value === "album" || value === "artist" ? value : null;
+
+const toPage = (value: string | null): number =>
+  Math.max(1, Number.parseInt(value ?? "", 10) || 1);
+
+const SearchPage = () => {
+  const [params, setSearchParams] = useSearchParams();
+  const query = params.get("query") ?? "";
+  const entityType = toEntityType(params.get("type"));
+  const page = toPage(params.get("page"));
+
+  const { data, loading, error } = useFetch(
+    useCallback(async () => {
+      const trimmed = query.trim();
+      if (!trimmed || !entityType) return null;
+
+      return searchMusicalEntity(trimmed, entityType, {
+        limit: PAGE_SIZE,
+        index: (page - 1) * PAGE_SIZE,
+      });
+    }, [query, entityType, page]),
+  );
+
+  const results = data?.results ?? [];
+  const total = data?.total ?? 0;
+  const hasQuery = query.trim() !== "" && entityType !== null;
+  const totalPages = Math.ceil(total / PAGE_SIZE);
+
+  const selectType = (type: MusicalEntityType) => {
+    if (type === entityType) return;
+    setSearchParams({ query, type });
+  };
+
+  const setPage = (nextPage: number) => {
+    setSearchParams((current) => {
+      current.set("page", String(nextPage));
+      return current;
+    });
+  };
+
+  return (
+    <div className="app-container search-page">
+      <h1 className="search-page-heading">
+        {hasQuery ? (
+          <>
+            Resultados para{" "}
+            <span className="search-page-keyword">"{query.trim()}"</span> en{" "}
+            {ENTITY_TYPE_LABELS[entityType]}
+          </>
+        ) : (
+          "Buscá canciones, álbumes y artistas."
+        )}
+      </h1>
+      {!loading && !error && hasQuery && total > 0 && (
+        <p className="search-page-count">
+          Mostrando {formatCount(total, "resultado", "resultados")}
+        </p>
+      )}
+      <div className="search-page-layout">
+        <div className="search-page-main">
+          {loading && (
+            <div className="status-message">
+              <FaSpinner
+                className="search-page-spinner"
+                aria-hidden="true"
+              />
+              Buscando...
+            </div>
+          )}
+
+          {!loading && error && (
+            <div className="status-message">
+              No se pudieron cargar los resultados
+            </div>
+          )}
+
+          {!loading && !error && hasQuery && results.length === 0 && (
+            <div className="status-message">Sin resultados</div>
+          )}
+
+          {!loading && !error && results.length > 0 && (
+            <>
+              <div className="search-page-results" role="list">
+                {results.map((result) => (
+                  <SearchResultItem
+                    key={`${result.type}-${result.externalId}`}
+                    result={result}
+                  />
+                ))}
+              </div>
+
+              <Pagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPageChange={setPage}
+              />
+            </>
+          )}
+        </div>
+
+        <aside className="search-page-filters">
+          <h2 className="search-page-filters-title">Filtrar por tipo</h2>
+          <div
+            className="search-page-type-selector"
+            role="radiogroup"
+            aria-label="Tipo de resultado"
+          >
+            {(Object.keys(TYPE_OPTIONS) as MusicalEntityType[]).map((type) => {
+              const Icon = TYPE_ICONS[type];
+              return (
+                <label
+                  key={type}
+                  className={`search-page-type-option${
+                    entityType === type ? " is-active" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="search-page-type"
+                    value={type}
+                    checked={entityType === type}
+                    onChange={() => selectType(type)}
+                  />
+                  <Icon
+                    className="search-page-type-icon"
+                    aria-hidden="true"
+                  />
+                  {TYPE_OPTIONS[type]}
+                </label>
+              );
+            })}
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
+};
+
+export default SearchPage;

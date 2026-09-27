@@ -1,0 +1,111 @@
+.track-list {
+  flex: 1;
+  min-width: 0;
+}
+
+.track-list-header {
+  margin: 0 0 1.25rem;
+  text-align: left;
+}
+
+.track-list-empty {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.track-list-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.track-list-item {
+  display: grid;
+  grid-template-columns: 1.5rem 52px 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgb(255 255 255 / 0.06);
+}
+
+.track-list-item-no-rank {
+  grid-template-columns: 52px 1fr auto;
+}
+
+.track-list-item:last-child {
+  border-bottom: none;
+}
+
+.track-list-rank {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.track-list-cover {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.track-list-meta {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.track-list-title {
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-list-title:visited {
+  color: var(--text);
+}
+
+.track-list-title:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.track-list-subtitle {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-list-item > .average-rating {
+  margin-right: 0.6rem;
+}
+
+@media (max-width: 575.98px) {
+  .track-list-item {
+    grid-template-columns: 1.2rem 44px 1fr;
+  }
+
+  .track-list-item-no-rank {
+    grid-template-columns: 44px 1fr;
+  }
+
+  .track-list-item > .average-rating {
+    grid-column: 3;
+    justify-self: start;
+  }
+
+  .track-list-item-no-rank > .average-rating {
+    grid-column: 2;
+    justify-self: start;
+  }
+}

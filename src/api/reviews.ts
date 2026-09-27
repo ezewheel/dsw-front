@@ -29,7 +29,7 @@ export interface LatestReview {
   entity: EntitySummary;
 }
 
-export interface ReviewedSong {
+export interface ReviewedTrack {
   externalId: string;
   title: string | null;
   artist: string | null;
@@ -81,10 +81,10 @@ export const getLatestReviews = async (
   return data;
 };
 
-export const getLatestReviewedSongs = async (
+export const getLatestReviewedTracks = async (
   limit: number = 5,
-): Promise<ReviewedSong[]> => {
-  const { data } = await api.get<ReviewedSong[]>(
+): Promise<ReviewedTrack[]> => {
+  const { data } = await api.get<ReviewedTrack[]>(
     "/interaction/latest-reviewed-songs",
     { params: { limit } },
   );

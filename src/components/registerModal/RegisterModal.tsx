@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { getErrorMessage } from "../../api/client";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
-import PasswordInput from "../authModals/PasswordInput";
+import PasswordInput from "../passwordInput/PasswordInput";
 import Modal from "../modal/Modal";
 import "../authModals/auth-form.css";
 
