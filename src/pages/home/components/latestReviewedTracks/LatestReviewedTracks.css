@@ -1,9 +1,5 @@
-.latest-reviewed-tracks-title {
-  margin-bottom: 1.5rem;
-}
-
 .latest-reviewed-tracks-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-  gap: 0.75rem;
+  gap: 1rem;
 }

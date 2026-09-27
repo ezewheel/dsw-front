@@ -16,7 +16,7 @@
   left: 1rem;
   right: 1rem;
   bottom: 15%;
-  max-width: 45rem;
+  max-width: 50rem;
   margin-inline: auto;
   text-align: center;
   font-size: clamp(1.75rem, 5vw, 3.5rem);

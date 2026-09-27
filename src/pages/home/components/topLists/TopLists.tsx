@@ -8,7 +8,7 @@ const TopLists = () => {
 
   return (
     <>
-      <h2 className="text-center top-lists-title">Listas de popularidad</h2>
+      <h2 className="section-title">Listas de popularidad</h2>
 
       {loading && <p className="status-message">Cargando listas...</p>}
 

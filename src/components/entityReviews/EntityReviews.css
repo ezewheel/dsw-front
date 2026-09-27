@@ -25,6 +25,12 @@
 
 .entity-reviews-list {
   min-width: 0;
+  scroll-margin-top: 1rem;
+  transition: opacity 0.2s ease;
+}
+
+.entity-reviews-list-loading {
+  opacity: 0.5;
 }
 
 @media (max-width: 767.98px) {

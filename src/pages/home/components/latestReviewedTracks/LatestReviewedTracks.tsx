@@ -1,4 +1,4 @@
-import TrackCard from "../trackCard/TrackCard";
+import TrackCard, { TrackCardSkeleton } from "../trackCard/TrackCard";
 import { getLatestReviewedTracks } from "../../../../api/reviews";
 import { useFetch } from "../../../../hooks/useFetch";
 import "./LatestReviewedTracks.css";
@@ -11,12 +11,22 @@ const LatestReviewedTracks = () => {
   const { data: tracks, loading, error } = useFetch(loadLatestReviewedTracks);
 
   return (
-    <section className="latest-reviewed-tracks-section">
-      <h2 className="text-center latest-reviewed-tracks-title">
+    <section>
+      <h2 className="section-title">
         Últimas canciones reseñadas
       </h2>
 
-      {loading && <p className="status-message">Cargando canciones...</p>}
+      {loading && (
+        <div
+          className="latest-reviewed-tracks-list"
+          aria-busy="true"
+          aria-label="Cargando canciones"
+        >
+          {Array.from({ length: TRACKS_LIMIT }, (_, index) => (
+            <TrackCardSkeleton key={index} />
+          ))}
+        </div>
+      )}
 
       {!loading && error && (
         <p className="status-message">

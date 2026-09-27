@@ -29,6 +29,12 @@ export interface LatestReview {
   entity: EntitySummary;
 }
 
+export interface LatestReviewsResult {
+  total: number;
+  totalPages: number;
+  items: LatestReview[];
+}
+
 export interface ReviewedTrack {
   externalId: string;
   title: string | null;
@@ -88,12 +94,13 @@ export const getEntityReviews = async (
   return data;
 };
 
-export const getLatestReviews = async (
-  limit: number = 20,
-): Promise<LatestReview[]> => {
-  const { data } = await api.get<LatestReview[]>(
+export const getLatestReviews = async (options: {
+  page: number;
+  pageSize: number;
+}): Promise<LatestReviewsResult> => {
+  const { data } = await api.get<LatestReviewsResult>(
     "/interaction/reviews/latest",
-    { params: { limit } },
+    { params: options },
   );
   return data;
 };

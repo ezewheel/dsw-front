@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { MusicalEntityType } from "../../api/musical-entity";
+import { getEntityReviews } from "../../api/reviews";
+import { useFetch } from "../../hooks/useFetch";
+import Pagination from "../pagination/Pagination";
 import ReviewForm from "../reviewForm/ReviewForm";
 import ReviewList from "../reviewList/ReviewList";
 import "./EntityReviews.css";
+
+const PAGE_SIZE = 10;
 
 type EntityReviewsProps = {
   entityType: MusicalEntityType;
@@ -15,7 +20,27 @@ const EntityReviews = ({
   externalId,
   onReviewChange,
 }: EntityReviewsProps) => {
-  const [reviewChanges, setReviewChanges] = useState(0);
+  const listRef = useRef<HTMLDivElement>(null);
+  const [page, setPage] = useState(1);
+  const { data, loading, error, reload } = useFetch(
+    useCallback(
+      () =>
+        getEntityReviews(entityType, externalId, { page, pageSize: PAGE_SIZE }),
+      [entityType, externalId, page],
+    ),
+    { keepPreviousData: true },
+  );
+
+  const changePage = (nextPage: number) => {
+    setPage(nextPage);
+    listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleReviewChange = () => {
+    setPage(1);
+    reload();
+    onReviewChange();
+  };
 
   return (
     <section className="entity-reviews">
@@ -25,18 +50,35 @@ const EntityReviews = ({
           <ReviewForm
             entityType={entityType}
             externalId={externalId}
-            onChange={() => {
-              setReviewChanges((count) => count + 1);
-              onReviewChange();
-            }}
+            onChange={handleReviewChange}
           />
         </div>
-        <div className="entity-reviews-list">
-          <ReviewList
-            key={reviewChanges}
-            entityType={entityType}
-            externalId={externalId}
-          />
+        <div
+          ref={listRef}
+          className={`entity-reviews-list${loading ? " entity-reviews-list-loading" : ""}`}
+          aria-busy={loading}
+        >
+          {!data && loading && (
+            <p className="status-message">Cargando reseñas...</p>
+          )}
+          {error && (
+            <p className="status-message">No se pudieron cargar las reseñas.</p>
+          )}
+          {!error && data?.items.length === 0 && (
+            <p className="status-message">
+              Todavía no hay reseñas para esta entidad. ¡Sé el primero!
+            </p>
+          )}
+          {!error && data && data.items.length > 0 && (
+            <>
+              <ReviewList reviews={data.items} />
+              <Pagination
+                currentPage={page}
+                totalPages={data.totalPages}
+                onPageChange={changePage}
+              />
+            </>
+          )}
         </div>
       </div>
     </section>

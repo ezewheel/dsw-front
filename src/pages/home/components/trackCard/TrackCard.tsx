@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FaClock } from "react-icons/fa";
 import type { ReviewedTrack } from "../../../../api/reviews";
 import { entityPath } from "../../../../utils/routes";
 import { formatDuration } from "../../../../utils/format";
@@ -10,7 +11,7 @@ const TrackCard = ({ track }: { track: ReviewedTrack }) => {
   const hasSubtitle = track.artistId !== null || track.albumId !== null;
 
   return (
-    <div className="track-card">
+    <article className="track-card">
       <div className="track-card-img-wrapper">
         {track.cover ? (
           <img
@@ -26,17 +27,20 @@ const TrackCard = ({ track }: { track: ReviewedTrack }) => {
             ♪
           </div>
         )}
+        <span className="track-card-rating">
+          <AverageRating value={track.averageRating} size="sm" />
+        </span>
       </div>
 
       <div className="track-card-body">
-        <h5 className="track-card-title">
+        <h3 className="track-card-title">
           <Link to={entityPath("track", track.externalId)} className="link">
             {title}
           </Link>
-        </h5>
+        </h3>
 
         {hasSubtitle && (
-          <div className="track-card-subtitle">
+          <p className="track-card-subtitle">
             {track.artistId !== null && (
               <Link to={entityPath("artist", track.artistId)} className="link">
                 {track.artist}
@@ -50,17 +54,27 @@ const TrackCard = ({ track }: { track: ReviewedTrack }) => {
                 {track.album}
               </Link>
             )}
-          </div>
+          </p>
         )}
 
-        <AverageRating value={track.averageRating} />
-
         <p className="track-card-duration">
+          <FaClock aria-hidden="true" />
           {formatDuration(track.duration ?? 0)}
         </p>
       </div>
-    </div>
+    </article>
   );
 };
+
+export const TrackCardSkeleton = () => (
+  <div className="track-card track-card-skeleton" aria-hidden="true">
+    <div className="track-card-img" />
+    <div className="track-card-body">
+      <span className="track-card-skeleton-line" />
+      <span className="track-card-skeleton-line track-card-skeleton-line-short" />
+      <span className="track-card-skeleton-line track-card-skeleton-line-thin" />
+    </div>
+  </div>
+);
 
 export default TrackCard;
