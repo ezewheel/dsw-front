@@ -8,9 +8,14 @@ import NotFound from "../../components/notFound/NotFound";
 import { entityPath } from "../../utils/routes";
 import { formatCount, formatDuration } from "../../utils/format";
 import { useFetch } from "../../hooks/useFetch";
-import { FaCompactDisc } from "react-icons/fa";
+import {
+  FaCalendarAlt,
+  FaClock,
+  FaCompactDisc,
+  FaMicrophone,
+  FaMusic,
+} from "react-icons/fa";
 import "../detail.css";
-import "./AlbumPage.css";
 
 const AlbumPage = () => {
   const { id = "" } = useParams();
@@ -40,29 +45,43 @@ const AlbumPage = () => {
   }
 
   return (
-    <div className="app-container detail-page album-detail">
-      <div className="detail-top">
+    <div className="app-container detail-page">
+      <div className="detail-top detail-top-reversed">
         <DetailHero
           image={album.cover}
           title={album.title}
           rating={album.averageRating}
         >
-          <div className="album-hero-info">
-            <Link
-              to={entityPath("artist", album.artist.id)}
-              className="link album-hero-artist"
-            >
-              {album.artist.name}
-            </Link>
-            <div className="album-hero-meta">
+          <div className="detail-meta">
+            <div className="detail-meta-item">
+              <FaMicrophone className="detail-meta-icon" aria-hidden="true" />
+              <Link
+                to={entityPath("artist", album.artist.id)}
+                className="detail-meta-link"
+                title={album.artist.name}
+              >
+                {album.artist.name}
+              </Link>
+            </div>
+            <div className="detail-meta-item">
+              <FaClock className="detail-meta-icon" aria-hidden="true" />
+              <span>{formatDuration(album.duration)}</span>
+            </div>
+            <div className="detail-meta-item">
+              <FaMusic className="detail-meta-icon" aria-hidden="true" />
               <span>
                 {formatCount(album.tracks.length, "canción", "canciones")}
               </span>
-              <span>{formatDuration(album.duration)}</span>
-              {album.releaseDate && (
-                <span>{album.releaseDate.slice(0, 4)}</span>
-              )}
             </div>
+            {album.releaseDate && (
+              <div className="detail-meta-item">
+                <FaCalendarAlt
+                  className="detail-meta-icon"
+                  aria-hidden="true"
+                />
+                <span>{album.releaseDate.slice(0, 4)}</span>
+              </div>
+            )}
           </div>
         </DetailHero>
 

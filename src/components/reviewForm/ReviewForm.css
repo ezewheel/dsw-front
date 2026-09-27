@@ -2,20 +2,28 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
   padding: 1.25rem;
-  background: var(--bg-overlay);
-  border-radius: 10px;
+  background: var(--bg-overlay-soft);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: 12px;
+}
+
+.review-form-title {
+  margin: 0;
+  font-size: 1.1rem;
 }
 
 .review-form .form-field {
   margin-bottom: 0;
 }
 
+.review-form textarea.form-input {
+  resize: vertical;
+}
+
 .review-form-hint {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.8125rem;
   color: var(--text-muted);
 }
 
@@ -45,12 +53,6 @@
   display: block;
 }
 
-.review-form-login {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
 .review-form-login-text {
   margin: 0;
   color: var(--text-muted);
@@ -58,4 +60,8 @@
 
 .review-form .alert {
   margin: 0;
+}
+
+.review-form .app-btn {
+  width: 100%;
 }

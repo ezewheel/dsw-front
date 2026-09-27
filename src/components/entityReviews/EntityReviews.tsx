@@ -1,14 +1,8 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import type { MusicalEntityType } from "../../api/musical-entity";
-import { getEntityReviews } from "../../api/reviews";
-import { useFetch } from "../../hooks/useFetch";
-import { formatDate } from "../../utils/format";
-import Pagination from "../pagination/Pagination";
 import ReviewForm from "../reviewForm/ReviewForm";
-import StarRating from "../starRating/StarRating";
+import ReviewList from "../reviewList/ReviewList";
 import "./EntityReviews.css";
-
-const PAGE_SIZE = 10;
 
 type EntityReviewsProps = {
   entityType: MusicalEntityType;
@@ -21,76 +15,28 @@ const EntityReviews = ({
   externalId,
   onReviewSaved,
 }: EntityReviewsProps) => {
-  const [page, setPage] = useState(1);
-  const { data, loading, error, reload } = useFetch(
-    useCallback(
-      () =>
-        getEntityReviews(entityType, externalId, { page, pageSize: PAGE_SIZE }),
-      [entityType, externalId, page],
-    ),
-  );
+  const [savedReviews, setSavedReviews] = useState(0);
 
   return (
     <section className="entity-reviews">
       <h2 className="entity-reviews-title">Reseñas</h2>
       <div className="entity-reviews-layout">
-        <div className="entity-reviews-side">
-          <h3 className="entity-reviews-side-title">Dejá tu reseña</h3>
+        <div className="entity-reviews-form">
           <ReviewForm
             entityType={entityType}
             externalId={externalId}
             onSubmitted={() => {
-              setPage(1);
-              reload();
+              setSavedReviews((count) => count + 1);
               onReviewSaved();
             }}
           />
         </div>
-        <div className="entity-reviews-main">
-          {loading ? (
-            <p className="status-message">Cargando reseñas...</p>
-          ) : error ? (
-            <p className="status-message">
-              No se pudieron cargar las reseñas.
-            </p>
-          ) : !data || data.items.length === 0 ? (
-            <p className="status-message">
-              Todavía no hay reseñas para esta entidad. ¡Sé el primero!
-            </p>
-          ) : (
-            <>
-              <div className="entity-reviews-list">
-                {data.items.map((review) => {
-                  const initial = review.user.nickname.charAt(0).toUpperCase();
-
-                  return (
-                    <article className="entity-review-item" key={review.id}>
-                      <span className="entity-review-avatar" aria-hidden="true">
-                        {initial}
-                      </span>
-                      <div className="entity-review-body">
-                        <div className="entity-review-header">
-                          <span className="entity-review-author">
-                            {review.user.nickname}
-                          </span>
-                          <StarRating value={review.value} readOnly size="sm" />
-                        </div>
-                        <p className="entity-review-text">{review.content}</p>
-                        <span className="entity-review-date">
-                          {formatDate(review.createdAt)}
-                        </span>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-              <Pagination
-                currentPage={page}
-                totalPages={data.totalPages}
-                onPageChange={setPage}
-              />
-            </>
-          )}
+        <div className="entity-reviews-list">
+          <ReviewList
+            key={savedReviews}
+            entityType={entityType}
+            externalId={externalId}
+          />
         </div>
       </div>
     </section>

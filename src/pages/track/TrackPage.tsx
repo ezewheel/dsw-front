@@ -20,7 +20,6 @@ import {
   FaCompactDisc,
 } from "react-icons/fa";
 import "../detail.css";
-import "./TrackPage.css";
 
 const loadTrackPage = async (id: string) => {
   const track = await getTrackDetail(id);
@@ -61,51 +60,51 @@ const TrackPage = () => {
 
   return (
     <div className="app-container detail-page">
-      <div className="detail-top">
+      <div className="detail-top detail-top-reversed">
         <DetailHero
           image={track.album.cover}
           title={track.title}
           rating={track.averageRating}
         >
-          <div className="track-hero-meta">
-            <div className="track-meta-item">
+          <div className="detail-meta">
+            <div className="detail-meta-item">
               <FaMicrophone
-                className="track-meta-icon"
+                className="detail-meta-icon"
                 aria-hidden="true"
               />
               <Link
                 to={entityPath("artist", track.artist.id)}
-                className="track-hero-link track-hero-artist"
+                className="detail-meta-link"
                 title={track.artist.name}
               >
                 {track.artist.name}
               </Link>
             </div>
-            <div className="track-meta-item">
-              <FaClock className="track-meta-icon" aria-hidden="true" />
-              <span className="track-hero-duration">
+            <div className="detail-meta-item">
+              <FaClock className="detail-meta-icon" aria-hidden="true" />
+              <span>
                 {formatDuration(track.duration)}
               </span>
             </div>
-            <div className="track-meta-item">
+            <div className="detail-meta-item">
               <FaCompactDisc
-                className="track-meta-icon"
+                className="detail-meta-icon"
                 aria-hidden="true"
               />
               <Link
                 to={entityPath("album", track.album.id)}
-                className="track-hero-link track-hero-album"
+                className="detail-meta-link"
                 title={track.album.title}
               >
                 {track.album.title}
               </Link>
             </div>
-            <div className="track-meta-item">
+            <div className="detail-meta-item">
               <FaCommentDots
-                className="track-meta-icon"
+                className="detail-meta-icon"
                 aria-hidden="true"
               />
-              <span className="track-hero-ratings">
+              <span>
                 {formatCount(
                   track.ratingsCount,
                   "calificación",

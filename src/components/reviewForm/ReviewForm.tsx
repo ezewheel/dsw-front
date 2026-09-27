@@ -31,23 +31,6 @@ const ReviewForm = ({
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
 
-  if (!user) {
-    return (
-      <div className="review-form review-form-login">
-        <p className="review-form-login-text">
-          Iniciá sesión para dejar tu reseña.
-        </p>
-        <button
-          type="button"
-          className="app-btn app-btn-primary"
-          onClick={openLogin}
-        >
-          Iniciar sesión
-        </button>
-      </div>
-    );
-  }
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -84,13 +67,33 @@ const ReviewForm = ({
     }
   };
 
+  if (!user) {
+    return (
+      <div className="review-form">
+        <h3 className="review-form-title">Dejá tu reseña</h3>
+        <p className="review-form-login-text">
+          Iniciá sesión para dejar tu reseña.
+        </p>
+        <button
+          type="button"
+          className="app-btn app-btn-primary"
+          onClick={openLogin}
+        >
+          Iniciar sesión
+        </button>
+      </div>
+    );
+  }
+
   return (
     <form
       className={`review-form${validated ? " was-validated" : ""}`}
       onSubmit={handleSubmit}
       noValidate
     >
-<div className="form-field">
+      <h3 className="review-form-title">Dejá tu reseña</h3>
+
+      <div className="form-field">
         <span className="form-label" id="review-form-rating-label">
           Tu puntuación
         </span>
