@@ -117,7 +117,7 @@ export type TrackDetail = {
     cover: string;
   };
   averageRating: number | null;
-  reviewsCount: number;
+  ratingsCount: number;
 };
 
 export const getTrackDetail = async (id: string): Promise<TrackDetail> => {

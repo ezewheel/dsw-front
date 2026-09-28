@@ -105,7 +105,7 @@ const TrackPage = () => {
                 aria-hidden="true"
               />
               <span>
-                {formatCount(track.reviewsCount, "reseña", "reseñas")}
+                {formatCount(track.ratingsCount, "reseña", "reseñas")}
               </span>
             </div>
           </div>

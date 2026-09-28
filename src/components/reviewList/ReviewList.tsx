@@ -37,7 +37,9 @@ const ReviewList = ({ reviews }: ReviewListProps) => (
               {ENTITY_TYPE_LABELS[review.entity.type]}
             </p>
           )}
-          <p className="review-list-text">{review.content}</p>
+          {review.content && (
+            <p className="review-list-text">{review.content}</p>
+          )}
           <span className="review-list-date">
             {formatDate(review.updatedAt)}
           </span>
