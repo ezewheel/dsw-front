@@ -9,20 +9,13 @@
   align-items: flex-start;
   gap: 1.25rem;
   padding: 1.5rem;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--feature-color) 10%, transparent),
-    var(--bg-overlay-soft) 60%
-  );
+  background: var(--bg-overlay-soft);
   border: 1px solid rgb(255 255 255 / 0.08);
   border-radius: 16px;
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease;
+  transition: border-color 0.25s ease;
 }
 
 .feature-card:hover {
-  transform: translateY(-3px);
   border-color: color-mix(in srgb, var(--feature-color) 45%, transparent);
 }
 

@@ -9,10 +9,11 @@ import "./TrackCard.css";
 const TrackCard = ({ track }: { track: ReviewedTrack }) => {
   const title = track.title ?? "Título no disponible";
   const hasSubtitle = track.artistId !== null || track.albumId !== null;
+  const trackPath = entityPath("track", track.externalId);
 
   return (
     <article className="track-card">
-      <div className="track-card-img-wrapper">
+      <Link to={trackPath} className="track-card-img-wrapper" tabIndex={-1}>
         {track.cover ? (
           <img
             src={track.cover}
@@ -30,11 +31,11 @@ const TrackCard = ({ track }: { track: ReviewedTrack }) => {
         <span className="track-card-rating">
           <AverageRating value={track.averageRating} size="sm" />
         </span>
-      </div>
+      </Link>
 
       <div className="track-card-body">
         <h3 className="track-card-title">
-          <Link to={entityPath("track", track.externalId)} className="link">
+          <Link to={trackPath} className="link">
             {title}
           </Link>
         </h3>

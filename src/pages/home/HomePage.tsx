@@ -11,9 +11,7 @@ const HomePage = () => {
     <>
       <HeroImage />
       <div className="app-container home-sections">
-        <Reveal>
-          <FeatureSection />
-        </Reveal>
+        <FeatureSection />
         <Reveal>
           <LatestReviewedTracks />
         </Reveal>
