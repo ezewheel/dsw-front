@@ -1,14 +1,15 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import type { MusicalEntityType } from "../../api/musical-entity";
 import { getEntityReviews } from "../../api/reviews";
 import { useFetch } from "../../hooks/useFetch";
 import Pagination from "../pagination/Pagination";
 import ReviewForm from "../reviewForm/ReviewForm";
 import ReviewList from "../reviewList/ReviewList";
+import { focusReviewForm, REVIEW_FORM_ID } from "../../utils/review-form";
 import "./EntityReviews.css";
 
 const PAGE_SIZE = 10;
-export const REVIEW_FORM_ID = "review-form";
 
 type EntityReviewsProps = {
   entityType: MusicalEntityType;
@@ -21,8 +22,13 @@ const EntityReviews = ({
   externalId,
   onReviewChange,
 }: EntityReviewsProps) => {
+  const { hash } = useLocation();
   const listRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    if (hash === `#${REVIEW_FORM_ID}`) focusReviewForm();
+  }, [hash]);
   const { data, loading, error, reload } = useFetch(
     useCallback(
       () =>

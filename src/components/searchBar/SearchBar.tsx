@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { searchMusicalEntity } from "../../api/musical-entity";
-import { searchUsers } from "../../api/users";
+import { searchUsers } from "../../api/user";
 import { entityPath, searchPath, userPath } from "../../utils/routes";
 import type { SearchType } from "../../utils/search";
 import SearchTypeMenu from "../searchTypeMenu/SearchTypeMenu";

@@ -5,7 +5,7 @@ import {
   searchMusicalEntity,
   type EntitySummary,
 } from "../../api/musical-entity";
-import { searchUsers, type UserSummary } from "../../api/users";
+import { searchUsers, type UserSummary } from "../../api/user";
 import SearchResultItem from "./components/searchResultItem/SearchResultItem";
 import UserResultItem from "./components/userResultItem/UserResultItem";
 import Pagination from "../../components/pagination/Pagination";

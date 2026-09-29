@@ -1,51 +1,39 @@
 import { useCallback } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
-import { getUser } from "../../api/users";
+import { getUser } from "../../api/user";
 import { useAuth } from "../../context/auth-context";
 import { useFetch } from "../../hooks/useFetch";
 import NotFound from "../../components/notFound/NotFound";
+import ProfileForm from "./components/profileForm/ProfileForm";
+import PasswordForm from "./components/passwordForm/PasswordForm";
+import ProfileStats from "./components/profileStats/ProfileStats";
+import OwnInteractions from "./components/ownInteractions/OwnInteractions";
 import "./ProfilePage.css";
 
-type ProfileCardProps = {
-  title: string;
-  nickname: string;
-  email?: string;
-};
-
-const ProfileCard = ({ title, nickname, email }: ProfileCardProps) => (
-  <div className="app-container profile-page">
-    <section className="profile-card">
-      <h1 className="profile-title">{title}</h1>
-      <dl className="profile-data">
-        <dt>Nickname</dt>
-        <dd>{nickname}</dd>
-        {email && (
-          <>
-            <dt>Email</dt>
-            <dd>{email}</dd>
-          </>
-        )}
-      </dl>
-    </section>
-  </div>
+const LoadingProfile = () => (
+  <p className="app-container profile-page status-message">
+    Cargando perfil...
+  </p>
 );
 
 const OwnProfile = () => {
   const { user, loading } = useAuth();
 
-  if (loading) {
-    return <p className="app-container profile-page status-message">Cargando perfil...</p>;
-  }
+  if (loading) return <LoadingProfile />;
 
   if (!user) return <Navigate to="/" replace />;
 
   return (
-    <ProfileCard
-      title="Mi perfil"
-      nickname={user.nickname}
-      email={user.email}
-    />
+    <div className="app-container profile-page">
+      <h1 className="profile-title">Mi perfil</h1>
+      <div className="profile-settings">
+        <ProfileForm user={user} />
+        <PasswordForm />
+      </div>
+      <ProfileStats />
+      <OwnInteractions />
+    </div>
   );
 };
 
@@ -54,9 +42,7 @@ const UserProfile = ({ id }: { id: string }) => {
     useCallback(() => getUser(id), [id]),
   );
 
-  if (loading) {
-    return <p className="app-container profile-page status-message">Cargando perfil...</p>;
-  }
+  if (loading) return <LoadingProfile />;
 
   if (error || !user) {
     return (
@@ -70,7 +56,17 @@ const UserProfile = ({ id }: { id: string }) => {
     );
   }
 
-  return <ProfileCard title="Perfil" nickname={user.nickname} />;
+  return (
+    <div className="app-container profile-page">
+      <h1 className="profile-title">Perfil</h1>
+      <section className="profile-card">
+        <dl className="profile-data">
+          <dt>Nickname</dt>
+          <dd>{user.nickname}</dd>
+        </dl>
+      </section>
+    </div>
+  );
 };
 
 const ProfilePage = () => {

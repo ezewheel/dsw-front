@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import type { UserSummary } from "../../../../api/users";
+import type { UserSummary } from "../../../../api/user";
 import { userPath } from "../../../../utils/routes";
 import "../searchResultItem/SearchResultItem.css";
 import "./UserResultItem.css";

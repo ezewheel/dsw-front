@@ -1,0 +1,131 @@
+.own-interactions-list {
+  scroll-margin-top: calc(var(--navbar-height) + 1rem);
+  transition: opacity 0.2s ease;
+}
+
+.own-interactions-list-loading {
+  opacity: 0.5;
+}
+
+.own-interactions-items {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.own-interaction {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid rgb(255 255 255 / 0.07);
+}
+
+.own-interaction:last-child {
+  border-bottom: none;
+}
+
+.own-interaction-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--bg-overlay-strong);
+  color: var(--text-muted);
+}
+
+.own-interaction-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.own-interaction-entity {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.own-interaction-title {
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.own-interaction-title:hover {
+  text-decoration: underline;
+}
+
+.own-interaction-text {
+  margin: 0;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.own-interaction-empty {
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.own-interaction-date {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.own-interaction-edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  align-self: center;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  background-color: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--text);
+  font-size: 0.85rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.own-interaction-edit:visited {
+  color: var(--text);
+}
+
+.own-interaction-edit:hover {
+  border-color: var(--accent);
+  background-color: color-mix(in srgb, var(--accent) 22%, transparent);
+  filter: none;
+}
+
+.own-interaction-edit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.own-interaction-edit-icon {
+  font-size: 0.75rem;
+  color: #c084fc;
+}
+
+@media (max-width: 575.98px) {
+  .own-interaction {
+    flex-wrap: wrap;
+  }
+
+  .own-interaction-edit {
+    width: 100%;
+  }
+}

@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import type { LoginRequest, RegisterRequest, User } from "../api/auth";
+import type { UpdateProfileInput } from "../api/user";
 
 export interface AuthContextValue {
   user: User | null;
@@ -7,6 +8,7 @@ export interface AuthContextValue {
   login: (credentials: LoginRequest) => Promise<void>;
   register: (credentials: RegisterRequest) => Promise<void>;
   logout: () => void;
+  updateProfile: (input: UpdateProfileInput) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextValue | undefined>(
