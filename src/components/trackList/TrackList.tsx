@@ -7,6 +7,7 @@ type TrackItem = {
   externalId: string;
   title: string;
   subtitle?: string;
+  subtitlePath?: string;
   cover: string;
   averageRating: number | null;
 };
@@ -40,7 +41,15 @@ const TrackListItem = ({
         {track.title}
       </Link>
       {track.subtitle && (
-        <p className="track-list-subtitle">{track.subtitle}</p>
+        <p className="track-list-subtitle">
+          {track.subtitlePath ? (
+            <Link to={track.subtitlePath} className="link">
+              {track.subtitle}
+            </Link>
+          ) : (
+            track.subtitle
+          )}
+        </p>
       )}
     </div>
     <AverageRating value={track.averageRating} />

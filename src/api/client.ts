@@ -19,6 +19,11 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+export type SearchResults<T> = {
+  results: T[];
+  total: number;
+};
+
 export const isAccountSuspended = (error: unknown): boolean =>
   axios.isAxiosError<{ code?: string }>(error) &&
   error.response?.data?.code === "ACCOUNT_SUSPENDED";

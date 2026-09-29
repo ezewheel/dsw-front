@@ -1,6 +1,6 @@
-import api from "./client";
+import api, { type SearchResults } from "./client";
 import type { UserRole } from "./auth";
-import type { ReviewsWithEntityResult } from "./reviews";
+import type { Page, ReviewWithEntity } from "./reviews";
 
 export type UserSummary = {
   id: number;
@@ -11,11 +11,6 @@ export type UserDetail = UserSummary & {
   role: UserRole;
   interactionsCount: number;
   createdAt: string;
-};
-
-export type UserSearchResponse = {
-  results: UserSummary[];
-  total: number;
 };
 
 export type UserProfile = UserSummary & {
@@ -54,8 +49,8 @@ export const changePassword = async (
 export const getOwnInteractions = async (options: {
   page: number;
   pageSize: number;
-}): Promise<ReviewsWithEntityResult> => {
-  const { data } = await api.get<ReviewsWithEntityResult>(
+}): Promise<Page<ReviewWithEntity>> => {
+  const { data } = await api.get<Page<ReviewWithEntity>>(
     "/user/me/interactions",
     { params: options },
   );
@@ -65,8 +60,8 @@ export const getOwnInteractions = async (options: {
 export const searchUsers = async (
   query: string,
   options?: { limit?: number; index?: number },
-): Promise<UserSearchResponse> => {
-  const { data } = await api.get<UserSearchResponse>("/user/search", {
+): Promise<SearchResults<UserSummary>> => {
+  const { data } = await api.get<SearchResults<UserSummary>>("/user/search", {
     params: { query, ...options },
   });
   return data;
@@ -80,8 +75,8 @@ export const getUser = async (id: string): Promise<UserDetail> => {
 export const getUserReviews = async (
   id: string,
   options: { page: number; pageSize: number },
-): Promise<ReviewsWithEntityResult> => {
-  const { data } = await api.get<ReviewsWithEntityResult>(
+): Promise<Page<ReviewWithEntity>> => {
+  const { data } = await api.get<Page<ReviewWithEntity>>(
     `/user/${id}/reviews`,
     { params: options },
   );

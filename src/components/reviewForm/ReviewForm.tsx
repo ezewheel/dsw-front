@@ -97,8 +97,8 @@ const ReviewEditor = ({
   const [saved, setSaved] = useState<SavedReview | null>(
     ownReview && {
       value: ownReview.value,
-      content: ownReview.content ?? "",
-      publishedAt: ownReview.updatedAt,
+      content: ownReview.content,
+      publishedAt: ownReview.publishedAt,
     },
   );
   const [value, setValue] = useState(saved?.value ?? 0);
@@ -153,7 +153,7 @@ const ReviewEditor = ({
       setSaved({
         value,
         content: trimmedContent,
-        publishedAt: review.updatedAt,
+        publishedAt: review.publishedAt,
       });
       setContent(trimmedContent);
       setValidated(false);

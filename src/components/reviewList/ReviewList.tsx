@@ -10,7 +10,7 @@ import { entityPath, userPath } from "../../utils/routes";
 import StarRating from "../starRating/StarRating";
 import "./ReviewList.css";
 
-type Review = EntityReview & { entity?: EntitySummary };
+export type Review = EntityReview & { entity?: EntitySummary };
 
 type ReviewListProps<T extends Review> = {
   reviews: T[];
@@ -54,7 +54,7 @@ const ReviewList = <T extends Review>({
           )}
           <div className="review-list-footer">
             <span className="review-list-date">
-              {formatDate(review.updatedAt)}
+              {formatDate(review.publishedAt)}
             </span>
             {renderActions?.(review)}
           </div>

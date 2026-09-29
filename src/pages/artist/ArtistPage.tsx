@@ -8,6 +8,7 @@ import DetailHero from "../../components/detailHero/DetailHero";
 import ReviewCallToAction from "../../components/reviewCallToAction/ReviewCallToAction";
 import NotFound from "../../components/notFound/NotFound";
 import { useFetch } from "../../hooks/useFetch";
+import { entityPath } from "../../utils/routes";
 import { formatCount } from "../../utils/format";
 import { FaCommentDots, FaCompactDisc, FaUser } from "react-icons/fa";
 import "../detail.css";
@@ -43,6 +44,7 @@ const ArtistPage = () => {
     externalId: track.externalId,
     title: track.title,
     subtitle: track.album.title,
+    subtitlePath: entityPath("album", track.album.id),
     cover: track.album.cover,
     averageRating: track.averageRating,
   }));

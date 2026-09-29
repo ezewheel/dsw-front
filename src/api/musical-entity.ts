@@ -1,4 +1,4 @@
-import api from "./client";
+import api, { type SearchResults } from "./client";
 
 export type MusicalEntityType = "track" | "album" | "artist";
 
@@ -18,19 +18,15 @@ export type EntitySummary = {
   ratingsCount: number;
 };
 
-export interface SearchResponse {
-  results: EntitySummary[];
-  total: number;
-}
-
 export const searchMusicalEntity = async (
   query: string,
   type: MusicalEntityType,
   options?: { limit?: number; index?: number },
-): Promise<SearchResponse> => {
-  const { data } = await api.get<SearchResponse>("/musical-entity/search", {
-    params: { query, type, ...options },
-  });
+): Promise<SearchResults<EntitySummary>> => {
+  const { data } = await api.get<SearchResults<EntitySummary>>(
+    "/musical-entity/search",
+    { params: { query, type, ...options } },
+  );
   return data;
 };
 
@@ -75,6 +71,7 @@ export type ArtistTopTrack = {
   externalId: string;
   title: string;
   album: {
+    id: number;
     title: string;
     cover: string;
   };

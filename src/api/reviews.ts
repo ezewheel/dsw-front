@@ -1,49 +1,32 @@
 import api from "./client";
 import type { EntitySummary, MusicalEntityType } from "./musical-entity";
-
-export interface EntityReviewUser {
-  id: number;
-  nickname: string;
-}
+import type { UserSummary } from "./user";
 
 export interface EntityReview {
   id: number;
-  user: EntityReviewUser;
-  value: number;
-  content: string | null;
-  updatedAt: string;
-}
-
-export interface EntityReviewsResult {
-  total: number;
-  totalPages: number;
-  items: EntityReview[];
-}
-
-export interface ReviewWithEntity {
-  id: number;
-  user: EntityReviewUser;
+  user: UserSummary;
   value: number;
   content: string;
-  updatedAt: string;
-  entity: EntitySummary;
+  publishedAt: string;
 }
 
-export interface ReviewsWithEntityResult {
+export type ReviewWithEntity = EntityReview & { entity: EntitySummary };
+
+export type Page<T> = {
+  items: T[];
   total: number;
   totalPages: number;
-  items: ReviewWithEntity[];
-}
+};
 
 export interface ReviewedTrack {
   externalId: string;
-  title: string | null;
-  artist: string | null;
-  artistId: number | null;
-  album: string | null;
-  albumId: number | null;
-  duration: number | null;
-  cover: string | null;
+  title: string;
+  artist: string;
+  artistId: number;
+  album: string;
+  albumId: number;
+  duration: number;
+  cover: string;
   averageRating: number | null;
   ratingsCount: number;
 }
@@ -90,8 +73,8 @@ export const getEntityReviews = async (
   type: MusicalEntityType,
   externalId: string,
   options?: { page?: number; pageSize?: number },
-): Promise<EntityReviewsResult> => {
-  const { data } = await api.get<EntityReviewsResult>(
+): Promise<Page<EntityReview>> => {
+  const { data } = await api.get<Page<EntityReview>>(
     `/interaction/${type}/${externalId}/reviews`,
     { params: options },
   );
@@ -101,8 +84,8 @@ export const getEntityReviews = async (
 export const getLatestReviews = async (options: {
   page: number;
   pageSize: number;
-}): Promise<ReviewsWithEntityResult> => {
-  const { data } = await api.get<ReviewsWithEntityResult>(
+}): Promise<Page<ReviewWithEntity>> => {
+  const { data } = await api.get<Page<ReviewWithEntity>>(
     "/interaction/reviews/latest",
     { params: options },
   );

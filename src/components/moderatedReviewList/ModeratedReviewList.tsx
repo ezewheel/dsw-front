@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { getErrorMessage } from "../../api/client";
-import type { EntitySummary } from "../../api/musical-entity";
-import { deleteReviewById, type EntityReview } from "../../api/reviews";
+import { deleteReviewById } from "../../api/reviews";
 import { useAuth } from "../../context/auth-context";
 import ConfirmModal from "../confirmModal/ConfirmModal";
-import ReviewList from "../reviewList/ReviewList";
-
-type Review = EntityReview & { entity?: EntitySummary };
+import ReviewList, { type Review } from "../reviewList/ReviewList";
 
 type ModeratedReviewListProps = {
   reviews: Review[];
