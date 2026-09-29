@@ -26,9 +26,15 @@ export const isAccountSuspended = (error: unknown): boolean =>
 export const isUnauthorized = (error: unknown): boolean =>
   axios.isAxiosError(error) && error.response?.status === 401;
 
+type ErrorResponse = {
+  message?: string;
+  errors?: { messages: string[] }[];
+};
+
 export const getErrorMessage = (error: unknown, fallback: string): string => {
-  if (!axios.isAxiosError<{ message?: string }>(error)) return fallback;
-  return error.response?.data?.message ?? fallback;
+  if (!axios.isAxiosError<ErrorResponse>(error)) return fallback;
+  const data = error.response?.data;
+  return data?.errors?.[0]?.messages[0] ?? data?.message ?? fallback;
 };
 
 export default api;

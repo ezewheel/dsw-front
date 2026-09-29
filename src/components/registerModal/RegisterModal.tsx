@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { getErrorMessage } from "../../api/client";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
+import NicknameInput from "../nicknameInput/NicknameInput";
 import PasswordInput from "../passwordInput/PasswordInput";
 import Modal from "../modal/Modal";
 import "../authModals/auth-form.css";
@@ -63,16 +64,12 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
           <label className="form-label" htmlFor="register-modal-nickname">
             Nickname
           </label>
-          <input
+          <NicknameInput
             id="register-modal-nickname"
-            type="text"
-            className="form-input"
             placeholder="usuario123"
             value={nickname}
             onChange={(event) => setNickname(event.target.value)}
-            required
           />
-          <p className="form-feedback">Ingresá un nickname.</p>
         </div>
 
         <div className="form-field">
@@ -100,9 +97,7 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             placeholder="••••••••"
-            required
-            minLength={8}
-            feedback="La contraseña debe tener al menos 8 caracteres."
+            enforceMinLength
           />
         </div>
 
@@ -118,8 +113,6 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
             value={confirmPassword}
             onChange={(event) => setConfirmPassword(event.target.value)}
             placeholder="••••••••"
-            required
-            minLength={8}
             feedback="Confirmá tu contraseña."
           />
         </div>

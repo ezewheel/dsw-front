@@ -75,9 +75,7 @@ const LoginModal = ({ onClose }: { onClose: () => void }) => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             placeholder="••••••••"
-            required
-            minLength={8}
-            feedback="La contraseña debe tener al menos 8 caracteres."
+            feedback="Ingresá tu contraseña."
           />
         </div>
 

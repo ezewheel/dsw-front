@@ -3,6 +3,7 @@ import { FaIdCard } from "react-icons/fa";
 import type { User } from "../../../../api/auth";
 import { getErrorMessage } from "../../../../api/client";
 import { useAuth } from "../../../../context/auth-context";
+import NicknameInput from "../../../../components/nicknameInput/NicknameInput";
 
 const ProfileForm = ({ user }: { user: User }) => {
   const { updateProfile } = useAuth();
@@ -65,16 +66,11 @@ const ProfileForm = ({ user }: { user: User }) => {
         <label className="form-label" htmlFor="profile-nickname">
           Nickname
         </label>
-        <input
+        <NicknameInput
           id="profile-nickname"
-          type="text"
-          className="form-input"
           value={nickname}
           onChange={(event) => setNickname(event.target.value)}
-          required
-          pattern=".*\S.*"
         />
-        <p className="form-feedback">Ingresá un nickname.</p>
       </div>
 
       <div className="form-field">

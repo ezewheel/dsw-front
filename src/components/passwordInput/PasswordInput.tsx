@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./PasswordInput.css";
 
+const MIN_PASSWORD_LENGTH = 8;
 const MAX_PASSWORD_LENGTH = 72;
 
 type PasswordInputProps = {
@@ -9,8 +10,7 @@ type PasswordInputProps = {
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  required?: boolean;
-  minLength?: number;
+  enforceMinLength?: boolean;
   feedback?: string;
 };
 
@@ -19,9 +19,8 @@ const PasswordInput = ({
   value,
   onChange,
   placeholder,
-  required,
-  minLength,
-  feedback,
+  enforceMinLength = false,
+  feedback = `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres.`,
 }: PasswordInputProps) => {
   const [visible, setVisible] = useState(false);
 
@@ -34,8 +33,8 @@ const PasswordInput = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        required={required}
-        minLength={minLength}
+        required
+        minLength={enforceMinLength ? MIN_PASSWORD_LENGTH : undefined}
         maxLength={MAX_PASSWORD_LENGTH}
       />
       <button
@@ -46,7 +45,7 @@ const PasswordInput = ({
       >
         {visible ? <FaEyeSlash /> : <FaEye />}
       </button>
-      {feedback && <p className="form-feedback">{feedback}</p>}
+      <p className="form-feedback">{feedback}</p>
     </div>
   );
 };

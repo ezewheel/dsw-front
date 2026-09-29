@@ -4,8 +4,6 @@ import { getErrorMessage } from "../../../../api/client";
 import { changePassword } from "../../../../api/user";
 import PasswordInput from "../../../../components/passwordInput/PasswordInput";
 
-const MIN_PASSWORD_LENGTH = 8;
-
 const PasswordForm = () => {
   const [editing, setEditing] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
@@ -91,7 +89,6 @@ const PasswordForm = () => {
               id="profile-current-password"
               value={currentPassword}
               onChange={(event) => setCurrentPassword(event.target.value)}
-              required
               feedback="Ingresá tu contraseña actual."
             />
           </div>
@@ -104,9 +101,7 @@ const PasswordForm = () => {
               id="profile-new-password"
               value={newPassword}
               onChange={(event) => setNewPassword(event.target.value)}
-              required
-              minLength={MIN_PASSWORD_LENGTH}
-              feedback="La contraseña debe tener al menos 8 caracteres."
+              enforceMinLength
             />
           </div>
 
@@ -118,8 +113,6 @@ const PasswordForm = () => {
               id="profile-confirm-password"
               value={confirmPassword}
               onChange={(event) => setConfirmPassword(event.target.value)}
-              required
-              minLength={MIN_PASSWORD_LENGTH}
               feedback="Repetí tu contraseña nueva."
             />
           </div>
