@@ -78,4 +78,8 @@
   .detail-top-reversed .detail-hero {
     order: 0;
   }
+
+  .detail-meta-item:has(> .detail-meta-link) {
+    grid-column: 1 / -1;
+  }
 }
