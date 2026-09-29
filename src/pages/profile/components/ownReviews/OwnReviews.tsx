@@ -65,7 +65,7 @@ const OwnReviews = ({ onChange }: OwnReviewsProps) => {
     const title = entity.title ?? "este contenido";
 
     return (
-      <div className="review-list-actions">
+      <div className="own-reviews-actions">
         <Link
           to={reviewFormPath(entity.type, entity.externalId)}
           className="app-btn app-btn-secondary review-list-action"
