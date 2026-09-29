@@ -45,37 +45,42 @@ const searchResults = async (
   }));
 };
 
+type FoundResults = {
+  search: string;
+  results: SearchBarResult[];
+};
+
+const searchKey = (query: string, type: SearchType) => `${type}:${query}`;
+
 function SearchBar() {
   const navigate = useNavigate();
   const [searchType, setSearchType] = useState<SearchType>("track");
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchBarResult[]>([]);
+  const [found, setFound] = useState<FoundResults | null>(null);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const blurTimer = useRef<number | null>(null);
 
-  useEffect(() => {
-    const trimmed = query.trim();
+  const trimmedQuery = query.trim();
+  const currentSearch = searchKey(trimmedQuery, searchType);
+  const results = found?.search === currentSearch ? found.results : null;
 
-    if (!trimmed) return;
+  useEffect(() => {
+    if (!trimmedQuery) return;
 
     let active = true;
+    const search = searchKey(trimmedQuery, searchType);
 
     const timer = window.setTimeout(() => {
-      setLoading(true);
-      searchResults(trimmed, searchType)
-        .then((found) => {
+      searchResults(trimmedQuery, searchType)
+        .then((items) => {
           if (!active) return;
-          setResults(found);
+          setFound({ search, results: items });
           setOpen(true);
         })
         .catch(() => {
           if (!active) return;
-          setResults([]);
+          setFound({ search, results: [] });
           setOpen(false);
-        })
-        .finally(() => {
-          if (active) setLoading(false);
         });
     }, 300);
 
@@ -83,7 +88,7 @@ function SearchBar() {
       active = false;
       window.clearTimeout(timer);
     };
-  }, [query, searchType]);
+  }, [trimmedQuery, searchType]);
 
   useEffect(() => {
     return () => {
@@ -95,10 +100,9 @@ function SearchBar() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const trimmed = query.trim();
-    if (!trimmed) return;
+    if (!trimmedQuery) return;
     setOpen(false);
-    navigate(searchPath(trimmed, searchType));
+    navigate(searchPath(trimmedQuery, searchType));
   }
 
   function handleFocus() {
@@ -106,14 +110,12 @@ function SearchBar() {
       window.clearTimeout(blurTimer.current);
       blurTimer.current = null;
     }
-    if (query.trim() !== "") setOpen(true);
+    if (trimmedQuery) setOpen(true);
   }
 
   function handleBlur() {
     blurTimer.current = window.setTimeout(() => setOpen(false), 150);
   }
-
-  const hasQuery = query.trim() !== "";
 
   return (
     <div className="searchbar-wrapper">
@@ -125,14 +127,7 @@ function SearchBar() {
           placeholder="Buscar..."
           className="searchbar-input"
           value={query}
-          onChange={(e) => {
-            const value = e.target.value;
-            setQuery(value);
-            if (value.trim() === "") {
-              setResults([]);
-              setOpen(false);
-            }
-          }}
+          onChange={(event) => setQuery(event.target.value)}
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
@@ -142,9 +137,9 @@ function SearchBar() {
         </button>
       </form>
 
-      {open && hasQuery && (
+      {open && trimmedQuery && (
         <div className="searchbar-results">
-          {loading && results.length === 0 ? (
+          {results === null ? (
             <div className="searchbar-results-empty">Buscando...</div>
           ) : results.length === 0 ? (
             <div className="searchbar-results-empty">Sin resultados</div>
@@ -182,7 +177,7 @@ function SearchBar() {
               </div>
 
               <Link
-                to={searchPath(query.trim(), searchType)}
+                to={searchPath(trimmedQuery, searchType)}
                 className="searchbar-more app-btn app-btn-primary app-btn-block"
                 onClick={() => setOpen(false)}
               >

@@ -1,0 +1,3 @@
+.not-found-page {
+  padding-block: calc(var(--navbar-height) + 1.25rem) 3rem;
+}

@@ -8,6 +8,7 @@ import SearchPage from "./pages/search/SearchPage";
 import TrackPage from "./pages/track/TrackPage";
 import ArtistPage from "./pages/artist/ArtistPage";
 import AlbumPage from "./pages/album/AlbumPage";
+import NotFoundPage from "./pages/notFound/NotFoundPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/artist/:id" element={<ArtistPage />} />
             <Route path="/album/:id" element={<AlbumPage />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
         <Footer />
