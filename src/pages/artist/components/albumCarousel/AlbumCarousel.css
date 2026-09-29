@@ -10,6 +10,7 @@
 
 .album-carousel-section {
   --item-gap: 1.5rem;
+  --per-view: 5;
 }
 
 .album-carousel {
@@ -29,8 +30,12 @@
   scroll-behavior: smooth;
 }
 
-.album-carousel-track.single-page {
-  justify-content: center;
+.album-carousel-item:first-child {
+  margin-left: auto;
+}
+
+.album-carousel-item:last-child {
+  margin-right: auto;
 }
 
 .album-carousel-arrow {
@@ -79,7 +84,9 @@
 
 .album-carousel-item {
   flex: 0 0 auto;
-  width: calc((100% - 4 * var(--item-gap)) / 5);
+  width: calc(
+    (100% - (var(--per-view) - 1) * var(--item-gap)) / var(--per-view)
+  );
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
@@ -91,14 +98,30 @@
   padding: 0;
 }
 
+@media (max-width: 991.98px) {
+  .album-carousel-section {
+    --per-view: 4;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .album-carousel-section {
+    --per-view: 3;
+  }
+}
+
 @media (max-width: 575.98px) {
   .album-carousel-section {
     --item-gap: 1rem;
+    --per-view: 2.3;
+  }
+
+  .album-carousel-track {
+    margin: 0;
   }
 
   .album-carousel-arrow {
-    width: 30px;
-    height: 30px;
+    display: none;
   }
 }
 

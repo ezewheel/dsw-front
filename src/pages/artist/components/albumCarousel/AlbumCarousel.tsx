@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import type { ArtistAlbum } from "../../../../api/musical-entity";
@@ -10,13 +10,10 @@ type AlbumCarouselProps = {
   albums: ArtistAlbum[];
 };
 
-const ALBUMS_PER_VIEW = 5;
-
 const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
   const trackRef = useRef<HTMLDivElement>(null);
-  const fitsInOneView = albums.length <= ALBUMS_PER_VIEW;
   const [atStart, setAtStart] = useState(true);
-  const [atEnd, setAtEnd] = useState(fitsInOneView);
+  const [atEnd, setAtEnd] = useState(true);
 
   const scrollOneView = (direction: -1 | 1) => {
     const track = trackRef.current;
@@ -30,6 +27,15 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
     setAtStart(track.scrollLeft <= 0);
     setAtEnd(track.scrollLeft + track.clientWidth >= track.scrollWidth - 1);
   };
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const observer = new ResizeObserver(updateEdges);
+    observer.observe(track);
+    return () => observer.disconnect();
+  }, []);
 
   if (albums.length === 0) {
     return (
@@ -54,9 +60,7 @@ const AlbumCarousel = ({ albums }: AlbumCarouselProps) => {
           <FaChevronLeft aria-hidden="true" />
         </button>
         <div
-          className={`album-carousel-track${
-            fitsInOneView ? " single-page" : ""
-          }`}
+          className="album-carousel-track"
           ref={trackRef}
           onScroll={updateEdges}
         >
