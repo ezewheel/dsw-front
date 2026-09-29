@@ -3,17 +3,11 @@ import type { MusicalEntityType } from "../../api/musical-entity";
 import { getOwnReview } from "../../api/reviews";
 import { useAuth } from "../../context/auth-context";
 import { useFetch } from "../../hooks/useFetch";
-import { REVIEW_FORM_ID } from "../entityReviews/EntityReviews";
+import { focusReviewForm } from "../../utils/review-form";
 
 type ReviewCallToActionProps = {
   entityType: MusicalEntityType;
   externalId: string;
-};
-
-const focusReviewForm = () => {
-  const reviewForm = document.getElementById(REVIEW_FORM_ID);
-  reviewForm?.scrollIntoView({ behavior: "smooth", block: "start" });
-  reviewForm?.focus({ preventScroll: true });
 };
 
 const ReviewCallToAction = ({

@@ -10,6 +10,10 @@ import {
   type RegisterRequest,
   type User,
 } from "../api/auth";
+import {
+  updateProfile as updateProfileRequest,
+  type UpdateProfileInput,
+} from "../api/user";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -54,8 +58,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
   };
 
+  const updateProfile = async (input: UpdateProfileInput) => {
+    const { id, email, nickname } = await updateProfileRequest(input);
+    setUser({ id, email, nickname });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, register, logout, updateProfile }}
+    >
       {children}
     </AuthContext.Provider>
   );
