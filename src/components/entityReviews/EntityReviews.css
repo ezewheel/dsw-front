@@ -7,7 +7,7 @@
 .entity-reviews-title {
   font-size: 1.6rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem;
   text-align: center;
 }
 
@@ -21,6 +21,14 @@
 .entity-reviews-form {
   position: sticky;
   top: 1rem;
+  scroll-margin-top: 1rem;
+  border-radius: 12px;
+  outline: none;
+}
+
+.entity-reviews-form:focus .review-form {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 .entity-reviews-list {

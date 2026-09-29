@@ -219,11 +219,11 @@ const ReviewEditor = ({
       >
         <div key={`heading-${mode}`} className="review-form-fade">
           <h3 className="review-form-title">{TITLES[mode]}</h3>
-          <p className="review-form-hint">
-            {saved
-              ? `Publicada el ${formatShortDate(saved.publishedAt)}`
-              : "Contá qué te pareció."}
-          </p>
+          {saved && (
+            <p className="review-form-hint">
+              Publicada el {formatShortDate(saved.publishedAt)}
+            </p>
+          )}
         </div>
 
         <div className="form-field">

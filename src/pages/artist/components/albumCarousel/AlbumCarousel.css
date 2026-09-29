@@ -132,6 +132,10 @@
   filter: saturate(1);
 }
 
+.album-carousel-item:hover .album-carousel-title {
+  text-decoration: underline;
+}
+
 .album-carousel-title {
   font-weight: 600;
   font-size: 0.88rem;

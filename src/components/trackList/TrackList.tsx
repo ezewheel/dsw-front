@@ -58,7 +58,9 @@ const TrackList = ({ title, tracks, showRank = true }: TrackListProps) => {
     return (
       <section className="track-list">
         <h2 className="track-list-header">{title}</h2>
-        <p className="track-list-empty">No hay canciones para mostrar.</p>
+        <p className="track-list-empty">
+          Nadie reseñó una canción de este artista aún. ¡Se el primero!
+        </p>
       </section>
     );
   }

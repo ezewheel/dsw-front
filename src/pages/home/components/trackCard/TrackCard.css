@@ -14,6 +14,7 @@
 }
 
 .track-card:hover {
+  transform: scale(1.03);
   border-color: color-mix(in srgb, var(--accent) 45%, transparent);
 }
 

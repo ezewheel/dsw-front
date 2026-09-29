@@ -4,13 +4,14 @@ import { getAlbumDetail } from "../../api/musical-entity";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import TrackList from "../../components/trackList/TrackList";
 import DetailHero from "../../components/detailHero/DetailHero";
+import ReviewCallToAction from "../../components/reviewCallToAction/ReviewCallToAction";
 import NotFound from "../../components/notFound/NotFound";
 import { entityPath } from "../../utils/routes";
 import { formatCount, formatDuration } from "../../utils/format";
 import { useFetch } from "../../hooks/useFetch";
 import {
-  FaCalendarAlt,
   FaClock,
+  FaCommentDots,
   FaCompactDisc,
   FaMicrophone,
   FaMusic,
@@ -64,25 +65,27 @@ const AlbumPage = () => {
               </Link>
             </div>
             <div className="detail-meta-item">
-              <FaClock className="detail-meta-icon" aria-hidden="true" />
-              <span>{formatDuration(album.duration)}</span>
-            </div>
-            <div className="detail-meta-item">
               <FaMusic className="detail-meta-icon" aria-hidden="true" />
               <span>
                 {formatCount(album.tracks.length, "canción", "canciones")}
               </span>
             </div>
-            {album.releaseDate && (
-              <div className="detail-meta-item">
-                <FaCalendarAlt
-                  className="detail-meta-icon"
-                  aria-hidden="true"
-                />
-                <span>{album.releaseDate.slice(0, 4)}</span>
-              </div>
-            )}
+            <div className="detail-meta-item">
+              <FaClock className="detail-meta-icon" aria-hidden="true" />
+              <span>{formatDuration(album.duration)}</span>
+            </div>
+            <div className="detail-meta-item">
+              <FaCommentDots className="detail-meta-icon" aria-hidden="true" />
+              <span>
+                {formatCount(album.ratingsCount, "reseña", "reseñas")}
+              </span>
+            </div>
           </div>
+          <ReviewCallToAction
+            key={album.ratingsCount}
+            entityType="album"
+            externalId={album.externalId}
+          />
         </DetailHero>
 
         <TrackList

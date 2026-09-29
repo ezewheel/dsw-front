@@ -8,6 +8,7 @@ import ReviewList from "../reviewList/ReviewList";
 import "./EntityReviews.css";
 
 const PAGE_SIZE = 10;
+export const REVIEW_FORM_ID = "review-form";
 
 type EntityReviewsProps = {
   entityType: MusicalEntityType;
@@ -44,9 +45,8 @@ const EntityReviews = ({
 
   return (
     <section className="entity-reviews">
-      <h2 className="entity-reviews-title">Reseñas</h2>
       <div className="entity-reviews-layout">
-        <div className="entity-reviews-form">
+        <div id={REVIEW_FORM_ID} className="entity-reviews-form" tabIndex={-1}>
           <ReviewForm
             entityType={entityType}
             externalId={externalId}
@@ -58,6 +58,7 @@ const EntityReviews = ({
           className={`entity-reviews-list${loading ? " entity-reviews-list-loading" : ""}`}
           aria-busy={loading}
         >
+          <h2 className="entity-reviews-title">Reseñas</h2>
           {!data && loading && (
             <p className="status-message">Cargando reseñas...</p>
           )}
@@ -66,7 +67,7 @@ const EntityReviews = ({
           )}
           {!error && data?.items.length === 0 && (
             <p className="status-message">
-              Todavía no hay reseñas para esta entidad. ¡Sé el primero!
+              Todavía no hay reseñas. ¡Sé el primero en dejar una!
             </p>
           )}
           {!error && data && data.items.length > 0 && (

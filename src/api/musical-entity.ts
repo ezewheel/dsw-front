@@ -56,12 +56,12 @@ export type AlbumDetail = {
   externalId: string;
   title: string;
   cover: string;
-  releaseDate: string;
   artist: {
     id: number;
     name: string;
   };
   averageRating: number | null;
+  ratingsCount: number;
   duration: number;
   tracks: AlbumTrack[];
 };
@@ -94,6 +94,7 @@ export type ArtistDetail = {
   name: string;
   cover: string;
   averageRating: number | null;
+  ratingsCount: number;
   topTracks: ArtistTopTrack[];
   albums: ArtistAlbum[];
 };

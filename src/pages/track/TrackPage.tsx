@@ -8,6 +8,7 @@ import {
 import TrackList from "../../components/trackList/TrackList";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import DetailHero from "../../components/detailHero/DetailHero";
+import ReviewCallToAction from "../../components/reviewCallToAction/ReviewCallToAction";
 import NotFound from "../../components/notFound/NotFound";
 import { entityPath } from "../../utils/routes";
 import { formatCount, formatDuration } from "../../utils/format";
@@ -68,10 +69,7 @@ const TrackPage = () => {
         >
           <div className="detail-meta">
             <div className="detail-meta-item">
-              <FaMicrophone
-                className="detail-meta-icon"
-                aria-hidden="true"
-              />
+              <FaMicrophone className="detail-meta-icon" aria-hidden="true" />
               <Link
                 to={entityPath("artist", track.artist.id)}
                 className="detail-meta-link"
@@ -81,16 +79,7 @@ const TrackPage = () => {
               </Link>
             </div>
             <div className="detail-meta-item">
-              <FaClock className="detail-meta-icon" aria-hidden="true" />
-              <span>
-                {formatDuration(track.duration)}
-              </span>
-            </div>
-            <div className="detail-meta-item">
-              <FaCompactDisc
-                className="detail-meta-icon"
-                aria-hidden="true"
-              />
+              <FaCompactDisc className="detail-meta-icon" aria-hidden="true" />
               <Link
                 to={entityPath("album", track.album.id)}
                 className="detail-meta-link"
@@ -100,15 +89,21 @@ const TrackPage = () => {
               </Link>
             </div>
             <div className="detail-meta-item">
-              <FaCommentDots
-                className="detail-meta-icon"
-                aria-hidden="true"
-              />
+              <FaClock className="detail-meta-icon" aria-hidden="true" />
+              <span>{formatDuration(track.duration)}</span>
+            </div>
+            <div className="detail-meta-item">
+              <FaCommentDots className="detail-meta-icon" aria-hidden="true" />
               <span>
                 {formatCount(track.ratingsCount, "reseña", "reseñas")}
               </span>
             </div>
           </div>
+          <ReviewCallToAction
+            key={track.ratingsCount}
+            entityType="track"
+            externalId={track.externalId}
+          />
         </DetailHero>
 
         <TrackList

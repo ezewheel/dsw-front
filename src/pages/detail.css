@@ -9,6 +9,13 @@
   margin-bottom: 2.5rem;
 }
 
+@media (min-width: 992px) {
+  .detail-top-compact .detail-hero {
+    flex-basis: 300px;
+    width: 300px;
+  }
+}
+
 .detail-top-reversed .detail-hero {
   order: 1;
   align-items: flex-end;

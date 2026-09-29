@@ -5,9 +5,11 @@ import TrackList from "../../components/trackList/TrackList";
 import AlbumCarousel from "./components/albumCarousel/AlbumCarousel";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import DetailHero from "../../components/detailHero/DetailHero";
+import ReviewCallToAction from "../../components/reviewCallToAction/ReviewCallToAction";
 import NotFound from "../../components/notFound/NotFound";
 import { useFetch } from "../../hooks/useFetch";
-import { FaUser } from "react-icons/fa";
+import { formatCount } from "../../utils/format";
+import { FaCommentDots, FaCompactDisc, FaUser } from "react-icons/fa";
 import "../detail.css";
 
 const ArtistPage = () => {
@@ -47,12 +49,32 @@ const ArtistPage = () => {
 
   return (
     <div className="app-container detail-page">
-      <div className="detail-top">
+      <div className="detail-top detail-top-compact">
         <DetailHero
           image={artist.cover}
           title={artist.name}
           rating={artist.averageRating}
-        />
+        >
+          <div className="detail-meta">
+            <div className="detail-meta-item">
+              <FaCompactDisc className="detail-meta-icon" aria-hidden="true" />
+              <span>
+                {formatCount(artist.albums.length, "álbum", "álbumes")}
+              </span>
+            </div>
+            <div className="detail-meta-item">
+              <FaCommentDots className="detail-meta-icon" aria-hidden="true" />
+              <span>
+                {formatCount(artist.ratingsCount, "reseña", "reseñas")}
+              </span>
+            </div>
+          </div>
+          <ReviewCallToAction
+            key={artist.ratingsCount}
+            entityType="artist"
+            externalId={artist.externalId}
+          />
+        </DetailHero>
 
         <TrackList title="Canciones mejor valoradas" tracks={trackItems} />
       </div>
