@@ -1,5 +1,6 @@
 .pagination {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
@@ -43,4 +44,23 @@
   color: var(--text-muted);
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+@media (max-width: 575.98px) {
+  .pagination {
+    gap: 0.25rem;
+  }
+
+  .pagination-arrow,
+  .pagination-page {
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 0.35rem;
+  }
+}
+
+@media (max-width: 399.98px) {
+  .pagination-edge {
+    display: none;
+  }
 }

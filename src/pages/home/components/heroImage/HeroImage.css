@@ -25,3 +25,9 @@
   text-shadow: 0 4px 24px rgb(0 0 0 / 0.85);
   line-height: 1.15;
 }
+
+@media (max-width: 767.98px) {
+  .hero-image-img {
+    min-height: 26rem;
+  }
+}

@@ -35,7 +35,7 @@ const Pagination = ({
     <nav className="pagination" aria-label="Paginación de resultados">
       <button
         type="button"
-        className="pagination-arrow"
+        className="pagination-arrow pagination-edge"
         onClick={() => onPageChange(1)}
         disabled={currentPage === 1}
         aria-label="Primera página"
@@ -81,7 +81,7 @@ const Pagination = ({
 
       <button
         type="button"
-        className="pagination-arrow"
+        className="pagination-arrow pagination-edge"
         onClick={() => onPageChange(totalPages)}
         disabled={currentPage === totalPages}
         aria-label="Última página"

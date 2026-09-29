@@ -163,3 +163,13 @@
     animation: none;
   }
 }
+
+@media (max-width: 575.98px) {
+  .track-card-body {
+    padding: 0.75rem;
+  }
+
+  .track-card-title {
+    font-size: 0.9rem;
+  }
+}

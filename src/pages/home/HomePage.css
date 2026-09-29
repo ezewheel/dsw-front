@@ -7,3 +7,18 @@
   padding-top: 3rem;
   border-top: 1px solid var(--border);
 }
+
+@media (max-width: 575.98px) {
+  .home-sections {
+    padding-block: 2rem;
+  }
+
+  .home-sections > * + * {
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+
+  .home-sections .section-title {
+    margin-bottom: 1.25rem;
+  }
+}

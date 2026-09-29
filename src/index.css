@@ -20,7 +20,7 @@
 
 @media (max-width: 767.98px) {
   :root {
-    --navbar-height: 6.75rem;
+    --navbar-height: 6rem;
   }
 }
 
@@ -79,7 +79,7 @@ body {
 
 .section-title {
   margin: 0 0 2rem;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 1rem + 2.5vw, 2rem);
   font-weight: 700;
   text-align: center;
 }
