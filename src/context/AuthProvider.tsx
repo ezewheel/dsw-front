@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { AuthContext } from "./auth-context";
-import { getToken } from "../api/client";
+import api, { getToken, isAccountSuspended } from "../api/client";
+import SuspendedAccountModal from "../components/suspendedAccountModal/SuspendedAccountModal";
 import {
   login as loginRequest,
   logout as logoutRequest,
@@ -18,6 +19,20 @@ import {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(() => getToken() !== null);
+  const [suspended, setSuspended] = useState(false);
+
+  useEffect(() => {
+    const interceptor = api.interceptors.response.use(undefined, (error) => {
+      if (isAccountSuspended(error) && getToken()) {
+        logoutRequest();
+        setUser(null);
+        setSuspended(true);
+      }
+      return Promise.reject(error);
+    });
+
+    return () => api.interceptors.response.eject(interceptor);
+  }, []);
 
   useEffect(() => {
     const storedToken = getToken();
@@ -68,6 +83,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       value={{ user, loading, login, register, logout, updateProfile }}
     >
       {children}
+      {suspended && (
+        <SuspendedAccountModal onClose={() => setSuspended(false)} />
+      )}
     </AuthContext.Provider>
   );
 };

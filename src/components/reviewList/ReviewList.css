@@ -54,6 +54,11 @@
   font-weight: 600;
   font-size: 0.94rem;
   color: var(--text);
+  text-decoration: none;
+}
+
+.review-list-author:hover {
+  text-decoration: underline;
 }
 
 .review-list-text {
@@ -90,4 +95,13 @@
 
 .review-list-entity-link:hover {
   text-decoration: underline;
+}
+
+.review-list-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  text-decoration: none;
 }

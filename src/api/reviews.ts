@@ -82,6 +82,10 @@ export const deleteReview = async (
   await api.delete(`/interaction/${type}/${externalId}/reviews`);
 };
 
+export const deleteReviewById = async (reviewId: number): Promise<void> => {
+  await api.delete(`/interaction/reviews/${reviewId}`);
+};
+
 export const getEntityReviews = async (
   type: MusicalEntityType,
   externalId: string,

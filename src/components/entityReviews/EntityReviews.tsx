@@ -5,7 +5,7 @@ import { getEntityReviews } from "../../api/reviews";
 import { useFetch } from "../../hooks/useFetch";
 import Pagination from "../pagination/Pagination";
 import ReviewForm from "../reviewForm/ReviewForm";
-import ReviewList from "../reviewList/ReviewList";
+import ModeratedReviewList from "../moderatedReviewList/ModeratedReviewList";
 import {
   focusReviewFormOnceSettled,
   REVIEW_FORM_ID,
@@ -82,7 +82,13 @@ const EntityReviews = ({
           )}
           {!error && data && data.items.length > 0 && (
             <>
-              <ReviewList reviews={data.items} />
+              <ModeratedReviewList
+                reviews={data.items}
+                onReviewDeleted={() => {
+                  reload();
+                  onReviewChange();
+                }}
+              />
               <Pagination
                 currentPage={page}
                 totalPages={data.totalPages}

@@ -6,7 +6,7 @@ import {
 } from "../../api/musical-entity";
 import type { EntityReview } from "../../api/reviews";
 import { formatDate } from "../../utils/format";
-import { entityPath } from "../../utils/routes";
+import { entityPath, userPath } from "../../utils/routes";
 import StarRating from "../starRating/StarRating";
 import "./ReviewList.css";
 
@@ -29,7 +29,12 @@ const ReviewList = <T extends Review>({
         </span>
         <div className="review-list-body">
           <div className="review-list-header">
-            <span className="review-list-author">{review.user.nickname}</span>
+            <Link
+              to={userPath(review.user.id)}
+              className="review-list-author"
+            >
+              {review.user.nickname}
+            </Link>
             <StarRating value={review.value} readOnly size="sm" />
           </div>
           {review.entity && (

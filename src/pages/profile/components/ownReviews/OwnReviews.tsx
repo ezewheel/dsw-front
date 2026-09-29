@@ -4,7 +4,8 @@ import { FaPen, FaTrashAlt } from "react-icons/fa";
 import { getErrorMessage } from "../../../../api/client";
 import { deleteReview, type ReviewWithEntity } from "../../../../api/reviews";
 import { getOwnInteractions } from "../../../../api/user";
-import DeleteReviewModal from "../../../../components/deleteReviewModal/DeleteReviewModal";
+import ConfirmModal from "../../../../components/confirmModal/ConfirmModal";
+import { DELETE_OWN_REVIEW_MESSAGE } from "../../../../utils/confirm-messages";
 import Pagination from "../../../../components/pagination/Pagination";
 import ReviewList from "../../../../components/reviewList/ReviewList";
 import { useFetch } from "../../../../hooks/useFetch";
@@ -64,10 +65,10 @@ const OwnReviews = ({ onChange }: OwnReviewsProps) => {
     const title = entity.title ?? "este contenido";
 
     return (
-      <div className="own-reviews-actions">
+      <div className="review-list-actions">
         <Link
           to={reviewFormPath(entity.type, entity.externalId)}
-          className="app-btn app-btn-secondary own-reviews-action"
+          className="app-btn app-btn-secondary review-list-action"
           aria-label={`Editar tu reseña de ${title}`}
         >
           <FaPen aria-hidden="true" />
@@ -75,7 +76,7 @@ const OwnReviews = ({ onChange }: OwnReviewsProps) => {
         </Link>
         <button
           type="button"
-          className="app-btn app-btn-danger own-reviews-action"
+          className="app-btn app-btn-danger review-list-action"
           onClick={() => setPendingDelete(review)}
           aria-label={`Eliminar tu reseña de ${title}`}
           title="Eliminar"
@@ -125,7 +126,10 @@ const OwnReviews = ({ onChange }: OwnReviewsProps) => {
       </div>
 
       {pendingDelete && (
-        <DeleteReviewModal
+        <ConfirmModal
+          title="Eliminar reseña"
+          message={DELETE_OWN_REVIEW_MESSAGE}
+          confirmLabel="Eliminar"
           onConfirm={confirmDelete}
           onCancel={() => setPendingDelete(null)}
         />

@@ -19,6 +19,13 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+const SUSPENDED_ACCOUNT_MESSAGE = "Tu cuenta fue suspendida";
+
+export const isAccountSuspended = (error: unknown): boolean =>
+  axios.isAxiosError<{ message?: string }>(error) &&
+  error.response?.status === 403 &&
+  error.response.data?.message === SUSPENDED_ACCOUNT_MESSAGE;
+
 export const getErrorMessage = (error: unknown, fallback: string): string => {
   if (!axios.isAxiosError<{ message?: string }>(error)) return fallback;
   return error.response?.data?.message ?? fallback;

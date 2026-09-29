@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import { getLatestReviews } from "../../../../api/reviews";
 import Pagination from "../../../../components/pagination/Pagination";
-import ReviewList from "../../../../components/reviewList/ReviewList";
+import ModeratedReviewList from "../../../../components/moderatedReviewList/ModeratedReviewList";
 import { useFetch } from "../../../../hooks/useFetch";
 import "./LatestReviews.css";
 
@@ -10,7 +10,7 @@ const PAGE_SIZE = 5;
 const LatestReviews = () => {
   const listRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(1);
-  const { data, loading, error } = useFetch(
+  const { data, loading, error, reload } = useFetch(
     useCallback(() => getLatestReviews({ page, pageSize: PAGE_SIZE }), [page]),
     { keepPreviousData: true },
   );
@@ -42,7 +42,10 @@ const LatestReviews = () => {
         )}
         {!error && data && data.items.length > 0 && (
           <>
-            <ReviewList reviews={data.items} />
+            <ModeratedReviewList
+              reviews={data.items}
+              onReviewDeleted={reload}
+            />
             <Pagination
               currentPage={page}
               totalPages={data.totalPages}

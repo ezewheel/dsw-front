@@ -11,7 +11,8 @@ import {
 import type { MusicalEntityType } from "../../api/musical-entity";
 import { useFetch } from "../../hooks/useFetch";
 import { formatShortDate } from "../../utils/format";
-import DeleteReviewModal from "../deleteReviewModal/DeleteReviewModal";
+import ConfirmModal from "../confirmModal/ConfirmModal";
+import { DELETE_OWN_REVIEW_MESSAGE } from "../../utils/confirm-messages";
 import StarRating from "../starRating/StarRating";
 import "./ReviewForm.css";
 
@@ -325,7 +326,10 @@ const ReviewEditor = ({
       </form>
 
       {confirmingDelete && (
-        <DeleteReviewModal
+        <ConfirmModal
+          title="Eliminar reseña"
+          message={DELETE_OWN_REVIEW_MESSAGE}
+          confirmLabel="Eliminar"
           onConfirm={handleDelete}
           onCancel={() => setConfirmingDelete(false)}
         />

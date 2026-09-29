@@ -1,10 +1,16 @@
 import api from "./client";
-import type { User } from "./auth";
+import type { User, UserRole } from "./auth";
 import type { ReviewsWithEntityResult } from "./reviews";
 
 export type UserSummary = {
   id: number;
   nickname: string;
+};
+
+export type UserDetail = UserSummary & {
+  role: UserRole;
+  interactionsCount: number;
+  createdAt: string;
 };
 
 export type UserSearchResponse = {
@@ -65,7 +71,22 @@ export const searchUsers = async (
   return data;
 };
 
-export const getUser = async (id: string): Promise<UserSummary> => {
-  const { data } = await api.get<UserSummary>(`/user/${id}`);
+export const getUser = async (id: string): Promise<UserDetail> => {
+  const { data } = await api.get<UserDetail>(`/user/${id}`);
   return data;
+};
+
+export const getUserReviews = async (
+  id: string,
+  options: { page: number; pageSize: number },
+): Promise<ReviewsWithEntityResult> => {
+  const { data } = await api.get<ReviewsWithEntityResult>(
+    `/user/${id}/reviews`,
+    { params: options },
+  );
+  return data;
+};
+
+export const banUser = async (id: number): Promise<void> => {
+  await api.post(`/user/${id}/ban`);
 };

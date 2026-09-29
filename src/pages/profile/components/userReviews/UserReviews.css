@@ -1,0 +1,15 @@
+.user-reviews {
+  min-width: 0;
+  scroll-margin-top: 1rem;
+  transition: opacity 0.2s ease;
+}
+
+.user-reviews-loading {
+  opacity: 0.5;
+}
+
+.user-reviews-title {
+  margin: 0 0 1rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+}

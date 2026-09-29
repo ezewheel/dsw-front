@@ -1,9 +1,12 @@
 import api, { removeToken, saveToken } from "./client";
 
+export type UserRole = "user" | "moderator";
+
 export interface User {
   id: number;
   nickname: string;
   email: string;
+  role: UserRole;
 }
 
 export interface LoginRequest {

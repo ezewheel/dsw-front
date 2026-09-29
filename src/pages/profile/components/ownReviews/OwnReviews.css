@@ -24,12 +24,3 @@
   display: flex;
   gap: 0.5rem;
 }
-
-.own-reviews-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.8rem;
-  text-decoration: none;
-}
