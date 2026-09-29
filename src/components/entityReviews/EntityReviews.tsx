@@ -6,7 +6,10 @@ import { useFetch } from "../../hooks/useFetch";
 import Pagination from "../pagination/Pagination";
 import ReviewForm from "../reviewForm/ReviewForm";
 import ReviewList from "../reviewList/ReviewList";
-import { focusReviewForm, REVIEW_FORM_ID } from "../../utils/review-form";
+import {
+  focusReviewFormOnceSettled,
+  REVIEW_FORM_ID,
+} from "../../utils/review-form";
 import "./EntityReviews.css";
 
 const PAGE_SIZE = 10;
@@ -27,8 +30,9 @@ const EntityReviews = ({
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    if (hash === `#${REVIEW_FORM_ID}`) focusReviewForm();
+    if (hash === `#${REVIEW_FORM_ID}`) return focusReviewFormOnceSettled();
   }, [hash]);
+
   const { data, loading, error, reload } = useFetch(
     useCallback(
       () =>

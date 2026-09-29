@@ -11,7 +11,7 @@ import {
 import type { MusicalEntityType } from "../../api/musical-entity";
 import { useFetch } from "../../hooks/useFetch";
 import { formatShortDate } from "../../utils/format";
-import Modal from "../modal/Modal";
+import DeleteReviewModal from "../deleteReviewModal/DeleteReviewModal";
 import StarRating from "../starRating/StarRating";
 import "./ReviewForm.css";
 
@@ -293,7 +293,7 @@ const ReviewEditor = ({
               </button>
               <button
                 type="button"
-                className="app-btn review-form-delete"
+                className="app-btn app-btn-danger"
                 onClick={() => setConfirmingDelete(true)}
                 disabled={pending}
               >
@@ -312,7 +312,7 @@ const ReviewEditor = ({
               {saved && (
                 <button
                   type="button"
-                  className="app-btn review-form-secondary"
+                  className="app-btn app-btn-secondary"
                   onClick={discardChanges}
                   disabled={pending}
                 >
@@ -325,30 +325,10 @@ const ReviewEditor = ({
       </form>
 
       {confirmingDelete && (
-        <Modal
-          title="Eliminar reseña"
-          onClose={() => setConfirmingDelete(false)}
-        >
-          <p className="review-form-confirm-text">
-            ¿Querés eliminar tu reseña? No se puede deshacer.
-          </p>
-          <div className="review-form-confirm-actions">
-            <button
-              type="button"
-              className="app-btn review-form-secondary"
-              onClick={() => setConfirmingDelete(false)}
-            >
-              Cancelar
-            </button>
-            <button
-              type="button"
-              className="app-btn review-form-delete"
-              onClick={handleDelete}
-            >
-              Eliminar
-            </button>
-          </div>
-        </Modal>
+        <DeleteReviewModal
+          onConfirm={handleDelete}
+          onCancel={() => setConfirmingDelete(false)}
+        />
       )}
     </>
   );

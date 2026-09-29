@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { getUser } from "../../api/user";
@@ -8,7 +8,8 @@ import NotFound from "../../components/notFound/NotFound";
 import ProfileForm from "./components/profileForm/ProfileForm";
 import PasswordForm from "./components/passwordForm/PasswordForm";
 import ProfileStats from "./components/profileStats/ProfileStats";
-import OwnInteractions from "./components/ownInteractions/OwnInteractions";
+import OwnReviews from "./components/ownReviews/OwnReviews";
+import ProfileHeader from "./components/profileHeader/ProfileHeader";
 import "./ProfilePage.css";
 
 const LoadingProfile = () => (
@@ -19,6 +20,7 @@ const LoadingProfile = () => (
 
 const OwnProfile = () => {
   const { user, loading } = useAuth();
+  const [statsVersion, setStatsVersion] = useState(0);
 
   if (loading) return <LoadingProfile />;
 
@@ -26,13 +28,22 @@ const OwnProfile = () => {
 
   return (
     <div className="app-container profile-page">
-      <h1 className="profile-title">Mi perfil</h1>
-      <div className="profile-settings">
-        <ProfileForm user={user} />
-        <PasswordForm />
+      <div className="profile-overview">
+        <ProfileHeader
+          eyebrow="Mi perfil"
+          nickname={user.nickname}
+          email={user.email}
+        >
+          <ProfileStats key={statsVersion} />
+        </ProfileHeader>
+        <div className="profile-settings">
+          <ProfileForm user={user} />
+          <PasswordForm />
+        </div>
       </div>
-      <ProfileStats />
-      <OwnInteractions />
+      <OwnReviews
+        onChange={() => setStatsVersion((version) => version + 1)}
+      />
     </div>
   );
 };
@@ -58,13 +69,7 @@ const UserProfile = ({ id }: { id: string }) => {
 
   return (
     <div className="app-container profile-page">
-      <h1 className="profile-title">Perfil</h1>
-      <section className="profile-card">
-        <dl className="profile-data">
-          <dt>Nickname</dt>
-          <dd>{user.nickname}</dd>
-        </dl>
-      </section>
+      <ProfileHeader eyebrow="Perfil" nickname={user.nickname} />
     </div>
   );
 };

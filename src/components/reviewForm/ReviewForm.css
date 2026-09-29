@@ -119,33 +119,3 @@
   width: 100%;
 }
 
-.review-form-confirm-text {
-  margin: 0 0 1.25rem;
-  color: var(--text-muted);
-}
-
-.review-form-confirm-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-}
-
-.review-form-delete {
-  background: transparent;
-  border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent);
-  color: var(--danger);
-}
-
-.review-form-delete:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--danger) 12%, transparent);
-}
-
-.review-form-secondary {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-}
-
-.review-form-secondary:hover:not(:disabled) {
-  background: var(--bg-overlay);
-}

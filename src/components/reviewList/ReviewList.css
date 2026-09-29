@@ -63,6 +63,14 @@
   line-height: 1.5;
 }
 
+.review-list-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
 .review-list-date {
   font-size: 0.76rem;
   color: var(--text-muted);

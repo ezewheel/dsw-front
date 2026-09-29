@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
   ENTITY_TYPE_LABELS,
@@ -9,11 +10,17 @@ import { entityPath } from "../../utils/routes";
 import StarRating from "../starRating/StarRating";
 import "./ReviewList.css";
 
-type ReviewListProps = {
-  reviews: (EntityReview & { entity?: EntitySummary })[];
+type Review = EntityReview & { entity?: EntitySummary };
+
+type ReviewListProps<T extends Review> = {
+  reviews: T[];
+  renderActions?: (review: T) => ReactNode;
 };
 
-const ReviewList = ({ reviews }: ReviewListProps) => (
+const ReviewList = <T extends Review>({
+  reviews,
+  renderActions,
+}: ReviewListProps<T>) => (
   <div className="review-list">
     {reviews.map((review) => (
       <article className="review-list-item" key={review.id}>
@@ -40,9 +47,12 @@ const ReviewList = ({ reviews }: ReviewListProps) => (
           {review.content && (
             <p className="review-list-text">{review.content}</p>
           )}
-          <span className="review-list-date">
-            {formatDate(review.updatedAt)}
-          </span>
+          <div className="review-list-footer">
+            <span className="review-list-date">
+              {formatDate(review.updatedAt)}
+            </span>
+            {renderActions?.(review)}
+          </div>
         </div>
       </article>
     ))}

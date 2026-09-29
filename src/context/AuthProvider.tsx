@@ -59,8 +59,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateProfile = async (input: UpdateProfileInput) => {
-    const { id, email, nickname } = await updateProfileRequest(input);
-    setUser({ id, email, nickname });
+    const { nickname } = await updateProfileRequest(input);
+    setUser((current) => current && { ...current, nickname });
   };
 
   return (

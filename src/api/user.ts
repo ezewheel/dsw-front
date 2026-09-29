@@ -14,10 +14,10 @@ export type UserSearchResponse = {
 
 export interface UserProfile extends User {
   interactionsCount: number;
+  createdAt: string;
 }
 
 export interface UpdateProfileInput {
-  email: string;
   nickname: string;
 }
 

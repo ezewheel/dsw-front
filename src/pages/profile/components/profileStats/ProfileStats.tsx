@@ -1,27 +1,25 @@
+import { FaCalendarAlt, FaCommentDots } from "react-icons/fa";
 import { getProfile } from "../../../../api/user";
 import { useFetch } from "../../../../hooks/useFetch";
-import { formatCount } from "../../../../utils/format";
+import { formatCount, formatDate } from "../../../../utils/format";
+import "./ProfileStats.css";
 
 const ProfileStats = () => {
-  const { data: profile, loading, error } = useFetch(getProfile);
+  const { data: profile } = useFetch(getProfile);
+
+  if (!profile) return null;
 
   return (
-    <section className="profile-card profile-stats">
-      <h2 className="profile-section-title">Actividad</h2>
-      {loading && <p className="status-message">Cargando...</p>}
-      {error && (
-        <p className="status-message">No se pudo cargar tu actividad.</p>
-      )}
-      {profile && (
-        <p className="profile-stats-total">
-          {formatCount(
-            profile.interactionsCount,
-            "interacción",
-            "interacciones",
-          )}
-        </p>
-      )}
-    </section>
+    <ul className="profile-stats">
+      <li className="profile-stats-item">
+        <FaCommentDots className="profile-stats-icon" aria-hidden="true" />
+        {formatCount(profile.interactionsCount, "reseña", "reseñas")}
+      </li>
+      <li className="profile-stats-item">
+        <FaCalendarAlt className="profile-stats-icon" aria-hidden="true" />
+        Miembro desde el {formatDate(profile.createdAt)}
+      </li>
+    </ul>
   );
 };
 

@@ -3,60 +3,82 @@
   flex-direction: column;
   gap: 1.5rem;
   max-width: 60rem;
-  padding-block: calc(var(--navbar-height) + 1.25rem) 3rem;
+  padding-block: calc(var(--navbar-height) + 2rem) 3rem;
 }
 
-.profile-title {
-  margin: 0;
-  text-align: center;
-}
-
-.profile-settings {
+.profile-overview {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  grid-template-columns: 1fr 2fr;
   gap: 1.5rem;
   align-items: start;
 }
 
-.profile-card {
-  padding: 1.5rem;
-  background-color: var(--bg-card);
-  border-radius: 16px;
-  box-shadow: 0 16px 48px rgb(0 0 0 / 0.25);
+.profile-settings {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1.5rem;
+  background: var(--bg-overlay-soft);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: 12px;
 }
 
-.profile-data {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.75rem 1.5rem;
+.profile-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-block: 1.5rem;
+}
+
+.profile-panel + .profile-panel {
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.profile-panel-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.profile-panel-icon {
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+.profile-panel-title {
   margin: 0;
+  font-size: 1.1rem;
 }
 
-.profile-data dt {
+.profile-panel-hint {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
   color: var(--text-muted);
 }
 
-.profile-data dd {
+.profile-panel-note {
   margin: 0;
-  overflow-wrap: anywhere;
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
 
-.profile-section-title {
-  margin: 0 0 1.25rem;
-  font-size: 1.2rem;
+.profile-panel .form-field {
+  margin-bottom: 0;
 }
 
-.profile-form {
+.profile-panel .alert {
+  margin: 0;
+}
+
+.profile-panel-actions {
   display: flex;
   flex-direction: column;
+  gap: 0.75rem;
 }
 
-.profile-form .app-btn {
-  align-self: flex-start;
-}
-
-.profile-stats-total {
-  margin: 0;
-  font-size: 1.75rem;
-  font-weight: 700;
+@media (max-width: 767.98px) {
+  .profile-overview {
+    grid-template-columns: 1fr;
+  }
 }

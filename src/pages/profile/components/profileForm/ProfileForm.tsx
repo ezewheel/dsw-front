@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { FaIdCard } from "react-icons/fa";
 import type { User } from "../../../../api/auth";
 import { getErrorMessage } from "../../../../api/client";
 import { useAuth } from "../../../../context/auth-context";
@@ -7,16 +8,13 @@ const ProfileForm = ({ user }: { user: User }) => {
   const { updateProfile } = useAuth();
 
   const [nickname, setNickname] = useState(user.nickname);
-  const [email, setEmail] = useState(user.email);
   const [validated, setValidated] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
 
   const normalizedNickname = nickname.trim();
-  const normalizedEmail = email.trim().toLowerCase();
-  const hasChanges =
-    normalizedNickname !== user.nickname || normalizedEmail !== user.email;
+  const hasChanges = normalizedNickname !== user.nickname;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,12 +29,8 @@ const ProfileForm = ({ user }: { user: User }) => {
     setPending(true);
 
     try {
-      await updateProfile({
-        nickname: normalizedNickname,
-        email: normalizedEmail,
-      });
+      await updateProfile({ nickname: normalizedNickname });
       setNickname(normalizedNickname);
-      setEmail(normalizedEmail);
       setValidated(false);
       setNotice("Datos actualizados.");
     } catch (updateError) {
@@ -55,9 +49,17 @@ const ProfileForm = ({ user }: { user: User }) => {
     <form
       noValidate
       onSubmit={handleSubmit}
-      className={`profile-card profile-form${validated ? " was-validated" : ""}`}
+      className={`profile-panel${validated ? " was-validated" : ""}`}
     >
-      <h2 className="profile-section-title">Tus datos</h2>
+      <div className="profile-panel-header">
+        <FaIdCard className="profile-panel-icon" aria-hidden="true" />
+        <div>
+          <h2 className="profile-panel-title">Tus datos</h2>
+          <p className="profile-panel-hint">
+            Tu nickname es público; tu email solo lo ves vos.
+          </p>
+        </div>
+      </div>
 
       <div className="form-field">
         <label className="form-label" htmlFor="profile-nickname">
@@ -83,11 +85,9 @@ const ProfileForm = ({ user }: { user: User }) => {
           id="profile-email"
           type="email"
           className="form-input"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          required
+          value={user.email}
+          disabled
         />
-        <p className="form-feedback">Ingresá un email válido.</p>
       </div>
 
       {error && (
@@ -101,13 +101,15 @@ const ProfileForm = ({ user }: { user: User }) => {
         </div>
       )}
 
-      <button
-        type="submit"
-        className="app-btn app-btn-primary"
-        disabled={pending || !hasChanges}
-      >
-        {pending ? "Guardando..." : "Guardar cambios"}
-      </button>
+      <div className="profile-panel-actions">
+        <button
+          type="submit"
+          className="app-btn app-btn-primary"
+          disabled={pending || !hasChanges}
+        >
+          {pending ? "Guardando..." : "Guardar cambios"}
+        </button>
+      </div>
     </form>
   );
 };

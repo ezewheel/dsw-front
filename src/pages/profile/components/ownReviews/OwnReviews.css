@@ -1,0 +1,35 @@
+.own-reviews {
+  margin-top: 1rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.own-reviews-title {
+  margin: 0 0 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.own-reviews-list {
+  scroll-margin-top: 1rem;
+  transition: opacity 0.2s ease;
+}
+
+.own-reviews-list-loading {
+  opacity: 0.5;
+}
+
+.own-reviews-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.own-reviews-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  text-decoration: none;
+}

@@ -122,6 +122,26 @@ body {
   filter: brightness(1.08);
 }
 
+.app-btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.app-btn-secondary:hover:not(:disabled) {
+  background: var(--bg-overlay);
+}
+
+.app-btn-danger {
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent);
+  color: var(--danger);
+}
+
+.app-btn-danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
 .app-btn-block {
   display: block;
   width: 100%;
@@ -156,6 +176,13 @@ body {
     border-color 0.15s ease,
     background-color 0.15s ease,
     box-shadow 0.15s ease;
+}
+
+.form-input:disabled {
+  background-color: rgb(0 0 0 / 0.25);
+  border-color: rgb(255 255 255 / 0.06);
+  color: var(--text-muted);
+  cursor: not-allowed;
 }
 
 .form-input::placeholder {
