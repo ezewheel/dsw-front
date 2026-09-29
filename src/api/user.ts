@@ -1,5 +1,5 @@
 import api from "./client";
-import type { User, UserRole } from "./auth";
+import type { UserRole } from "./auth";
 import type { ReviewsWithEntityResult } from "./reviews";
 
 export type UserSummary = {
@@ -18,10 +18,11 @@ export type UserSearchResponse = {
   total: number;
 };
 
-export interface UserProfile extends User {
+export type UserProfile = UserSummary & {
+  email: string;
   interactionsCount: number;
   createdAt: string;
-}
+};
 
 export interface UpdateProfileInput {
   nickname: string;

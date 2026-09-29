@@ -1,6 +1,10 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { AuthContext } from "./auth-context";
-import api, { getToken, isAccountSuspended } from "../api/client";
+import api, {
+  getToken,
+  isAccountSuspended,
+  isUnauthorized,
+} from "../api/client";
 import SuspendedAccountModal from "../components/suspendedAccountModal/SuspendedAccountModal";
 import {
   login as loginRequest,
@@ -46,8 +50,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       .then((currentUser) => {
         if (isSameSession()) setUser(currentUser);
       })
-      .catch(() => {
-        if (isSameSession()) logoutRequest();
+      .catch((error) => {
+        if (isSameSession() && isUnauthorized(error)) logoutRequest();
       })
       .finally(() => {
         if (active) setLoading(false);
