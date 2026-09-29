@@ -1,8 +1,8 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback } from "react";
 import { getUserReviews } from "../../../../api/user";
 import ModeratedReviewList from "../../../../components/moderatedReviewList/ModeratedReviewList";
 import Pagination from "../../../../components/pagination/Pagination";
-import { useFetch } from "../../../../hooks/useFetch";
+import { usePagedReviews } from "../../../../hooks/usePagedReviews";
 import "./UserReviews.css";
 
 const PAGE_SIZE = 10;
@@ -13,20 +13,13 @@ type UserReviewsProps = {
 };
 
 const UserReviews = ({ userId, onReviewDeleted }: UserReviewsProps) => {
-  const listRef = useRef<HTMLDivElement>(null);
-  const [page, setPage] = useState(1);
-  const { data, loading, error, reload } = useFetch(
-    useCallback(
-      () => getUserReviews(userId, { page, pageSize: PAGE_SIZE }),
-      [userId, page],
-    ),
-    { keepPreviousData: true },
-  );
-
-  const changePage = (nextPage: number) => {
-    setPage(nextPage);
-    listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  const { listRef, page, changePage, data, loading, error, reload } =
+    usePagedReviews(
+      useCallback(
+        (page: number) => getUserReviews(userId, { page, pageSize: PAGE_SIZE }),
+        [userId],
+      ),
+    );
 
   return (
     <section
@@ -41,7 +34,7 @@ const UserReviews = ({ userId, onReviewDeleted }: UserReviewsProps) => {
       {error && (
         <p className="status-message">No se pudieron cargar las reseñas.</p>
       )}
-      {!error && data?.items.length === 0 && (
+      {!loading && !error && data?.items.length === 0 && (
         <p className="status-message">Todavía no reseñó nada.</p>
       )}
       {!error && data && data.items.length > 0 && (

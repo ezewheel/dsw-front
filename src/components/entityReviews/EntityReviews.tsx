@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import type { MusicalEntityType } from "../../api/musical-entity";
 import { getEntityReviews } from "../../api/reviews";
-import { useFetch } from "../../hooks/useFetch";
+import { usePagedReviews } from "../../hooks/usePagedReviews";
 import Pagination from "../pagination/Pagination";
 import ReviewForm from "../reviewForm/ReviewForm";
 import ModeratedReviewList from "../moderatedReviewList/ModeratedReviewList";
@@ -26,26 +26,22 @@ const EntityReviews = ({
   onReviewChange,
 }: EntityReviewsProps) => {
   const { hash } = useLocation();
-  const listRef = useRef<HTMLDivElement>(null);
-  const [page, setPage] = useState(1);
 
   useEffect(() => {
     if (hash === `#${REVIEW_FORM_ID}`) return focusReviewFormOnceSettled();
   }, [hash]);
 
-  const { data, loading, error, reload } = useFetch(
-    useCallback(
-      () =>
-        getEntityReviews(entityType, externalId, { page, pageSize: PAGE_SIZE }),
-      [entityType, externalId, page],
-    ),
-    { keepPreviousData: true },
-  );
-
-  const changePage = (nextPage: number) => {
-    setPage(nextPage);
-    listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  const { listRef, page, setPage, changePage, data, loading, error, reload } =
+    usePagedReviews(
+      useCallback(
+        (page: number) =>
+          getEntityReviews(entityType, externalId, {
+            page,
+            pageSize: PAGE_SIZE,
+          }),
+        [entityType, externalId],
+      ),
+    );
 
   const handleReviewChange = () => {
     setPage(1);
@@ -75,7 +71,7 @@ const EntityReviews = ({
           {error && (
             <p className="status-message">No se pudieron cargar las reseñas.</p>
           )}
-          {!error && data?.items.length === 0 && (
+          {!loading && !error && data?.items.length === 0 && (
             <p className="status-message">
               Todavía no hay reseñas. ¡Sé el primero en dejar una!
             </p>

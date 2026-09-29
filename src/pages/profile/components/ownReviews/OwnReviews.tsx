@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaPen, FaTrashAlt } from "react-icons/fa";
 import { getErrorMessage } from "../../../../api/client";
@@ -8,47 +8,36 @@ import ConfirmModal from "../../../../components/confirmModal/ConfirmModal";
 import { DELETE_OWN_REVIEW_MESSAGE } from "../../../../utils/confirm-messages";
 import Pagination from "../../../../components/pagination/Pagination";
 import ReviewList from "../../../../components/reviewList/ReviewList";
-import { useFetch } from "../../../../hooks/useFetch";
+import { usePagedReviews } from "../../../../hooks/usePagedReviews";
 import { reviewFormPath } from "../../../../utils/review-form";
 import "./OwnReviews.css";
 
 const PAGE_SIZE = 10;
+
+const loadOwnReviews = (page: number) =>
+  getOwnInteractions({ page, pageSize: PAGE_SIZE });
 
 type OwnReviewsProps = {
   onChange: () => void;
 };
 
 const OwnReviews = ({ onChange }: OwnReviewsProps) => {
-  const listRef = useRef<HTMLDivElement>(null);
-  const [page, setPage] = useState(1);
+  const { listRef, page, changePage, data, loading, error, reload } =
+    usePagedReviews(loadOwnReviews);
   const [pendingDelete, setPendingDelete] = useState<ReviewWithEntity | null>(
     null,
   );
   const [deleteError, setDeleteError] = useState("");
-  const { data, loading, error, reload } = useFetch(
-    useCallback(
-      () => getOwnInteractions({ page, pageSize: PAGE_SIZE }),
-      [page],
-    ),
-    { keepPreviousData: true },
-  );
-
-  const changePage = (nextPage: number) => {
-    setPage(nextPage);
-    listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   const confirmDelete = async () => {
     if (!pendingDelete) return;
     const { entity } = pendingDelete;
-    const wasLastOnPage = data?.items.length === 1 && page > 1;
     setPendingDelete(null);
     setDeleteError("");
 
     try {
       await deleteReview(entity.type, entity.externalId);
-      if (wasLastOnPage) setPage(page - 1);
-      else reload();
+      reload();
       onChange();
     } catch (deleteFailure) {
       setDeleteError(
@@ -108,7 +97,7 @@ const OwnReviews = ({ onChange }: OwnReviewsProps) => {
             No se pudieron cargar tus reseñas.
           </p>
         )}
-        {!error && data?.items.length === 0 && (
+        {!loading && !error && data?.items.length === 0 && (
           <p className="status-message">
             Todavía no calificaste ni reseñaste nada.
           </p>
