@@ -19,6 +19,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/track/:id" element={<TrackPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/user/:id" element={<ProfilePage />} />
             <Route path="/artist/:id" element={<ArtistPage />} />
             <Route path="/album/:id" element={<AlbumPage />} />
             <Route path="/search" element={<SearchPage />} />
