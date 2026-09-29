@@ -92,20 +92,20 @@
 
 @media (max-width: 575.98px) {
   .track-list-item {
-    grid-template-columns: 1.2rem 44px 1fr;
+    grid-template-columns: 1.2rem 44px minmax(0, 1fr) auto;
+    gap: 0.75rem;
   }
 
   .track-list-item-no-rank {
-    grid-template-columns: 44px 1fr;
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+  }
+
+  .track-list-cover {
+    width: 44px;
+    height: 44px;
   }
 
   .track-list-item > .average-rating {
-    grid-column: 3;
-    justify-self: start;
-  }
-
-  .track-list-item-no-rank > .average-rating {
-    grid-column: 2;
-    justify-self: start;
+    margin-right: 0;
   }
 }

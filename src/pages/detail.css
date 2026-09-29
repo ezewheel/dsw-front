@@ -67,7 +67,12 @@
 @media (max-width: 991.98px) {
   .detail-top {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    gap: 2rem;
+  }
+
+  .detail-top .detail-hero {
+    align-self: center;
   }
 
   .detail-top-reversed .detail-hero {
