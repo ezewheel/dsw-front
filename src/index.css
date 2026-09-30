@@ -204,6 +204,14 @@ body {
   display: block;
 }
 
+.form-input-invalid {
+  border-color: var(--danger);
+}
+
+.form-feedback-visible {
+  display: block;
+}
+
 .alert {
   padding: 0.65rem 0.9rem;
   border-radius: 10px;

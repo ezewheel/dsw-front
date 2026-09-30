@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from "react";
-import { getErrorMessage } from "../../api/client";
+import { getErrorMessage, isNicknameTaken } from "../../api/client";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
-import NicknameInput from "../nicknameInput/NicknameInput";
+import NicknameInput, {
+  NICKNAME_TAKEN_MESSAGE,
+} from "../nicknameInput/NicknameInput";
 import PasswordInput from "../passwordInput/PasswordInput";
 import Modal from "../modal/Modal";
 import "../authModals/auth-form.css";
@@ -17,6 +19,7 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState("");
+  const [nicknameError, setNicknameError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -37,20 +40,30 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
     setValidated(true);
     setLoading(true);
     setError("");
+    setNicknameError("");
 
     try {
       await register({ email, password, nickname });
       onClose();
     } catch (registerError) {
-      setError(
-        getErrorMessage(
-          registerError,
-          "No se pudo crear la cuenta. Intentalo de nuevo.",
-        ),
-      );
+      if (isNicknameTaken(registerError)) {
+        setNicknameError(NICKNAME_TAKEN_MESSAGE);
+      } else {
+        setError(
+          getErrorMessage(
+            registerError,
+            "No se pudo crear la cuenta. Intentalo de nuevo.",
+          ),
+        );
+      }
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleNicknameChange = (value: string) => {
+    setNickname(value);
+    if (nicknameError) setNicknameError("");
   };
 
   return (
@@ -68,7 +81,8 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
             id="register-modal-nickname"
             placeholder="usuario123"
             value={nickname}
-            onChange={(event) => setNickname(event.target.value)}
+            onChange={(event) => handleNicknameChange(event.target.value)}
+            error={nicknameError}
           />
         </div>
 

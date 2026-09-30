@@ -1,9 +1,11 @@
 import { useState, type FormEvent } from "react";
 import { FaIdCard } from "react-icons/fa";
 import type { User } from "../../../../api/auth";
-import { getErrorMessage } from "../../../../api/client";
+import { getErrorMessage, isNicknameTaken } from "../../../../api/client";
 import { useAuth } from "../../../../context/auth-context";
-import NicknameInput from "../../../../components/nicknameInput/NicknameInput";
+import NicknameInput, {
+  NICKNAME_TAKEN_MESSAGE,
+} from "../../../../components/nicknameInput/NicknameInput";
 
 const ProfileForm = ({ user }: { user: User }) => {
   const { updateProfile } = useAuth();
@@ -12,6 +14,7 @@ const ProfileForm = ({ user }: { user: User }) => {
   const [validated, setValidated] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
+  const [nicknameError, setNicknameError] = useState("");
   const [notice, setNotice] = useState("");
 
   const normalizedNickname = nickname.trim();
@@ -21,6 +24,7 @@ const ProfileForm = ({ user }: { user: User }) => {
     event.preventDefault();
     setError("");
     setNotice("");
+    setNicknameError("");
 
     if (!event.currentTarget.checkValidity()) {
       setValidated(true);
@@ -35,15 +39,24 @@ const ProfileForm = ({ user }: { user: User }) => {
       setValidated(false);
       setNotice("Datos actualizados.");
     } catch (updateError) {
-      setError(
-        getErrorMessage(
-          updateError,
-          "No se pudieron guardar tus datos. Intentalo de nuevo.",
-        ),
-      );
+      if (isNicknameTaken(updateError)) {
+        setNicknameError(NICKNAME_TAKEN_MESSAGE);
+      } else {
+        setError(
+          getErrorMessage(
+            updateError,
+            "No se pudieron guardar tus datos. Intentalo de nuevo.",
+          ),
+        );
+      }
     } finally {
       setPending(false);
     }
+  };
+
+  const handleNicknameChange = (value: string) => {
+    setNickname(value);
+    if (nicknameError) setNicknameError("");
   };
 
   return (
@@ -69,7 +82,8 @@ const ProfileForm = ({ user }: { user: User }) => {
         <NicknameInput
           id="profile-nickname"
           value={nickname}
-          onChange={(event) => setNickname(event.target.value)}
+          onChange={(event) => handleNicknameChange(event.target.value)}
+          error={nicknameError}
         />
       </div>
 

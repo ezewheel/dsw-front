@@ -102,10 +102,6 @@
   color: var(--text);
 }
 
-.review-form .form-feedback-visible {
-  display: block;
-}
-
 .review-form-login-text {
   margin: 0;
   color: var(--text-muted);

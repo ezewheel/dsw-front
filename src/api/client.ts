@@ -28,6 +28,10 @@ export const isAccountSuspended = (error: unknown): boolean =>
   axios.isAxiosError<{ code?: string }>(error) &&
   error.response?.data?.code === "ACCOUNT_SUSPENDED";
 
+export const isNicknameTaken = (error: unknown): boolean =>
+  axios.isAxiosError<{ code?: string }>(error) &&
+  error.response?.data?.code === "NICKNAME_TAKEN";
+
 export const isUnauthorized = (error: unknown): boolean =>
   axios.isAxiosError(error) && error.response?.status === 401;
 
