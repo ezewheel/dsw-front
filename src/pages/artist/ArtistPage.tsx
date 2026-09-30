@@ -9,6 +9,7 @@ import DetailMetaItem from "../../components/detailMetaItem/DetailMetaItem";
 import ReviewCallToAction from "../../components/reviewCallToAction/ReviewCallToAction";
 import NotFound from "../../components/notFound/NotFound";
 import { useFetch } from "../../hooks/useFetch";
+import { useOwnReview } from "../../hooks/useOwnReview";
 import { entityPath } from "../../utils/routes";
 import { formatCount } from "../../utils/format";
 import { FaCommentDots, FaCompactDisc, FaUser } from "react-icons/fa";
@@ -20,6 +21,7 @@ const ArtistPage = () => {
   const { data: artist, loading, error, reload } = useFetch(
     useCallback(() => getArtistDetail(id), [id]),
   );
+  const ownReview = useOwnReview("artist", id);
 
   if (loading) {
     return (
@@ -66,11 +68,7 @@ const ArtistPage = () => {
               {formatCount(artist.ratingsCount, "reseña", "reseñas")}
             </DetailMetaItem>
           </div>
-          <ReviewCallToAction
-            key={artist.ratingsCount}
-            entityType="artist"
-            externalId={artist.externalId}
-          />
+          <ReviewCallToAction ownReview={ownReview} />
         </DetailHero>
 
         <TrackList
@@ -84,6 +82,7 @@ const ArtistPage = () => {
       <EntityReviews
         entityType="artist"
         externalId={artist.externalId}
+        ownReview={ownReview}
         onReviewChange={reload}
       />
     </div>

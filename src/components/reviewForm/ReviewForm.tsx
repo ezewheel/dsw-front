@@ -1,37 +1,43 @@
-import { useCallback, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { getErrorMessage } from "../../api/client";
 import { useAuth } from "../../context/auth-context";
 import { useAuthModals } from "../authModals/auth-modals-context";
 import {
   createReview,
   deleteReview,
-  getOwnReview,
   type EntityReview,
 } from "../../api/reviews";
 import type { MusicalEntityType } from "../../api/musical-entity";
-import { useFetch } from "../../hooks/useFetch";
+import type { OwnReview } from "../../hooks/useOwnReview";
 import { formatShortDate } from "../../utils/format";
 import ConfirmModal from "../confirmModal/ConfirmModal";
 import { DELETE_OWN_REVIEW_MESSAGE } from "../../utils/confirm-messages";
 import StarRating from "../starRating/StarRating";
 import "./ReviewForm.css";
 
+type Notice = {
+  text: string;
+  reviewId: number | null;
+};
+
 type ReviewFormProps = {
   entityType: MusicalEntityType;
   externalId: string;
+  ownReview: OwnReview;
   onChange: () => void;
 };
 
-const ReviewForm = ({ entityType, externalId, onChange }: ReviewFormProps) => {
+const ReviewForm = ({
+  entityType,
+  externalId,
+  ownReview,
+  onChange,
+}: ReviewFormProps) => {
   const { user } = useAuth();
   const { openLogin } = useAuthModals();
-  const { data: ownReview, loading } = useFetch(
-    useCallback(
-      () =>
-        user ? getOwnReview(entityType, externalId) : Promise.resolve(null),
-      [user, entityType, externalId],
-    ),
-  );
+  const [notice, setNotice] = useState<Notice | null>(null);
+  const currentReviewId = ownReview.review?.id ?? null;
+  const noticeText = notice?.reviewId === currentReviewId ? notice.text : "";
 
   if (!user) {
     return (
@@ -51,7 +57,7 @@ const ReviewForm = ({ entityType, externalId, onChange }: ReviewFormProps) => {
     );
   }
 
-  if (loading) {
+  if (ownReview.loading) {
     return (
       <div className="review-form">
         <p className="status-message">Cargando tu reseña...</p>
@@ -61,9 +67,12 @@ const ReviewForm = ({ entityType, externalId, onChange }: ReviewFormProps) => {
 
   return (
     <ReviewEditor
+      key={currentReviewId ?? "new"}
       entityType={entityType}
       externalId={externalId}
-      ownReview={ownReview}
+      ownReview={ownReview.review}
+      notice={noticeText}
+      onNoticeChange={setNotice}
       onChange={onChange}
     />
   );
@@ -79,6 +88,8 @@ type ReviewEditorProps = {
   entityType: MusicalEntityType;
   externalId: string;
   ownReview: EntityReview | null;
+  notice: string;
+  onNoticeChange: (notice: Notice | null) => void;
   onChange: () => void;
 };
 
@@ -92,6 +103,8 @@ const ReviewEditor = ({
   entityType,
   externalId,
   ownReview,
+  notice,
+  onNoticeChange,
   onChange,
 }: ReviewEditorProps) => {
   const [saved, setSaved] = useState<SavedReview | null>(
@@ -107,7 +120,6 @@ const ReviewEditor = ({
   const [validated, setValidated] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
   const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   const mode = !saved ? "new" : editing ? "edit" : "view";
@@ -117,7 +129,7 @@ const ReviewEditor = ({
     !saved || value !== saved.value || content.trim() !== saved.content;
 
   const startEditing = () => {
-    setNotice("");
+    onNoticeChange(null);
     setError("");
     setEditing(true);
   };
@@ -141,7 +153,7 @@ const ReviewEditor = ({
 
     setPending(true);
     setError("");
-    setNotice("");
+    onNoticeChange(null);
 
     try {
       const trimmedContent = content.trim();
@@ -149,7 +161,10 @@ const ReviewEditor = ({
         value,
         content: trimmedContent || undefined,
       });
-      setNotice(saved ? "Reseña actualizada." : "¡Reseña publicada!");
+      onNoticeChange({
+        text: saved ? "Reseña actualizada." : "¡Reseña publicada!",
+        reviewId: review.id,
+      });
       setSaved({
         value,
         content: trimmedContent,
@@ -175,14 +190,14 @@ const ReviewEditor = ({
     setConfirmingDelete(false);
     setPending(true);
     setError("");
-    setNotice("");
+    onNoticeChange(null);
 
     try {
       await deleteReview(entityType, externalId);
       setSaved(null);
       setValue(0);
       setContent("");
-      setNotice("Reseña eliminada.");
+      onNoticeChange({ text: "Reseña eliminada.", reviewId: null });
       onChange();
     } catch (deleteError) {
       setError(

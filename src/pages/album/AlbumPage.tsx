@@ -10,6 +10,7 @@ import NotFound from "../../components/notFound/NotFound";
 import { entityPath } from "../../utils/routes";
 import { formatCount, formatDuration } from "../../utils/format";
 import { useFetch } from "../../hooks/useFetch";
+import { useOwnReview } from "../../hooks/useOwnReview";
 import {
   FaClock,
   FaCommentDots,
@@ -25,6 +26,7 @@ const AlbumPage = () => {
   const { data: album, loading, error, reload } = useFetch(
     useCallback(() => getAlbumDetail(id), [id]),
   );
+  const ownReview = useOwnReview("album", id);
 
   if (loading) {
     return (
@@ -71,11 +73,7 @@ const AlbumPage = () => {
               {formatCount(album.ratingsCount, "reseña", "reseñas")}
             </DetailMetaItem>
           </div>
-          <ReviewCallToAction
-            key={album.ratingsCount}
-            entityType="album"
-            externalId={album.externalId}
-          />
+          <ReviewCallToAction ownReview={ownReview} />
         </DetailHero>
 
         <TrackList
@@ -95,6 +93,7 @@ const AlbumPage = () => {
       <EntityReviews
         entityType="album"
         externalId={album.externalId}
+        ownReview={ownReview}
         onReviewChange={reload}
       />
     </div>

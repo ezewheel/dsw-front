@@ -2,6 +2,7 @@ import { useCallback, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import type { MusicalEntityType } from "../../api/musical-entity";
 import { getEntityReviews } from "../../api/reviews";
+import type { OwnReview } from "../../hooks/useOwnReview";
 import { usePagedReviews } from "../../hooks/usePagedReviews";
 import Pagination from "../pagination/Pagination";
 import ReviewForm from "../reviewForm/ReviewForm";
@@ -17,12 +18,14 @@ const PAGE_SIZE = 10;
 type EntityReviewsProps = {
   entityType: MusicalEntityType;
   externalId: string;
+  ownReview: OwnReview;
   onReviewChange: () => void;
 };
 
 const EntityReviews = ({
   entityType,
   externalId,
+  ownReview,
   onReviewChange,
 }: EntityReviewsProps) => {
   const { hash } = useLocation();
@@ -46,6 +49,7 @@ const EntityReviews = ({
   const handleReviewChange = () => {
     setPage(1);
     reload();
+    ownReview.reload();
     onReviewChange();
   };
 
@@ -56,6 +60,7 @@ const EntityReviews = ({
           <ReviewForm
             entityType={entityType}
             externalId={externalId}
+            ownReview={ownReview}
             onChange={handleReviewChange}
           />
         </div>
@@ -82,6 +87,7 @@ const EntityReviews = ({
                 reviews={data.items}
                 onReviewDeleted={() => {
                   reload();
+                  ownReview.reload();
                   onReviewChange();
                 }}
               />
