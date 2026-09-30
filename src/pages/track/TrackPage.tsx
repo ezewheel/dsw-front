@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   getAlbumDetail,
   getTrackDetail,
@@ -8,6 +8,7 @@ import {
 import TrackList from "../../components/trackList/TrackList";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import DetailHero from "../../components/detailHero/DetailHero";
+import DetailMetaItem from "../../components/detailMetaItem/DetailMetaItem";
 import ReviewCallToAction from "../../components/reviewCallToAction/ReviewCallToAction";
 import NotFound from "../../components/notFound/NotFound";
 import { entityPath } from "../../utils/routes";
@@ -68,36 +69,24 @@ const TrackPage = () => {
           rating={track.averageRating}
         >
           <div className="detail-meta">
-            <div className="detail-meta-item">
-              <FaMicrophone className="detail-meta-icon" aria-hidden="true" />
-              <Link
-                to={entityPath("artist", track.artist.id)}
-                className="detail-meta-link"
-                title={track.artist.name}
-              >
-                {track.artist.name}
-              </Link>
-            </div>
-            <div className="detail-meta-item">
-              <FaCompactDisc className="detail-meta-icon" aria-hidden="true" />
-              <Link
-                to={entityPath("album", track.album.id)}
-                className="detail-meta-link"
-                title={track.album.title}
-              >
-                {track.album.title}
-              </Link>
-            </div>
-            <div className="detail-meta-item">
-              <FaClock className="detail-meta-icon" aria-hidden="true" />
-              <span>{formatDuration(track.duration)}</span>
-            </div>
-            <div className="detail-meta-item">
-              <FaCommentDots className="detail-meta-icon" aria-hidden="true" />
-              <span>
-                {formatCount(track.ratingsCount, "reseña", "reseñas")}
-              </span>
-            </div>
+            <DetailMetaItem
+              icon={FaMicrophone}
+              to={entityPath("artist", track.artist.id)}
+            >
+              {track.artist.name}
+            </DetailMetaItem>
+            <DetailMetaItem
+              icon={FaCompactDisc}
+              to={entityPath("album", track.album.id)}
+            >
+              {track.album.title}
+            </DetailMetaItem>
+            <DetailMetaItem icon={FaClock}>
+              {formatDuration(track.duration)}
+            </DetailMetaItem>
+            <DetailMetaItem icon={FaCommentDots}>
+              {formatCount(track.ratingsCount, "reseña", "reseñas")}
+            </DetailMetaItem>
           </div>
           <ReviewCallToAction
             key={track.ratingsCount}
@@ -108,6 +97,7 @@ const TrackPage = () => {
 
         <TrackList
           title="Canciones del mismo álbum"
+          emptyMessage="No se pudieron cargar las canciones del álbum."
           tracks={albumTracks.map((albumTrack) => ({
             externalId: albumTrack.externalId,
             title: albumTrack.title,

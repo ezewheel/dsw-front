@@ -58,18 +58,22 @@ const TrackListItem = ({
 
 type TrackListProps = {
   title: string;
+  emptyMessage: string;
   tracks: TrackItem[];
   showRank?: boolean;
 };
 
-const TrackList = ({ title, tracks, showRank = true }: TrackListProps) => {
+const TrackList = ({
+  title,
+  emptyMessage,
+  tracks,
+  showRank = true,
+}: TrackListProps) => {
   if (tracks.length === 0) {
     return (
       <section className="track-list">
         <h2 className="track-list-header">{title}</h2>
-        <p className="track-list-empty">
-          Nadie reseñó una canción de este artista aún. ¡Se el primero!
-        </p>
+        <p className="track-list-empty">{emptyMessage}</p>
       </section>
     );
   }

@@ -1,9 +1,10 @@
 import { useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getAlbumDetail } from "../../api/musical-entity";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import TrackList from "../../components/trackList/TrackList";
 import DetailHero from "../../components/detailHero/DetailHero";
+import DetailMetaItem from "../../components/detailMetaItem/DetailMetaItem";
 import ReviewCallToAction from "../../components/reviewCallToAction/ReviewCallToAction";
 import NotFound from "../../components/notFound/NotFound";
 import { entityPath } from "../../utils/routes";
@@ -54,32 +55,21 @@ const AlbumPage = () => {
           rating={album.averageRating}
         >
           <div className="detail-meta">
-            <div className="detail-meta-item">
-              <FaMicrophone className="detail-meta-icon" aria-hidden="true" />
-              <Link
-                to={entityPath("artist", album.artist.id)}
-                className="detail-meta-link"
-                title={album.artist.name}
-              >
-                {album.artist.name}
-              </Link>
-            </div>
-            <div className="detail-meta-item">
-              <FaMusic className="detail-meta-icon" aria-hidden="true" />
-              <span>
-                {formatCount(album.tracks.length, "canción", "canciones")}
-              </span>
-            </div>
-            <div className="detail-meta-item">
-              <FaClock className="detail-meta-icon" aria-hidden="true" />
-              <span>{formatDuration(album.duration)}</span>
-            </div>
-            <div className="detail-meta-item">
-              <FaCommentDots className="detail-meta-icon" aria-hidden="true" />
-              <span>
-                {formatCount(album.ratingsCount, "reseña", "reseñas")}
-              </span>
-            </div>
+            <DetailMetaItem
+              icon={FaMicrophone}
+              to={entityPath("artist", album.artist.id)}
+            >
+              {album.artist.name}
+            </DetailMetaItem>
+            <DetailMetaItem icon={FaMusic}>
+              {formatCount(album.tracks.length, "canción", "canciones")}
+            </DetailMetaItem>
+            <DetailMetaItem icon={FaClock}>
+              {formatDuration(album.duration)}
+            </DetailMetaItem>
+            <DetailMetaItem icon={FaCommentDots}>
+              {formatCount(album.ratingsCount, "reseña", "reseñas")}
+            </DetailMetaItem>
           </div>
           <ReviewCallToAction
             key={album.ratingsCount}
@@ -90,6 +80,7 @@ const AlbumPage = () => {
 
         <TrackList
           title="Canciones del álbum"
+          emptyMessage="Este álbum no tiene canciones."
           showRank={false}
           tracks={album.tracks.map((track) => ({
             externalId: track.externalId,

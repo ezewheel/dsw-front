@@ -5,6 +5,7 @@ import TrackList from "../../components/trackList/TrackList";
 import AlbumCarousel from "./components/albumCarousel/AlbumCarousel";
 import EntityReviews from "../../components/entityReviews/EntityReviews";
 import DetailHero from "../../components/detailHero/DetailHero";
+import DetailMetaItem from "../../components/detailMetaItem/DetailMetaItem";
 import ReviewCallToAction from "../../components/reviewCallToAction/ReviewCallToAction";
 import NotFound from "../../components/notFound/NotFound";
 import { useFetch } from "../../hooks/useFetch";
@@ -58,18 +59,12 @@ const ArtistPage = () => {
           rating={artist.averageRating}
         >
           <div className="detail-meta">
-            <div className="detail-meta-item">
-              <FaCompactDisc className="detail-meta-icon" aria-hidden="true" />
-              <span>
-                {formatCount(artist.albums.length, "álbum", "álbumes")}
-              </span>
-            </div>
-            <div className="detail-meta-item">
-              <FaCommentDots className="detail-meta-icon" aria-hidden="true" />
-              <span>
-                {formatCount(artist.ratingsCount, "reseña", "reseñas")}
-              </span>
-            </div>
+            <DetailMetaItem icon={FaCompactDisc}>
+              {formatCount(artist.albums.length, "álbum", "álbumes")}
+            </DetailMetaItem>
+            <DetailMetaItem icon={FaCommentDots}>
+              {formatCount(artist.ratingsCount, "reseña", "reseñas")}
+            </DetailMetaItem>
           </div>
           <ReviewCallToAction
             key={artist.ratingsCount}
@@ -78,7 +73,11 @@ const ArtistPage = () => {
           />
         </DetailHero>
 
-        <TrackList title="Canciones mejor valoradas" tracks={trackItems} />
+        <TrackList
+          title="Canciones mejor valoradas"
+          emptyMessage="Nadie reseñó una canción de este artista aún. ¡Sé el primero!"
+          tracks={trackItems}
+        />
       </div>
 
       <AlbumCarousel key={artist.externalId} albums={artist.albums} />
