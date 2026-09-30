@@ -7,6 +7,7 @@ import { useFetch } from "../../hooks/useFetch";
 import NotFound from "../../components/notFound/NotFound";
 import ProfileForm from "./components/profileForm/ProfileForm";
 import PasswordForm from "./components/passwordForm/PasswordForm";
+import DeleteAccountForm from "./components/deleteAccountForm/DeleteAccountForm";
 import ProfileStats from "./components/profileStats/ProfileStats";
 import OwnReviews from "./components/ownReviews/OwnReviews";
 import ProfileHeader from "./components/profileHeader/ProfileHeader";
@@ -49,6 +50,7 @@ const OwnProfile = () => {
         <div className="profile-settings">
           <ProfileForm user={user} />
           <PasswordForm />
+          <DeleteAccountForm />
         </div>
       </div>
       <OwnReviews onChange={reloadProfile} />

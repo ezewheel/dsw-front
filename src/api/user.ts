@@ -46,6 +46,10 @@ export const changePassword = async (
   await api.put("/user/me/password", input);
 };
 
+export const deleteAccount = async (password: string): Promise<void> => {
+  await api.delete("/user/me", { data: { password } });
+};
+
 export const getOwnInteractions = async (options: {
   page: number;
   pageSize: number;
