@@ -6,10 +6,10 @@ const HeroImage = () => {
       <img
         className="hero-image-img"
         src="/images/hero.webp"
-        alt="Hero de BeatGround"
+        alt=""
       />
       <div className="hero-image-text">
-        Todas las canciones que buscas y más, en BeatGround
+        Todas las canciones que buscás y más, en BeatGround
       </div>
     </div>
   );

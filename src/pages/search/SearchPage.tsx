@@ -111,7 +111,7 @@ const SearchPage = () => {
 
           {!loading && !error && data && hasResults && (
             <>
-              <div className="search-page-results" role="list">
+              <div className="search-page-results">
                 {data.type === "user"
                   ? data.results.map((user) => (
                       <UserResultItem key={user.id} user={user} />

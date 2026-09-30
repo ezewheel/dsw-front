@@ -45,7 +45,7 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
       setError(
         getErrorMessage(
           registerError,
-          "No se pudo crear la cuenta. Inténtalo de nuevo.",
+          "No se pudo crear la cuenta. Intentalo de nuevo.",
         ),
       );
     } finally {

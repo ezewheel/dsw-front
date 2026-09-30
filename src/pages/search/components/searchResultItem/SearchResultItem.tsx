@@ -22,7 +22,7 @@ const SearchResultItem = ({ result }: { result: EntitySummary }) => (
     <div className="search-result-stats">
       <AverageRating value={result.averageRating} />
       <span className="search-result-ratings">
-        {formatCount(result.ratingsCount, "calificación", "calificaciones")}
+        {formatCount(result.ratingsCount, "reseña", "reseñas")}
       </span>
     </div>
   </Link>

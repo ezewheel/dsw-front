@@ -13,19 +13,19 @@ type Feature = {
 const FEATURES: Feature[] = [
   {
     title: "Escribir y compartir reseñas",
-    text: "Compartí tu opinión sobre tus canciones y álbumes favoritos. Escribí reseñas, expresá lo que te transmitieron y descubrí las opiniones de otros usuarios.",
+    text: "Compartí tu opinión sobre tus canciones, álbumes y artistas favoritos. Escribí reseñas, expresá lo que te transmitieron y descubrí las opiniones de otros usuarios.",
     icon: FaPenFancy,
     color: "#a855f7",
   },
   {
-    title: "Calificar cada canción",
-    text: "Dale a cada canción una puntuación de una a cinco estrellas según cuánto te haya gustado. Tus calificaciones ayudan a descubrir qué canciones son las favoritas de la comunidad.",
+    title: "Puntuar canciones, álbumes y artistas",
+    text: "Dale a cada canción, álbum o artista una puntuación de media a cinco estrellas según cuánto te haya gustado. Tus puntuaciones ayudan a descubrir qué es lo favorito de la comunidad.",
     icon: FaStar,
     color: "#f5c518",
   },
   {
-    title: "Interactuar con otros usuarios",
-    text: "Conectá con personas que comparten tus mismos gustos musicales. Comentá, likeá y seguí a otros usuarios para construir una comunidad de amantes de la música.",
+    title: "Conocer a otros usuarios",
+    text: "Buscá a otros usuarios, entrá a sus perfiles y leé sus reseñas para descubrir qué escucha y qué opina el resto de la comunidad.",
     icon: FaUsers,
     color: "#38bdf8",
   },
