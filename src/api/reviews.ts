@@ -10,7 +10,12 @@ export interface EntityReview {
   publishedAt: string;
 }
 
-export type ReviewWithEntity = EntityReview & { entity: EntitySummary };
+export type ReviewedEntity = Omit<EntitySummary, "title" | "cover"> & {
+  title: string | null;
+  cover: string | null;
+};
+
+export type ReviewWithEntity = EntityReview & { entity: ReviewedEntity };
 
 export type Page<T> = {
   items: T[];

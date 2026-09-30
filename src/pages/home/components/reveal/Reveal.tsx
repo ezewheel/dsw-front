@@ -1,12 +1,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import "./Reveal.css";
 
-type RevealProps = {
-  children: ReactNode;
-  delay?: number;
-};
-
-const Reveal = ({ children, delay = 0 }: RevealProps) => {
+const Reveal = ({ children }: { children: ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,11 +25,7 @@ const Reveal = ({ children, delay = 0 }: RevealProps) => {
   }, []);
 
   return (
-    <div
-      ref={ref}
-      className="reveal"
-      style={{ transitionDelay: `${delay}ms` }}
-    >
+    <div ref={ref} className="reveal">
       {children}
     </div>
   );

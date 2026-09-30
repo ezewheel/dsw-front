@@ -1,7 +1,5 @@
 :root {
-  --bg: #1c1c1c;
   --bg-card: #3a3a3a;
-  --bg-elevated: #1f2937;
   --bg-overlay-soft: rgb(255 255 255 / 0.06);
   --bg-overlay: rgb(255 255 255 / 0.08);
   --bg-overlay-medium: rgb(255 255 255 / 0.1);
@@ -71,10 +69,6 @@ body {
   margin-left: auto;
   margin-right: auto;
   padding-inline: 1rem;
-}
-
-.text-center {
-  text-align: center;
 }
 
 .section-title {

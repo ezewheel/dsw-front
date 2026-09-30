@@ -57,12 +57,6 @@
   color: var(--text-muted);
 }
 
-.profile-panel-note {
-  margin: 0;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
 .profile-panel .form-field {
   margin-bottom: 0;
 }

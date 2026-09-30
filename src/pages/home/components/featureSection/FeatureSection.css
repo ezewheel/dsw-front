@@ -50,10 +50,6 @@
   .feature-card {
     transition: none;
   }
-
-  .feature-card:hover {
-    transform: none;
-  }
 }
 
 @media (max-width: 575.98px) {

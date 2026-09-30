@@ -1,16 +1,13 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import {
-  ENTITY_TYPE_LABELS,
-  type EntitySummary,
-} from "../../api/musical-entity";
-import type { EntityReview } from "../../api/reviews";
+import { ENTITY_TYPE_LABELS } from "../../api/musical-entity";
+import type { EntityReview, ReviewedEntity } from "../../api/reviews";
 import { formatDate } from "../../utils/format";
 import { entityPath, userPath } from "../../utils/routes";
 import StarRating from "../starRating/StarRating";
 import "./ReviewList.css";
 
-export type Review = EntityReview & { entity?: EntitySummary };
+export type Review = EntityReview & { entity?: ReviewedEntity };
 
 type ReviewListProps<T extends Review> = {
   reviews: T[];

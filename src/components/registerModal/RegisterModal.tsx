@@ -136,7 +136,7 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
         ¿Ya tenés cuenta?{" "}
         <button
           type="button"
-          className="auth-link auth-link-btn"
+          className="auth-link"
           onClick={openLogin}
         >
           Iniciá sesión

@@ -12,8 +12,7 @@ type StarRatingProps = {
   value: number;
   onChange?: (value: number) => void;
   readOnly?: boolean;
-  size?: "sm" | "md" | "lg";
-  label?: string;
+  size?: "sm" | "md";
 };
 
 const StarRating = ({
@@ -21,7 +20,6 @@ const StarRating = ({
   onChange,
   readOnly = false,
   size = "md",
-  label,
 }: StarRatingProps) => {
   const [hover, setHover] = useState(0);
   const active = readOnly ? value : hover > 0 ? hover : value;
@@ -35,7 +33,7 @@ const StarRating = ({
     <div
       className={`star-rating star-rating-${size}`}
       role={readOnly ? "img" : "radiogroup"}
-      aria-label={label ?? `${value} de 5 estrellas`}
+      aria-label={`${value} de 5 estrellas`}
       onMouseLeave={() => setHover(0)}
     >
       {STARS.map((star) => (

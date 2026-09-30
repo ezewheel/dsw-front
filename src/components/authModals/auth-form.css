@@ -12,17 +12,14 @@
 }
 
 .auth-link {
+  padding: 0;
+  border: none;
+  background: transparent;
   color: #c084fc;
+  font-family: inherit;
+  font-size: inherit;
   font-weight: 600;
   text-decoration: none;
-}
-
-.auth-link-btn {
-  background: transparent;
-  border: none;
-  padding: 0;
-  font-size: inherit;
-  font-family: inherit;
   cursor: pointer;
 }
 

@@ -45,7 +45,7 @@ const searchResults = async (
     key: `${entity.type}-${entity.externalId}`,
     path: entityPath(entity.type, entity.externalId),
     image: entity.cover,
-    title: entity.title ?? "Contenido no disponible",
+    title: entity.title,
     meta: entity.artist ?? "Artista",
   }));
 };

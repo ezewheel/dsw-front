@@ -98,7 +98,7 @@ const LoginModal = ({ onClose }: { onClose: () => void }) => {
         ¿No tenés cuenta?{" "}
         <button
           type="button"
-          className="auth-link auth-link-btn"
+          className="auth-link"
           onClick={openRegister}
         >
           Registrate

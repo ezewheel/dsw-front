@@ -30,6 +30,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 0rem 1rem;
+  margin-top: 1rem;
 }
 
 .search-page-count {
@@ -48,24 +49,16 @@
 
 @media (min-width: 992px) {
   .search-page-layout {
-    margin-top: 1rem;
     grid-template-columns: minmax(0, 1fr) 280px;
     align-items: start;
   }
 
-  .search-page-count {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
   .search-page-main {
     grid-column: 1;
-    grid-row: 2;
   }
 
   .search-page-filters {
     grid-column: 2;
-    grid-row: 2;
   }
 }
 
@@ -92,7 +85,6 @@
   gap: 0.6rem;
   padding: 0.75rem 0.85rem;
   border-radius: 0.6rem;
-  border-left: 3px solid transparent;
   color: var(--text-muted);
   font-size: 0.9rem;
   cursor: pointer;
@@ -140,7 +132,6 @@
 
 @media (max-width: 991.98px) {
   .search-page-layout {
-    margin-top: 1rem;
     row-gap: 1rem;
   }
 
@@ -163,7 +154,6 @@
   .search-page-type-option {
     justify-content: center;
     padding: 0.6rem 0.5rem;
-    border-left: none;
   }
 }
 

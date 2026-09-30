@@ -39,7 +39,6 @@
   aspect-ratio: 1 / 1;
   display: block;
   object-fit: cover;
-  transition: transform 0.35s ease;
 }
 
 .track-card-rating {
@@ -139,13 +138,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .track-card,
-  .track-card-img {
+  .track-card {
     transition: none;
   }
 
-  .track-card:hover,
-  .track-card:hover .track-card-img {
+  .track-card:hover {
     transform: none;
   }
 

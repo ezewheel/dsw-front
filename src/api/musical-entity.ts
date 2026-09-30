@@ -11,8 +11,8 @@ export const ENTITY_TYPE_LABELS: Record<MusicalEntityType, string> = {
 export type EntitySummary = {
   externalId: string;
   type: MusicalEntityType;
-  title: string | null;
-  cover: string | null;
+  title: string;
+  cover: string;
   artist: string | null;
   averageRating: number | null;
   ratingsCount: number;

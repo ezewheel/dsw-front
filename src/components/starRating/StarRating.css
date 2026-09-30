@@ -34,11 +34,6 @@
   letter-spacing: 2px;
 }
 
-.star-rating-lg {
-  font-size: 2rem;
-  letter-spacing: 3px;
-}
-
 .star-rating-hit {
   position: absolute;
   top: 0;
