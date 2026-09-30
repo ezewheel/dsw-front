@@ -1,4 +1,9 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useState,
+  type FormEvent,
+  type MouseEvent,
+} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { searchMusicalEntity } from "../../api/musical-entity";
@@ -58,7 +63,6 @@ function SearchBar() {
   const [query, setQuery] = useState("");
   const [found, setFound] = useState<FoundResults | null>(null);
   const [open, setOpen] = useState(false);
-  const blurTimer = useRef<number | null>(null);
 
   const trimmedQuery = query.trim();
   const currentSearch = searchKey(trimmedQuery, searchType);
@@ -90,14 +94,6 @@ function SearchBar() {
     };
   }, [trimmedQuery, searchType]);
 
-  useEffect(() => {
-    return () => {
-      if (blurTimer.current !== null) {
-        window.clearTimeout(blurTimer.current);
-      }
-    };
-  }, []);
-
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!trimmedQuery) return;
@@ -106,15 +102,11 @@ function SearchBar() {
   }
 
   function handleFocus() {
-    if (blurTimer.current !== null) {
-      window.clearTimeout(blurTimer.current);
-      blurTimer.current = null;
-    }
     if (trimmedQuery) setOpen(true);
   }
 
-  function handleBlur() {
-    blurTimer.current = window.setTimeout(() => setOpen(false), 150);
+  function keepInputFocused(event: MouseEvent) {
+    event.preventDefault();
   }
 
   return (
@@ -129,7 +121,7 @@ function SearchBar() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           onFocus={handleFocus}
-          onBlur={handleBlur}
+          onBlur={() => setOpen(false)}
         />
 
         <button type="submit" className="searchbar-icon" aria-label="Buscar">
@@ -138,7 +130,7 @@ function SearchBar() {
       </form>
 
       {open && trimmedQuery && (
-        <div className="searchbar-results">
+        <div className="searchbar-results" onMouseDown={keepInputFocused}>
           {results === null ? (
             <div className="searchbar-results-empty">Buscando...</div>
           ) : results.length === 0 ? (
